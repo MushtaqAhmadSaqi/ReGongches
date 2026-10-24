@@ -1022,8 +1022,7 @@
         </div>
       </div>
     </section>
-
-    <!-- 2. SHOP BY CRAFT — Interactive Scene Rail (Hanging Garments on Curved Rod) -->
+    <!-- 2. SHOP BY CRAFT — Interactive Scene Rail (20 Products with 8 Center Crafts & Cursor Pan) -->
     <style>
       /* ── Shop by Craft: Scene Rail ──────────────────────────────────── */
       .sr-craft-section {
@@ -1056,58 +1055,96 @@
         line-height: 1.15;
       }
 
-      /* Stage: holds the curved rod and hanging items */
+      /* Stage: holds the curved rod, edge masks and hanging items */
       .sr-stage {
         position: relative;
         width: 100%;
-        min-height: 480px;
+        min-height: 490px;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         padding-top: 24px;
+        user-select: none;
       }
 
-      /* Curved rod */
-      .sr-rod {
+      /* Subtle edge gradient masks for seamless overflow */
+      .sr-stage::before,
+      .sr-stage::after {
+        content: '';
         position: absolute;
-        top: 24px;
+        top: 0;
+        bottom: 80px;
+        width: clamp(30px, 5vw, 80px);
+        z-index: 4;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+
+      .sr-stage::before {
+        left: 0;
+        background: linear-gradient(to right, #f7f5f0 20%, rgba(247, 245, 240, 0));
+      }
+
+      .sr-stage::after {
+        right: 0;
+        background: linear-gradient(to left, #f7f5f0 20%, rgba(247, 245, 240, 0));
+      }
+
+      /* Floating cursor guidance pill */
+      .sr-cursor-guide {
+        position: absolute;
+        top: 8px;
         left: 50%;
         transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(184, 145, 58, 0.25);
+        color: #7a6e60;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        padding: 5px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+        z-index: 5;
+        transition: opacity 0.3s, transform 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      }
+
+      .sr-cursor-guide svg {
+        color: #B8913A;
+      }
+
+      /* Curved overhead hanging rod */
+      .sr-rod {
+        position: absolute;
+        top: 28px;
+        left: 0;
         width: 100%;
-        max-width: 1440px;
         height: 80px;
         pointer-events: none;
         z-index: 2;
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
       }
 
-      /* Rail scroll container - centered across the page */
+      /* Rail scroll container */
       .sr-rail {
         display: flex;
         align-items: flex-start;
-        justify-content: safe center;
-        gap: clamp(10px, 1.6vw, 22px);
+        gap: 16px;
         overflow-x: auto;
         overflow-y: visible;
-        scroll-behavior: smooth;
         scrollbar-width: none;
         -ms-overflow-style: none;
-        padding: 20px 32px 60px;
+        padding: 24px clamp(32px, 6vw, 100px) 58px;
         cursor: grab;
-        user-select: none;
         position: relative;
         z-index: 3;
         width: 100%;
         box-sizing: border-box;
-      }
-
-      @media (min-width: 1100px) {
-        .sr-rail {
-          justify-content: center;
-          padding: 20px 48px 60px;
-          max-width: 1440px;
-          margin: 0 auto;
-        }
       }
 
       .sr-rail::-webkit-scrollbar {
@@ -1116,13 +1153,12 @@
 
       .sr-rail.is-dragging {
         cursor: grabbing;
-        scroll-behavior: auto;
       }
 
       /* Individual craft garment item */
       .sr-item {
         flex: 0 0 auto;
-        width: clamp(118px, 9.2vw, 134px);
+        width: 124px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1135,7 +1171,7 @@
 
       .sr-item:hover,
       .sr-item.is-focused {
-        transform: translateY(-22px) scale(1.03);
+        transform: translateY(-22px) scale(1.04);
       }
 
       /* Hanger wire + hook */
@@ -1145,14 +1181,14 @@
         margin-bottom: -4px;
         position: relative;
         z-index: 4;
-        transition: filter 0.25s;
+        transition: filter 0.25s, transform 0.25s;
       }
 
       .sr-item:hover .sr-item__hanger {
         filter: drop-shadow(0 2px 6px rgba(184, 145, 58, 0.6));
       }
 
-      /* Garment card / silhouette */
+      /* Garment card */
       .sr-item__card {
         position: relative;
         display: flex;
@@ -1174,7 +1210,7 @@
       }
 
       .sr-item__img {
-        width: 108px;
+        width: 110px;
         height: 156px;
         object-fit: cover;
         display: block;
@@ -1198,11 +1234,21 @@
         border-radius: 12px;
         letter-spacing: 0.02em;
         transition: background 0.2s, color 0.2s;
+        max-width: 116px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .sr-item.is-main-craft .sr-item__craft-tag {
+        background: #f2ebd9;
+        color: #6a5328;
+        border: 1px solid rgba(184, 145, 58, 0.25);
       }
 
       .sr-item:hover .sr-item__craft-tag {
         background: #1a1410;
         color: #f7f4ee;
+        border-color: #1a1410;
       }
 
       /* Bottom info row */
@@ -1251,21 +1297,34 @@
       /* Progress dots */
       .sr-dots {
         display: flex;
-        gap: 6px;
+        gap: 5px;
         align-items: center;
+        max-width: 240px;
+        overflow-x: auto;
+        padding: 4px 2px;
+        scrollbar-width: none;
+      }
+
+      .sr-dots::-webkit-scrollbar {
+        display: none;
       }
 
       .sr-dot {
-        width: 7px;
-        height: 7px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: #d6cfc4;
         transition: all 0.25s;
         cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .sr-dot.is-main {
+        background: #baa992;
       }
 
       .sr-dot.is-active {
-        width: 22px;
+        width: 20px;
         border-radius: 4px;
         background: #1a1410;
       }
@@ -1550,7 +1609,7 @@
 
       @media (max-width: 768px) {
         .sr-rail {
-          padding: 10px 20px 40px;
+          padding: 14px 20px 44px;
         }
 
         .sr-item {
@@ -1573,6 +1632,10 @@
         .sr-qv__img-panel {
           display: none;
         }
+
+        .sr-cursor-guide {
+          display: none;
+        }
       }
     </style>
 
@@ -1590,13 +1653,21 @@
       <!-- Scene Rail Stage -->
       <div class="sr-stage" id="sr-stage">
 
-        <!-- Curved rod drawn via SVG -->
+        <!-- Visual guidance badge -->
+        <div class="sr-cursor-guide" id="sr-cursor-guide">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 16l-4-4m0 0l4-4m-4 4h18m-4 4l4-4m0 0l-4-4" />
+          </svg>
+          <span>Move cursor left or right to explore all 20 pieces</span>
+        </div>
+
+        <!-- Curved overhead rod drawn via SVG -->
         <svg class="sr-rod" id="sr-rod-svg" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
           <path id="sr-rod-path" d="M-20,60 Q720,-10 1460,60" stroke="#B8913A" stroke-width="3.5" fill="none"
             stroke-linecap="round" />
         </svg>
 
-        <!-- Scrollable Rail of craft pieces -->
+        <!-- Scrollable Rail of craft pieces (20 items) -->
         <div class="sr-rail" id="sr-rail" role="list" aria-label="Handcrafted pieces hanging on rail">
           <!-- Items injected by JS -->
         </div>
@@ -1608,10 +1679,10 @@
               <div class="sr-bottom__name" id="sr-active-name">Hover a craft piece</div>
               <div class="sr-bottom__price" id="sr-active-price">PKR 2,500</div>
             </div>
-            <div class="sr-bottom__hint" id="sr-hint">Hover a craft piece to lift · click to look closer</div>
+            <div class="sr-bottom__hint" id="sr-hint">Hover to lift · click for quick view</div>
           </div>
 
-          <!-- Progress dots -->
+          <!-- Progress dots for all 20 pieces -->
           <div class="sr-dots" id="sr-dots" aria-hidden="true"></div>
 
           <div class="sr-bottom__right">
@@ -1630,7 +1701,7 @@
 
         <!-- Left: image panel -->
         <div class="sr-qv__img-panel">
-          <span class="sr-qv__counter" id="sr-qv-counter">01 / 08</span>
+          <span class="sr-qv__counter" id="sr-qv-counter">01 / 20</span>
           <img src="" alt="" class="sr-qv__main-img" id="sr-qv-img">
           <div class="sr-qv__view-tabs">
             <button class="sr-qv__view-tab is-active" data-qv-view="front">Front</button>
@@ -1675,15 +1746,97 @@
       </div>
     </div>
 
-    <!-- Scene Rail JS -->
+    <!-- Scene Rail JS (20 Products + Smooth Cursor Motion) -->
     <script>
       (function () {
-        // ── 8 Crafts Data matching the 8 Craft Categories ─────────────────
+        // ── 20 Products: 6 Left, 8 Main Crafts (Center), 6 Right ────────
         const SR_PRODUCTS = [
+          // ── LEFT WING (Items 1–6) ──────────────────────────────────
+          {
+            id: 'highland-mittens',
+            name: 'Highland Wool Mittens',
+            craft: 'Winter Accessories',
+            isMain: false,
+            desc: 'Dense hand-knitted sheep wool mittens for bitter high-altitude cold, lined with soft brushed wool.',
+            region: 'Skardu, Baltistan',
+            price: 'PKR 1,800',
+            img: 'assets/img/products/highland-woven-wool-mittens/highland-woven-wool-mittens-hero.webp',
+            href: 'shop.html?category=Accessories',
+            sizes: ['S/M', 'L/XL'],
+            defaultSize: 'S/M',
+          },
+          {
+            id: 'wool-jacket',
+            name: 'Hand-Woven Wool Jacket',
+            craft: 'Outerwear',
+            isMain: false,
+            desc: 'Dense mountain wool jacket with tailored structured shoulders and genuine bone buttons.',
+            region: 'Hunza Valley',
+            price: 'PKR 12,500',
+            img: 'assets/img/products/hand-woven-wool-jacket/hand-woven-wool-jacket-hero-oatmeal.webp',
+            href: 'shop.html?category=Outerwear',
+            sizes: ['S', 'M', 'L', 'XL'],
+            defaultSize: 'M',
+          },
+          {
+            id: 'balti-cap',
+            name: 'Balti Woollen Cap',
+            craft: 'Caps & Headwear',
+            isMain: false,
+            desc: 'Traditional round Balti wool cap woven from unbleached natural oatmeal fleece in Skardu.',
+            region: 'Baltistan',
+            price: 'PKR 2,200',
+            img: 'assets/img/products/balti-woollen-cap/balti-woollen-cap-hero-oatmeal.webp',
+            href: 'category.html?cat=Caps+%26+Headwear',
+            sizes: ['54 cm', '56 cm', '58 cm', '60 cm'],
+            defaultSize: '56 cm',
+          },
+          {
+            id: 'coin-purse',
+            name: 'Embroidered Coin Purse',
+            craft: 'Textile Accessories',
+            isMain: false,
+            desc: 'Miniature geometric silk-stitch coin pouch crafted by women artisan cooperatives in Gojal.',
+            region: 'Gojal Valley',
+            price: 'PKR 1,400',
+            img: 'assets/img/products/embroidered-coin-purse/embroidered-coin-purse-hero-assorted.webp',
+            href: 'category.html?cat=Textile+Accessories',
+            sizes: ['Standard'],
+            defaultSize: 'Standard',
+          },
+          {
+            id: 'wool-muffler',
+            name: 'Hand-Woven Wool Muffler',
+            craft: 'Shawls & Scarves',
+            isMain: false,
+            desc: 'Soft brushed sheep-wool scarf with twisted fringe ends, naturally charcoal-dyed.',
+            region: 'Nagar Valley',
+            price: 'PKR 3,200',
+            img: 'assets/img/products/hand-woven-wool-muffler/hand-woven-wool-muffler-hero-charcoal.webp',
+            href: 'category.html?cat=Shawls+%26+Scarves',
+            sizes: ['Free Size'],
+            defaultSize: 'Free Size',
+          },
+          {
+            id: 'womens-waistcoat',
+            name: 'Embroidered Women\'s Waistcoat',
+            craft: 'Waistcoats & Outerwear',
+            isMain: false,
+            desc: 'Fitted black wool vest detailed with vibrant cross-stitch mountain floral borders.',
+            region: 'Hunza Valley',
+            price: 'PKR 7,500',
+            img: 'assets/img/products/embroidered-womens-waistcoat/embroidered-womens-waistcoat-hero-black.webp',
+            href: 'category.html?cat=Waistcoats+%26+Outerwear',
+            sizes: ['S', 'M', 'L'],
+            defaultSize: 'S',
+          },
+
+          // ── 8 MAIN CRAFTS (Items 7–14: Centered by default) ─────────
           {
             id: 'traditional-dresses',
             name: 'Karimabad Silk Kameez',
             craft: 'Traditional Dresses',
+            isMain: true,
             desc: 'Embroidered dresses and regional outfits, made in limited runs and often to order.',
             region: 'Hunza Valley',
             price: 'PKR 14,000',
@@ -1696,18 +1849,20 @@
             id: 'gilgiti-cap',
             name: 'Traditional Gilgiti Cap',
             craft: 'Caps & Headwear',
+            isMain: true,
             desc: 'Rolled wool Gilgiti caps, embroidered caps and headwear, sized by head circumference.',
             region: 'Gilgit District',
             price: 'PKR 2,500',
             img: 'assets/img/products/traditional-gilgiti-cap-1.webp',
             href: 'category.html?cat=Caps+%26+Headwear',
-            sizes: ['S', 'M', 'L', 'XL'],
-            defaultSize: 'M',
+            sizes: ['54 cm (S)', '56 cm (M)', '58 cm (L)', '60 cm (XL)'],
+            defaultSize: '56 cm (M)',
           },
           {
             id: 'embroidered-shawl',
             name: 'Embroidered Wool Shawl',
             craft: 'Shawls & Scarves',
+            isMain: true,
             desc: 'Hand-woven wool shawls and embroidered stoles for warmth, ceremony and everyday wear.',
             region: 'Nagar Valley',
             price: 'PKR 8,500',
@@ -1720,6 +1875,7 @@
             id: 'traditional-waistcoat',
             name: 'Traditional Pattu Waistcoat',
             craft: 'Waistcoats & Outerwear',
+            isMain: true,
             desc: 'Tailored waistcoats, wool jackets and long coats, cut for layering over shalwar kameez.',
             region: 'Skardu, Baltistan',
             price: 'PKR 6,200',
@@ -1732,6 +1888,7 @@
             id: 'textile-accessories',
             name: 'Embroidered Mountain Bag',
             craft: 'Textile Accessories',
+            isMain: true,
             desc: 'Embroidered bags, purses, belts and fabric jewellery, perfect as gifts or for daily use.',
             region: 'Gojal Valley',
             price: 'PKR 4,800',
@@ -1744,6 +1901,7 @@
             id: 'home-textiles',
             name: 'Shigar Cushion Cover',
             craft: 'Home Textiles',
+            isMain: true,
             desc: 'Cushion covers, runners and wall pieces that bring mountain craft into the home.',
             region: 'Shigar Valley',
             price: 'PKR 3,600',
@@ -1756,6 +1914,7 @@
             id: 'heritage-gifts',
             name: 'Heritage Gift Set',
             craft: 'Heritage Gifts',
+            isMain: true,
             desc: 'Ready-to-give sets with gift wrap and an authenticity card.',
             region: 'Gilgit-Baltistan',
             price: 'PKR 9,500',
@@ -1768,6 +1927,7 @@
             id: 'custom-festive',
             name: 'Custom Festive Chugha',
             craft: 'Custom & Festive Wear',
+            isMain: true,
             desc: 'Made-to-measure pieces for weddings, Eid and cultural events. Book 3–5 weeks ahead.',
             region: 'Hunza Valley',
             price: 'PKR 22,000',
@@ -1776,22 +1936,106 @@
             sizes: ['Made to Measure', 'Bespoke'],
             defaultSize: 'Made to Measure',
           },
+
+          // ── RIGHT WING (Items 15–20) ─────────────────────────────────
+          {
+            id: 'lightweight-stole',
+            name: 'Lightweight Stole',
+            craft: 'Shawls & Scarves',
+            isMain: false,
+            desc: 'Feather-light fine merino stole with delicate needlepoint vine motif in dusty rose.',
+            region: 'Hunza Valley',
+            price: 'PKR 5,400',
+            img: 'assets/img/products/embroidered-lightweight-stole/embroidered-lightweight-stole-hero-dusty-rose.webp',
+            href: 'category.html?cat=Shawls+%26+Scarves',
+            sizes: ['Free Size'],
+            defaultSize: 'Free Size',
+          },
+          {
+            id: 'grooms-cap',
+            name: 'Groom\'s Cap with Plume',
+            craft: 'Caps & Headwear',
+            isMain: false,
+            desc: 'Ceremonial charcoal Gilgiti cap with an ornate silver-plated pin and traditional white plume.',
+            region: 'Gilgit District',
+            price: 'PKR 3,800',
+            img: 'assets/img/products/grooms-gilgiti-cap-plume/grooms-gilgiti-cap-plume-hero-charcoal.webp',
+            href: 'category.html?cat=Caps+%26+Headwear',
+            sizes: ['56 cm (M)', '58 cm (L)', '60 cm (XL)'],
+            defaultSize: '58 cm (L)',
+          },
+          {
+            id: 'wool-belt',
+            name: 'Hand-Woven Wool Belt',
+            craft: 'Textile Accessories',
+            isMain: false,
+            desc: 'Tablet-woven wool waistband with braided tassels, traditionally worn with chughas and waistcoats.',
+            region: 'Gojal Valley',
+            price: 'PKR 2,400',
+            img: 'assets/img/products/hand-woven-wool-belt/hand-woven-wool-belt-hero-brown.webp',
+            href: 'category.html?cat=Textile+Accessories',
+            sizes: ['110 cm', '130 cm'],
+            defaultSize: '110 cm',
+          },
+          {
+            id: 'table-runner',
+            name: 'Loomed Table Runner',
+            craft: 'Home Textiles',
+            isMain: false,
+            desc: 'Natural unbleached sheep wool table runner with traditional mountain geometric border bands.',
+            region: 'Shigar Valley',
+            price: 'PKR 4,200',
+            img: 'assets/img/products/hand-woven-wool-table-runner/hand-woven-wool-table-runner-hero-natural.webp',
+            href: 'category.html?cat=Home+Textiles',
+            sizes: ['14×54"', '14×72"'],
+            defaultSize: '14×54"',
+          },
+          {
+            id: 'keepsake-box',
+            name: 'Mountain Keepsake Box',
+            craft: 'Heritage Gifts',
+            isMain: false,
+            desc: 'Hand-carved walnut wood keepsake box wrapped with an embroidered wool ribbon and seal.',
+            region: 'Gilgit-Baltistan',
+            price: 'PKR 4,500',
+            img: 'assets/img/products/mountain-keepsake-box/mountain-keepsake-box-hero-blue-silver-edition.webp',
+            href: 'gift-sets.html',
+            sizes: ['Small (6×4")', 'Medium (8×6")'],
+            defaultSize: 'Medium (8×6")',
+          },
+          {
+            id: 'bridal-ensemble',
+            name: 'Bridal Ceremonial Ensemble',
+            craft: 'Custom & Festive Wear',
+            isMain: false,
+            desc: 'Opulent heirloom bridal kurta, dupatta and pattu coat with heavy gold tilla wirework.',
+            region: 'Hunza Valley',
+            price: 'PKR 35,000',
+            img: 'assets/img/products/bridal-ceremonial-ensemble/bridal-ceremonial-ensemble-hero-ivory-red.webp',
+            href: 'custom-orders.html',
+            sizes: ['Bespoke Order'],
+            defaultSize: 'Bespoke Order',
+          },
         ];
 
+        const stage = document.getElementById('sr-stage');
         const rail = document.getElementById('sr-rail');
         const activeName = document.getElementById('sr-active-name');
         const activePrice = document.getElementById('sr-active-price');
         const hint = document.getElementById('sr-hint');
         const dotsContainer = document.getElementById('sr-dots');
 
-        // Render progress dots
+        // Render progress dots (20 total, distinct style for the 8 main)
         SR_PRODUCTS.forEach((p, i) => {
           const dot = document.createElement('div');
-          dot.className = 'sr-dot' + (i === 0 ? ' is-active' : '');
+          dot.className = 'sr-dot' + (p.isMain ? ' is-main' : '') + (i === 6 ? ' is-active' : '');
+          dot.title = p.craft + ': ' + p.name;
           dot.addEventListener('click', () => {
             const items = rail.querySelectorAll('.sr-item');
             if (items[i]) {
-              items[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              const maxScroll = rail.scrollWidth - rail.clientWidth;
+              const target = items[i].offsetLeft - (rail.clientWidth / 2) + (items[i].offsetWidth / 2);
+              targetScroll = Math.max(0, Math.min(maxScroll, target));
               setActiveProduct(p, i);
             }
           });
@@ -1806,14 +2050,14 @@
         function setActiveProduct(p, index) {
           activeName.textContent = p.craft + ' — ' + p.name;
           activePrice.textContent = p.price;
-          hint.textContent = p.region + ' · Click to inspect piece';
+          hint.textContent = p.region + ' · Piece ' + (index + 1) + ' of ' + SR_PRODUCTS.length + ' · Click to inspect';
           setActiveDot(index);
         }
 
         // Render hanging garments on the rail
         SR_PRODUCTS.forEach((p, idx) => {
           const item = document.createElement('div');
-          item.className = 'sr-item';
+          item.className = 'sr-item' + (p.isMain ? ' is-main-craft' : '');
           item.setAttribute('role', 'listitem');
           item.setAttribute('tabindex', '0');
           item.setAttribute('aria-label', p.craft + ': ' + p.name + ', ' + p.price);
@@ -1830,9 +2074,9 @@
             </svg>
             <div class="sr-item__card">
               <div class="sr-item__img-wrap">
-                <img src="${p.img}" alt="${p.name}" class="sr-item__img" loading="lazy" width="108" height="156">
+                <img src="${p.img}" alt="${p.name}" class="sr-item__img" loading="lazy" width="110" height="156">
               </div>
-              <div class="sr-item__craft-tag">${p.craft}</div>
+              <div class="sr-item__craft-tag" title="${p.craft}">${p.craft}</div>
             </div>
           `;
 
@@ -1841,7 +2085,7 @@
           item.addEventListener('focus', () => setActiveProduct(p, idx));
 
           // Click to open quick-view modal
-          item.addEventListener('click', (e) => {
+          item.addEventListener('click', () => {
             if (isDragging) return;
             openQuickView(p, idx);
           });
@@ -1856,39 +2100,141 @@
           rail.appendChild(item);
         });
 
+        // ── Physics & Cursor Smooth Motion Engine ────────────────────────
+        let currentScroll = 0;
+        let targetScroll = 0;
+        let mainCenterScroll = 0;
+        let isDragging = false;
+        let hasInitialized = false;
+
+        function calcMainCenterScroll() {
+          const items = rail.querySelectorAll('.sr-item');
+          if (items.length >= 14) {
+            // Center around the 8 main craft items (indices 6 to 13)
+            const itemFirst = items[6];
+            const itemLast = items[13];
+            const mainMiddle = (itemFirst.offsetLeft + itemLast.offsetLeft + itemLast.offsetWidth) / 2;
+            const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+            mainCenterScroll = Math.max(0, Math.min(maxScroll, mainMiddle - (rail.clientWidth / 2)));
+          } else {
+            mainCenterScroll = Math.max(0, (rail.scrollWidth - rail.clientWidth) / 2);
+          }
+          return mainCenterScroll;
+        }
+
+        // Initialize position on load
+        function initPosition() {
+          calcMainCenterScroll();
+          currentScroll = mainCenterScroll;
+          targetScroll = mainCenterScroll;
+          rail.scrollLeft = mainCenterScroll;
+          hasInitialized = true;
+          // Set initial active product to the first main piece (index 6, Traditional Dresses)
+          if (SR_PRODUCTS[6]) {
+            setActiveProduct(SR_PRODUCTS[6], 6);
+          }
+        }
+
+        window.addEventListener('load', initPosition);
+        window.addEventListener('resize', () => {
+          calcMainCenterScroll();
+          targetScroll = mainCenterScroll;
+        });
+
+        // Fallback init if load fired early
+        setTimeout(() => {
+          if (!hasInitialized || rail.scrollLeft === 0) {
+            initPosition();
+          }
+        }, 300);
+
+        // 60FPS Buttery Physics Animation Loop
+        function animateRail() {
+          if (!isDragging) {
+            const diff = targetScroll - currentScroll;
+            if (Math.abs(diff) > 0.25) {
+              // Smooth, luxurious momentum (damping factor 0.075)
+              currentScroll += diff * 0.075;
+              rail.scrollLeft = currentScroll;
+            }
+          } else {
+            currentScroll = rail.scrollLeft;
+            targetScroll = rail.scrollLeft;
+          }
+          requestAnimationFrame(animateRail);
+        }
+        requestAnimationFrame(animateRail);
+
+        // Cursor tracking on the stage
+        stage.addEventListener('mousemove', (e) => {
+          if (isDragging) return;
+          // Disable cursor panning on touch devices
+          if (window.matchMedia('(hover: none)').matches) return;
+
+          const rect = stage.getBoundingClientRect();
+          const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+          const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+
+          // Center sweet spot between 0.38 and 0.62:
+          // In this range, the 8 main products stay stably centered for effortless inspection
+          if (ratio >= 0.38 && ratio <= 0.62) {
+            targetScroll = mainCenterScroll;
+          } else if (ratio < 0.38) {
+            // Moving cursor to the left side glides to reveal left products
+            const norm = ratio / 0.38; // 0 to 1
+            const eased = Math.pow(norm, 1.3);
+            targetScroll = mainCenterScroll * eased;
+          } else {
+            // Moving cursor to the right side glides to reveal right products
+            const norm = (ratio - 0.62) / 0.38; // 0 to 1
+            const eased = Math.pow(norm, 1.3);
+            targetScroll = mainCenterScroll + (maxScroll - mainCenterScroll) * eased;
+          }
+        });
+
+        // When cursor leaves stage, smoothly return to the 8 main center crafts
+        stage.addEventListener('mouseleave', () => {
+          if (!isDragging) {
+            targetScroll = mainCenterScroll;
+          }
+        });
+
         // Drag to scroll
         let isDown = false;
-        let startX, scrollLeft;
-        let isDragging = false;
+        let startX, scrollLeftVal;
 
         rail.addEventListener('mousedown', (e) => {
           isDown = true;
           isDragging = false;
           rail.classList.add('is-dragging');
           startX = e.pageX - rail.offsetLeft;
-          scrollLeft = rail.scrollLeft;
+          scrollLeftVal = rail.scrollLeft;
         });
 
         window.addEventListener('mouseup', () => {
+          if (!isDown) return;
           isDown = false;
           rail.classList.remove('is-dragging');
-          setTimeout(() => { isDragging = false; }, 50);
+          setTimeout(() => { isDragging = false; }, 60);
         });
 
         rail.addEventListener('mousemove', (e) => {
           if (!isDown) return;
           e.preventDefault();
           const x = e.pageX - rail.offsetLeft;
-          const walk = (x - startX) * 1.6;
-          if (Math.abs(walk) > 5) isDragging = true;
-          rail.scrollLeft = scrollLeft - walk;
+          const walk = (x - startX) * 1.5;
+          if (Math.abs(walk) > 4) isDragging = true;
+          rail.scrollLeft = scrollLeftVal - walk;
+          currentScroll = rail.scrollLeft;
+          targetScroll = rail.scrollLeft;
         });
 
-        // Wheel scroll
+        // Mouse wheel scroll
         rail.addEventListener('wheel', (e) => {
           if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
           e.preventDefault();
-          rail.scrollLeft += e.deltaY * 0.9;
+          const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + e.deltaY * 0.9));
         }, { passive: false });
 
         // Quick View modal
@@ -1962,11 +2308,6 @@
             qvAtc.style.background = '';
           }, 2000);
         });
-
-        // Set initial active product
-        if (SR_PRODUCTS.length > 0) {
-          setActiveProduct(SR_PRODUCTS[0], 0);
-        }
       })();
     </script>
 
