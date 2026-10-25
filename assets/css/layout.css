@@ -231,8 +231,6 @@
   inset-block-start: var(--header-height-scrolled);
 }
 
-.menu-item-has-children:hover > .sub-menu,
-.menu-item-has-children:focus-within > .sub-menu,
 .menu-item-has-children.is-open > .sub-menu {
   opacity: 1;
   visibility: visible;
@@ -285,7 +283,6 @@
   color: var(--text-secondary);
 }
 
-.menu-item-has-children:hover .rg-menu-arrow,
 .menu-item-has-children.is-open .rg-menu-arrow {
   transform: rotate(180deg);
   color: var(--brand-secondary);
@@ -327,8 +324,6 @@
   inset-block-start: 100%;
 }
 
-.menu-item--dropdown:hover > .sub-menu,
-.menu-item--dropdown:focus-within > .sub-menu,
 .menu-item--dropdown.is-open > .sub-menu {
   transform: translateX(-50%) translateY(0);
 }

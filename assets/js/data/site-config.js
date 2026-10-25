@@ -11,9 +11,9 @@ window.RG_DATA.config = {
   "freeDeliveryThreshold": 5000,
   "standardDeliveryFee": 250,
   "giftWrapFee": 300,
-  "whatsappNumber": "923000000000",
+  "whatsappNumber": "923408500976",
   "supportEmail": "care@regongches.store",
-  "supportPhone": "+92 300 0000000 [verify]",
+  "supportPhone": "+92 340 8500976",
   "founder": {
     "name": "Mushtaq Ahmad",
     "role": "Founder & CEO",

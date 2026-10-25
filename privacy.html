@@ -96,7 +96,6 @@
 <!-- Announcement Bar (Dismissible, remembered in localStorage, threshold from site-config.js) -->
 <div class="rg-announcement" id="rg-announcement-bar" role="region" aria-label="Store Announcements">
   <div class="rg-container rg-announcement__inner">
-    <span style="font-weight:700;color:var(--rg-antique-gold);">DEMO STORE</span>
     <p class="rg-announcement__text" id="rg-announcement-text">
       Free tracked delivery across Pakistan on orders over PKR 5,000 · Cash on Delivery available
     </p>
@@ -698,7 +697,7 @@
 </nav>
 
 <!-- Floating WhatsApp Inquiry Button -->
-<a href="https://wa.me/923000000000?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
+<a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
   <svg width="18" height="18" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
   <span>Ask on WhatsApp</span>
 </a>
@@ -721,109 +720,82 @@
     <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="festive">4. Festive</button>
     <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="walnut-ochre">5. Walnut &amp; Ochre</button>
   </div>
-</aside>
+</aside>  <!-- Illustrative Dark-Blue Site Footer (.site-footer) -->
+  <footer class="site-footer" id="colophon">
+    <!-- Layered Mountain Silhouette SVG -->
+    <div class="site-footer__mountains" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none">
+        <path d="M0 120 L0 72 L210 24 L420 82 L690 12 L960 76 L1210 18 L1440 68 L1440 120 Z" fill="#1F3A5F" opacity="0.45" />
+        <path d="M0 120 L160 48 L390 92 L620 28 L890 88 L1140 34 L1440 84 L1440 120 Z" fill="#13243B" />
+      </svg>
+    </div>
 
-<!-- Illustrative Dark-Blue Site Footer (.site-footer) -->
-<footer class="site-footer" id="colophon">
-  <!-- Layered Mountain Silhouette SVG -->
-  <div class="site-footer__mountains" aria-hidden="true">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none">
-      <path d="M0 120 L0 72 L210 24 L420 82 L690 12 L960 76 L1210 18 L1440 68 L1440 120 Z" fill="#1F3A5F" opacity="0.45"/>
-      <path d="M0 120 L160 48 L390 92 L620 28 L890 88 L1140 34 L1440 84 L1440 120 Z" fill="#13243B"/>
-    </svg>
-  </div>
-
-  <div class="rg-container">
-    <!-- Newsletter Block -->
-    <div class="site-footer__newsletter">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:center;">
-        <div>
-          <span class="rg-badge rg-badge--handmade" style="margin-block-end:8px;">Letters from the North</span>
-          <h2 style="color:#F7F4EE;font-size:var(--text-xl);margin-block-end:6px;">Letters from the North</h2>
-          <p style="color:rgba(247,244,238,0.8);font-size:var(--text-sm);margin:0;">New collections, maker stories and care tips, about twice a month. No spam, unsubscribe anytime.</p>
+    <div class="rg-container">
+      <!-- Minimal Essential Footer Grid -->
+      <div class="site-footer__grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="site-footer__col">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="shop.html">All Mountain Catalogue</a></li>
+            <li><a href="category.html?cat=Traditional+Dresses">Traditional Dresses</a></li>
+            <li><a href="category.html?cat=Caps+%26+Headwear">Gilgiti &amp; Hunza Caps</a></li>
+            <li><a href="category.html?cat=Shawls+%26+Scarves">Hand-Woven Wool Shawls</a></li>
+            <li><a href="category.html?cat=Waistcoats+%26+Outerwear">Pattu Waistcoats &amp; Jackets</a></li>
+          </ul>
         </div>
-        <form data-rg-demo-form="You're in. Your first letter arrives with our next collection." style="display:flex;flex-wrap:wrap;gap:10px;">
-          <label for="rg-footer-email" class="screen-reader-text">Email address</label>
-          <input type="email" id="rg-footer-email" required placeholder="Enter your email address..." style="flex:1;min-width:220px;padding:12px 16px;border-radius:var(--radius-editorial);border:1px solid rgba(247,244,238,0.3);background:rgba(255,255,255,0.08);color:#F7F4EE;">
-          <button type="submit" class="rg-btn rg-btn--primary">Subscribe</button>
-        </form>
+
+        <div class="site-footer__col">
+          <h3>Help &amp; Policies</h3>
+          <ul>
+            <li><a href="size-guide.html">Size Guide</a></li>
+            <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+            <li><a href="returns-exchange.html">Returns &amp; Exchanges</a></li>
+            <li><a href="account.html">Track Your Order</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3>About</h3>
+          <ul>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="artisans.html">Meet the Artisans</a></li>
+            <li><a href="authenticity.html">How We Verify Origin</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener">WhatsApp: +92 340 8500976</a></li>
+            <li><a href="tel:03408500976">Call: 0340-8500976</a></li>
+            <li><a href="mailto:care@regongches.store">Email: care@regongches.store</a></li>
+          </ul>
+          <p class="urdu-text" style="font-size:var(--text-sm);color:var(--rg-antique-gold);margin-block-start:12px;margin-block-end:0;">
+            پہاڑی ورثے کے دھاگے — گلگت بلتستان کی مستند دستکاری
+          </p>
+        </div>
+      </div>
+
+      <!-- Payment & Copyright Row -->
+      <div class="site-footer__badges">
+        <div class="rg-pay-badges" aria-label="Supported Payment Options">
+          <span class="rg-pay-badge">Cash on Delivery (COD)</span>
+          <span class="rg-pay-badge">Bank Transfer (IBFT)</span>
+          <span class="rg-pay-badge">Easypaisa</span>
+          <span class="rg-pay-badge">JazzCash</span>
+        </div>
+        <div style="font-size:var(--text-xs);color:rgba(247,244,238,0.78);">
+          © 2026 ReGongches · <a href="privacy.html" style="text-decoration:underline;">Privacy</a> · <a href="terms.html" style="text-decoration:underline;">Terms</a>
+        </div>
       </div>
     </div>
 
-    <!-- 4 Link Columns -->
-    <div class="site-footer__grid">
-      <div class="site-footer__col">
-        <h3>Shop</h3>
-        <ul>
-          <li><a href="shop.html">All Mountain Catalogue</a></li>
-          <li><a href="category.html?cat=Traditional+Dresses">Traditional Dresses</a></li>
-          <li><a href="category.html?cat=Caps+%26+Headwear">Gilgiti &amp; Hunza Caps</a></li>
-          <li><a href="category.html?cat=Shawls+%26+Scarves">Hand-Woven Wool Shawls</a></li>
-          <li><a href="category.html?cat=Waistcoats+%26+Outerwear">Pattu Waistcoats &amp; Jackets</a></li>
-          <li><a href="category.html?cat=Textile+Accessories">Embroidered Accessories</a></li>
-          <li><a href="category.html?cat=Home+Textiles">Home Textiles</a></li>
-          <li><a href="collections.html">Selected Collections</a></li>
-        </ul>
-      </div>
-
-      <div class="site-footer__col">
-        <h3>Help &amp; Sizing</h3>
-        <ul>
-          <li><a href="size-guide.html">Size Guide (cm &amp; inches)</a></li>
-          <li><a href="faq.html">Frequently Asked Questions</a></li>
-          <li><a href="shipping-policy.html">Shipping &amp; Delivery Policy</a></li>
-          <li><a href="returns-exchange.html">Returns &amp; Size Exchanges</a></li>
-          <li><a href="account.html">Track Your Order</a></li>
-          <li><a href="cart.html">View Shopping Bag</a></li>
-        </ul>
-      </div>
-
-      <div class="site-footer__col">
-        <h3>About &amp; Origin</h3>
-        <ul>
-          <li><a href="our-story.html">Our Story &amp; Mission</a></li>
-          <li><a href="artisans.html">Meet the Artisans</a></li>
-          <li><a href="authenticity.html">How We Verify Origin</a></li>
-          <li><a href="region.html?region=hunza">Explore 10 Districts</a></li>
-          <li><a href="journal.html">Cultural Journal</a></li>
-          <li><a href="custom-orders.html">Custom &amp; Bridal Orders</a></li>
-          <li><a href="gift-sets.html">Institutional &amp; Corporate Gifting</a></li>
-        </ul>
-      </div>
-
-      <div class="site-footer__col">
-        <h3>Contact &amp; Cultural Note</h3>
-        <ul>
-          <li><a href="contact.html">Customer Care &amp; Studio Hours</a></li>
-          <li><a href="https://wa.me/923000000000" target="_blank" rel="noopener">WhatsApp: +92 300 0000000 [verify]</a></li>
-          <li><a href="mailto:care@regongches.store">Email: care@regongches.store</a></li>
-          <li><span style="font-size:12px;color:rgba(247,244,238,0.7);display:block;margin-block-start:8px;">Instagram · Facebook · TikTok @ReGongches</span></li>
-        </ul>
-        <p class="urdu-text" style="font-size:var(--text-sm);color:var(--rg-antique-gold);margin-block-start:12px;margin-block-end:0;">
-          پہاڑی ورثے کے دھاگے — گلگت بلتستان کی مستند دستکاری
-        </p>
-      </div>
-    </div>
-
-    <!-- Payment & Delivery Badges -->
-    <div class="site-footer__badges">
-      <div class="rg-pay-badges" aria-label="Supported Payment Options">
-        <span class="rg-pay-badge">Cash on Delivery (COD)</span>
-        <span class="rg-pay-badge">Bank Transfer (IBFT)</span>
-        <span class="rg-pay-badge">Easypaisa</span>
-        <span class="rg-pay-badge">JazzCash</span>
-        <span class="rg-pay-badge">Visa / Mastercard (Gateway Ready)</span>
-      </div>
-      <div style="font-size:var(--text-xs);color:rgba(247,244,238,0.78);">
-        © 2026 ReGongches (regongches.store) · <a href="privacy.html" style="text-decoration:underline;">Privacy</a> · <a href="terms.html" style="text-decoration:underline;">Terms</a> · Demo Academic Prototype (Mushtaq Ahmad | SP25-BAI-047)
-      </div>
-    </div>
-  </div>
-
-  <!-- Giant Bleeding Wordmark -->
-  <div class="site-footer__wordmark" aria-hidden="true">ReGongches</div>
-</footer>
-<!-- RG:FOOTER END -->
+    <!-- Giant Wordmark -->
+    <div class="site-footer__wordmark" aria-hidden="true">ReGongches</div>
+  </footer>
+  <!-- RG:FOOTER END -->
 
 <!-- Local Data Layer (No fetch() — works directly on file:// and static servers) -->
 <script src="assets/js/data/site-config.js" defer></script>
