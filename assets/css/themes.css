@@ -1,6 +1,6 @@
 /* ==========================================================================
    ReGongches Visual Theme Presets (themes.css)
-   4 Switchable Presets for future WordPress Customizer
+   5 Switchable Presets for future WordPress Customizer
    ========================================================================== */
 
 /* 1. Heritage (Default) */
@@ -91,6 +91,121 @@ html[data-theme="festive"] {
 
 html[data-theme="festive"] .rg-hero {
   border-bottom: 6px double var(--rg-antique-gold);
+}
+
+/* 5. Walnut & Ochre (Warm Artisan Earth: Roasted Walnut #5B4632, Apricot Silk #F4D9A0, Spiced Ochre #C8792C) */
+html[data-theme="walnut-ochre"] {
+  --bg-primary: #FAF6EF;
+  --bg-secondary: #F3E8D7;
+  --bg-elevated: #FFFDF9;
+  --bg-accent: #F4D9A0;
+  --bg-header: rgba(250, 246, 239, 0.95);
+  --bg-footer: #261A12;
+  --text-primary: #24180F;
+  --text-secondary: #654E3C;
+  --text-inverse: #FAF6EF;
+  --brand-primary: #5B4632;
+  --brand-secondary: #C8792C;
+  --brand-accent: #C8792C;
+  --rg-border: rgba(91, 70, 50, 0.16);
+  --rg-border-strong: rgba(91, 70, 50, 0.30);
+  --shadow-sm: 0 4px 14px rgba(61, 45, 31, 0.08);
+  --shadow-md: 0 12px 30px rgba(61, 45, 31, 0.12);
+  --shadow-lg: 0 20px 48px rgba(61, 45, 31, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(200, 121, 44, 0.35);
+}
+
+/* Walnut & Ochre Component Polish */
+html[data-theme="walnut-ochre"] .rg-hero {
+  border-bottom: 4px solid #C8792C;
+}
+
+html[data-theme="walnut-ochre"] .rg-announcement {
+  background: #3D2D1F;
+  color: #F4D9A0;
+}
+
+html[data-theme="walnut-ochre"] .rg-announcement span,
+html[data-theme="walnut-ochre"] .rg-announcement a,
+html[data-theme="walnut-ochre"] .rg-announcement p {
+  color: #F4D9A0 !important;
+}
+
+html[data-theme="walnut-ochre"] .rg-announcement__close {
+  color: #F4D9A0;
+  border-color: rgba(244, 217, 160, 0.35);
+}
+
+html[data-theme="walnut-ochre"] .site-footer__mountains path:first-child {
+  fill: #5B4632;
+  opacity: 0.55;
+}
+
+html[data-theme="walnut-ochre"] .site-footer__mountains path:last-child {
+  fill: #261A12;
+}
+
+html[data-theme="walnut-ochre"] .site-footer__col h3 {
+  color: #F4D9A0;
+}
+
+html[data-theme="walnut-ochre"] .site-footer__newsletter {
+  border-block-end-color: rgba(244, 217, 160, 0.3);
+}
+
+html[data-theme="walnut-ochre"] .rg-btn--primary,
+html[data-theme="walnut-ochre"] .button.alt,
+html[data-theme="walnut-ochre"] .single_add_to_cart_button {
+  background-color: #C8792C;
+  color: #FFFFFF;
+  border-color: #C8792C;
+}
+
+html[data-theme="walnut-ochre"] .rg-btn--primary:hover,
+html[data-theme="walnut-ochre"] .button.alt:hover,
+html[data-theme="walnut-ochre"] .single_add_to_cart_button:hover {
+  background-color: #A3561E;
+  border-color: #A3561E;
+  box-shadow: 0 6px 18px rgba(200, 121, 44, 0.35);
+}
+
+html[data-theme="walnut-ochre"] .rg-btn--secondary {
+  background-color: #5B4632;
+  color: #FAF6EF;
+  border-color: #5B4632;
+}
+
+html[data-theme="walnut-ochre"] .rg-btn--secondary:hover {
+  background-color: #3D2D1F;
+  border-color: #3D2D1F;
+}
+
+html[data-theme="walnut-ochre"] .rg-badge--handmade {
+  background: #C8792C;
+  color: #FFFFFF;
+}
+
+html[data-theme="walnut-ochre"] .rg-badge--new {
+  background: #5B4632;
+  color: #FAF6EF;
+}
+
+html[data-theme="walnut-ochre"] .rg-badge--verified {
+  background: #EAF1EB;
+  color: #3D5A45;
+  border: 1px solid rgba(61, 90, 69, 0.35);
+}
+
+html[data-theme="walnut-ochre"] ::selection {
+  background: #F4D9A0;
+  color: #24180F;
+}
+
+html[data-theme="walnut-ochre"] .rg-style-switcher__btn[data-rg-theme-set="walnut-ochre"] {
+  background: #5B4632;
+  color: #FAF6EF;
+  border-color: #C8792C;
+  box-shadow: 0 0 0 2px rgba(200, 121, 44, 0.4);
 }
 
 /* Reduced Motion Global Overrides */

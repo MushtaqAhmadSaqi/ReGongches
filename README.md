@@ -19,6 +19,7 @@
   2. `mountain-night` (Cinematic dark mode `#0E1620`, also respects `prefers-color-scheme: dark`)
   3. `minimal-gallery` (High-contrast gallery framing)
   4. `festive` (Rich maroon & gold border edition for Eid and wedding campaigns)
+  5. `walnut-ochre` (Warm Karakoram artisan earth: roasted walnut `#5B4632`, apricot silk `#F4D9A0`, spiced ochre `#C8792C`)
 
 ---
 
@@ -57,7 +58,7 @@
 ├── assets/
 │   ├── css/
 │   │   ├── tokens.css          # Brand colour palette, fluid clamp() typography, spacing, motion
-│   │   ├── themes.css          # 4 [data-theme] presets + prefers-color-scheme & reduced-motion
+│   │   ├── themes.css          # 5 [data-theme] presets + prefers-color-scheme & reduced-motion
 │   │   ├── base.css            # Reset, logical RTL-ready properties, WCAG 2.2 AA focus styles
 │   │   ├── layout.css          # Container, sticky header, mega-menus, mobile bar, footer
 │   │   ├── components.css      # Buttons, badges, Origin Card, drawers, modals, toasts
