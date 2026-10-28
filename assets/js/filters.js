@@ -289,7 +289,12 @@
         const resetBtn = document.getElementById('rg-empty-reset-btn');
         if (resetBtn) resetBtn.addEventListener('click', () => this.clearAll());
       } else {
-        grid.innerHTML = visible.map((p) => window.RG.ui.renderProductCard(p)).join('');
+        grid.style.transition = 'opacity 0.15s ease';
+        grid.style.opacity = '0.4';
+        setTimeout(() => {
+          grid.innerHTML = visible.map((p) => window.RG.ui.renderProductCard(p)).join('');
+          grid.style.opacity = '1';
+        }, 60);
       }
 
       const loadMoreBtn = document.getElementById('rg-load-more-btn');

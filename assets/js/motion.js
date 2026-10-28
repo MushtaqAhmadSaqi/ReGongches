@@ -18,12 +18,15 @@
     },
 
     initScrollReveals() {
-      const els = document.querySelectorAll('[data-rg-reveal]');
+      const explicitEls = Array.from(document.querySelectorAll('[data-rg-reveal]'));
+      const autoEls = Array.from(document.querySelectorAll('.rg-craft-step, .rg-cat-tile, .rg-review-card, #rg-newsletter-block'));
+      const els = [...new Set([...explicitEls, ...autoEls])];
       if (!els.length) return;
       if (prefersReducedMotion || !('IntersectionObserver' in window)) {
         els.forEach((el) => el.classList.add('is-revealed'));
         return;
       }
+      els.forEach((el) => el.classList.add('rg-reveal-item'));
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -31,7 +34,7 @@
             io.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12 });
+      }, { threshold: 0.1 });
       els.forEach((el) => io.observe(el));
     },
 

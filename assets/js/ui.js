@@ -66,6 +66,10 @@
         return `<button type="button" class="rg-swatch ${idx === 0 ? 'is-selected' : ''}" data-rg-card-swatch="${imgForSwatch}" style="background-color:${hex}" title="${label}" aria-label="Preview ${label}"></button>`;
       }).join('');
 
+      const stockUrgency = (product.stock_quantity && product.stock_quantity <= 5)
+        ? `<span class="rg-stock-urgency" title="Limited stock">⚡ Only ${product.stock_quantity} left</span>`
+        : '';
+
       return `
         <!-- WP PARTIAL: template-parts/content-product-card.php -->
         <li class="product type-product status-publish instock" data-product-id="${product.id}">
@@ -78,13 +82,19 @@
               <img src="${img1}" alt="${img1Alt}" width="640" height="800" loading="lazy" class="rg-product-card__img-primary">
               <img src="${img2}" alt="${img1Alt} detail view" width="640" height="800" loading="lazy" class="rg-product-card__img-secondary">
             </a>
-            <button type="button" class="rg-product-card__quickview" data-rg-quick-view="${product.id}">
-              Quick View
-            </button>
+            <div class="rg-product-card__actions">
+              <button type="button" class="rg-product-card__quickview" data-rg-quick-view="${product.id}" aria-label="Quick view of ${product.name}">
+                <svg width="13" height="13" aria-hidden="true"><use href="#icon-eye"></use></svg> Quick View
+              </button>
+              <button type="button" class="rg-product-card__quick-atc" data-rg-add-to-cart="${product.id}" aria-label="Add ${product.name} to bag">
+                <svg width="13" height="13" aria-hidden="true"><use href="#icon-bag"></use></svg> + Add
+              </button>
+            </div>
           </div>
           <div class="rg-product-card__body">
             <div class="rg-product-card__meta">
               <a href="region.html?region=${product.region.toLowerCase()}" class="rg-product-card__region">${product.region}</a>
+              ${stockUrgency}
               <div class="star-rating" aria-label="Rated ${product.rating} out of 5">
                 <span>★ ${product.rating.toFixed(1)}</span>
                 <span style="color:var(--text-secondary);font-weight:400">(${product.review_count})</span>
@@ -103,9 +113,9 @@
               </label>
             </div>
             <div class="rg-product-card__footer">
-              <a href="product.html?id=${product.id}" class="button add_to_cart_button" data-rg-add-to-cart="${product.id}">
+              <button type="button" class="button add_to_cart_button" data-rg-add-to-cart="${product.id}">
                 Add to Cart
-              </a>
+              </button>
             </div>
           </div>
         </li>
@@ -622,9 +632,10 @@
       const footer = document.getElementById('rg-minicart-footer');
       if (!body || !footer) return;
 
-      const shipMsg = summary.freeShippingRemaining > 0
+      const isUnlocked = summary.freeShippingRemaining <= 0;
+      const shipMsg = !isUnlocked
         ? `Add <strong>${fmt(summary.freeShippingRemaining)}</strong> more for free delivery across Pakistan.`
-        : `<strong style="color:var(--rg-success);">You've unlocked free nationwide delivery.</strong>`;
+        : `<span style="color:var(--rg-success);font-weight:700;display:inline-flex;align-items:center;gap:6px;"><svg width="15" height="15" aria-hidden="true"><use href="#icon-check"></use></svg> You've unlocked free delivery across Pakistan!</span>`;
 
       if (summary.items.length === 0) {
         const suggested = window.RG.data.getProducts().slice(0, 3);
@@ -653,10 +664,10 @@
       }
 
       body.innerHTML = `
-        <div class="rg-shipping-bar">
+        <div class="rg-shipping-bar ${isUnlocked ? 'is-unlocked' : ''}">
           <div style="font-size:var(--text-xs);">${shipMsg}</div>
           <div class="rg-shipping-bar__track">
-            <div class="rg-shipping-bar__fill" style="width:${summary.freeShippingProgress}%"></div>
+            <div class="rg-shipping-bar__fill" style="width:${summary.freeShippingProgress}%;"></div>
           </div>
         </div>
         <div style="display:grid;gap:var(--space-4);">

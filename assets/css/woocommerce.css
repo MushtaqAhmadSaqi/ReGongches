@@ -206,27 +206,74 @@ ul.products > li.product:hover .rg-product-card__img-secondary {
   fill: var(--rg-heritage-maroon);
 }
 
-.rg-product-card__quickview {
+.rg-product-card__actions {
   position: absolute;
   inset-block-end: var(--space-3);
   inset-inline: var(--space-3);
   z-index: 2;
-  background: rgba(247, 244, 238, 0.95);
-  color: var(--rg-ink);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: var(--radius-editorial);
-  text-align: center;
+  display: flex;
+  gap: 8px;
   opacity: 0;
   transform: translateY(8px);
   transition: opacity var(--duration-fast), transform var(--duration-fast);
 }
 
-ul.products > li.product:hover .rg-product-card__quickview,
-.rg-product-card__quickview:focus-visible {
+ul.products > li.product:hover .rg-product-card__actions,
+.rg-product-card__actions:focus-within {
   opacity: 1;
   transform: translateY(0);
+}
+
+.rg-product-card__quickview,
+.rg-product-card__quick-atc {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: var(--radius-editorial);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.rg-product-card__quickview {
+  background: rgba(247, 244, 238, 0.95);
+  color: var(--rg-ink);
+  border: 1px solid var(--rg-border);
+}
+
+.rg-product-card__quickview:hover {
+  background: #FFFFFF;
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.rg-product-card__quick-atc {
+  background: var(--brand-secondary);
+  color: #FFFFFF;
+  border: 1px solid var(--brand-secondary);
+}
+
+.rg-product-card__quick-atc:hover {
+  background: #5c141e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(122, 31, 43, 0.25);
+}
+
+.rg-stock-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rg-heritage-maroon);
+  background: rgba(122, 31, 43, 0.08);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
 }
 
 .rg-product-card__body {

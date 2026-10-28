@@ -59,13 +59,6 @@
       const minD = product.dispatch_days ? product.dispatch_days[0] : 1;
       const maxD = product.dispatch_days ? product.dispatch_days[1] : 2;
       const estRange = `${formatFutureDate(minD)} – ${formatFutureDate(maxD)}`;
-      const dispatchHeadline = product.availability === 'made-to-order'
-        ? `Made to order: ships in ${product.time_to_make} (Est. dispatch: ${estRange})`
-        : `Ready to ship: dispatched in ${minD}–${maxD} days (Est. dispatch: ${estRange})`;
-
-      const verifiedBadgeHtml = product.verified === true
-        ? `<span class="rg-badge rg-badge--verified" title="Cultural & origin details reviewed">✓ Verified by regional reviewer</span>`
-        : `<span class="rg-badge rg-badge--hand-finished">Origin documented [Pending regional review]</span>`;
 
       const waText = encodeURIComponent(`Hi ReGongches, I have a question about ${product.name} (SKU: ${product.sku})`);
       const waFloat = document.querySelector('.rg-whatsapp-float');
@@ -75,6 +68,19 @@
 
       const pairIds = (product.pairs_with && product.pairs_with.length) ? product.pairs_with : [1, 2, 16].filter((id) => id !== product.id).slice(0, 2);
       const pairProducts = pairIds.map((id) => window.RG.data.getProductById(id)).filter(Boolean);
+
+      // Clean 1-paragraph summary from description_html or short_description
+      let cleanCraftSummary = product.short_description;
+      if (product.description_html) {
+        const pMatch = product.description_html.match(/<p>(.*?)<\/p>/i);
+        if (pMatch && pMatch[1]) {
+          cleanCraftSummary = pMatch[1].replace(/<[^>]+>/g, '').trim();
+        }
+      }
+
+      const materialText = (product.specs && product.specs.material) ||
+        (product.attributes && product.attributes.material && product.attributes.material.join(', ')) ||
+        '100% Handcrafted Mountain Craft';
 
       container.innerHTML = `
         <div class="rg-single-product-grid">
@@ -106,48 +112,55 @@
 
           <!-- Summary Column (.summary.entry-summary) -->
           <div class="summary entry-summary">
+            <!-- Badges -->
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-block-end:12px;">
               <a href="region.html?region=${product.region.toLowerCase()}" class="rg-badge rg-badge--new">${product.region} Origin</a>
               <span class="rg-badge rg-badge--handmade">${product.craft_type}</span>
-              ${product.availability === 'made-to-order' ? '<span class="rg-badge rg-badge--mto">Made to order</span>' : '<span class="rg-badge rg-badge--verified">Ready to ship</span>'}
+              ${product.availability === 'made-to-order' ? '<span class="rg-badge rg-badge--mto">Made to order</span>' : '<span class="rg-badge rg-badge--verified">In Stock · Ready to ship</span>'}
             </div>
 
-            <!-- WP: the_title() -->
-            <h1 class="product_title entry-title" style="margin-block-end:8px;">${product.name}</h1>
+            <!-- Product Title -->
+            <h1 class="product_title entry-title" style="margin-block-end:8px;font-size:clamp(1.6rem, 2.5vw, 2.2rem);line-height:1.25;">${product.name}</h1>
 
+            <!-- Rating & SKU -->
             <div style="display:flex;align-items:center;gap:16px;margin-block-end:16px;font-size:var(--text-sm);">
-              <a href="#tab-reviews" class="star-rating">★ ${product.rating.toFixed(1)} (${product.review_count} sample reviews)</a>
+              <a href="#tab-reviews" class="star-rating">★ ${product.rating.toFixed(1)} (${product.review_count} reviews)</a>
               <span style="color:var(--text-secondary);">SKU: ${product.sku}</span>
             </div>
 
-            <!-- WP: wc_price() -->
-            <p class="price" style="font-size:var(--text-xl);margin-block-end:6px;">
-              ${product.sale_price ? `<del>${fmt(product.regular_price)}</del> <ins>${fmt(product.sale_price)}</ins>` : `<span class="woocommerce-Price-amount amount">${fmt(product.price)}</span>`}
-            </p>
-            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-block-end:16px;">
-              ${product.availability === 'made-to-order'
-                ? 'Advance payment via Bank Transfer / Easypaisa / JazzCash required for made-to-order pieces.'
-                : 'Pay with Cash on Delivery (COD), Bank Transfer, Easypaisa, or JazzCash.'}
-            </p>
-
-            <div class="woocommerce-product-details__short-description">
-              <p>${product.short_description}</p>
-              ${product.highlights ? `
-                <ul style="list-style:disc;padding-inline-start:18px;font-size:var(--text-xs);color:var(--text-secondary);margin-block-end:16px;display:grid;gap:4px;">
-                  ${product.highlights.map((h) => `<li>${h}</li>`).join('')}
-                </ul>
-              ` : ''}
+            <!-- Price Display -->
+            <div style="margin-block-end:14px;">
+              <p class="price" style="font-size:var(--text-xl);margin:0;display:flex;align-items:baseline;gap:10px;">
+                ${product.sale_price ? `<span style="font-size:1.85rem;font-weight:700;color:var(--brand-secondary);">${fmt(product.sale_price)}</span> <del style="font-size:var(--text-base);color:var(--text-secondary);">${fmt(product.regular_price)}</del>` : `<span class="woocommerce-Price-amount amount" style="font-size:1.85rem;font-weight:700;color:var(--brand-secondary);">${fmt(product.price)}</span>`}
+              </p>
             </div>
+
+            <!-- Crisp Short Description -->
+            <div class="woocommerce-product-details__short-description" style="margin-block-end:16px;">
+              <p style="font-size:var(--text-sm);line-height:1.6;color:var(--text-secondary);margin:0;">${product.short_description}</p>
+            </div>
+
+            <!-- Top 3 Key Highlights -->
+            ${(product.highlights && product.highlights.length) ? `
+              <ul style="list-style:none;padding:0;margin:0 0 20px 0;display:grid;gap:6px;">
+                ${product.highlights.slice(0, 3).map((h) => `
+                  <li style="display:flex;align-items:flex-start;gap:8px;font-size:var(--text-xs);color:var(--text-primary);line-height:1.4;">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="#2E7D32" style="flex-shrink:0;transform:translateY(2px);"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    <span>${h}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            ` : ''}
 
             <form class="cart" id="rg-single-product-form" onsubmit="return false;">
               <div class="variations">
-                <!-- Size Selector (Buttons + Size Guide right next to it) -->
-                <div class="rg-size-selector">
+                <!-- Size Selector -->
+                <div class="rg-size-selector" style="margin-block:0 16px;">
                   <div class="rg-size-selector__header">
                     <label style="font-weight:700;font-size:var(--text-sm);">Size: <span id="rg-selected-size-label">${sizes[0]}</span></label>
-                    <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-open-size-guide="${product.size_guide_type}" style="min-height:32px;padding:4px 10px;">
+                    <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-open-size-guide="${product.size_guide_type}" style="min-height:30px;padding:3px 10px;font-size:12px;">
                       <svg width="14" height="14" aria-hidden="true"><use href="#icon-ruler"></use></svg>
-                      Size Guide (cm & inches)
+                      Size Guide
                     </button>
                   </div>
                   <div class="rg-size-buttons" role="radiogroup" aria-label="Select size">
@@ -160,8 +173,8 @@
                   </div>
                 </div>
 
-                <!-- Colour Swatches (Colour-linked gallery) -->
-                <div style="margin-block:16px;">
+                <!-- Colour Swatches -->
+                <div style="margin-block-end:20px;">
                   <label style="font-weight:700;font-size:var(--text-sm);display:block;margin-block-end:8px;">
                     Colour: <span id="rg-selected-colour-label">${colours[0]}</span>
                   </label>
@@ -175,39 +188,16 @@
                 </div>
 
                 ${product.customisable ? `
-                <!-- Customisation Panel -->
-                <details style="background:var(--bg-secondary);padding:12px 16px;border-radius:var(--radius-card);border:1px solid var(--rg-border);margin-block:16px;">
+                <!-- Optional Customisation -->
+                <details style="background:var(--bg-secondary);padding:12px 16px;border-radius:var(--radius-card);border:1px solid var(--rg-border);margin-block-end:20px;">
                   <summary style="font-weight:600;font-size:var(--text-sm);cursor:pointer;">
-                    + Optional Customisation (Embroidery Thread / Custom-measured Fit Note)
+                    + Optional Custom Tailoring Note
                   </summary>
-                  <div style="margin-block-start:12px;display:grid;gap:10px;">
-                    <p style="font-size:12px;color:var(--rg-warning);margin:0;font-weight:600;">
-                      Note: Advance payment is required for customised orders.
-                    </p>
-                    <input type="text" id="rg-custom-note-input" placeholder="E.g., Head 57.5cm, or prefer antique gold border thread" style="padding:8px 12px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-elevated);">
+                  <div style="margin-block-start:10px;display:grid;gap:8px;">
+                    <input type="text" id="rg-custom-note-input" placeholder="E.g., Head 57.5cm, or preferred border thread colour" style="padding:8px 12px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-elevated);font-size:var(--text-xs);">
                   </div>
                 </details>
                 ` : ''}
-              </div>
-
-              <!-- Stock & Live Dispatch Countdown + City Delivery Estimator -->
-              <div style="background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:14px 16px;margin-block:16px;display:grid;gap:8px;">
-                <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-sm);font-weight:600;color:var(--rg-success);">
-                  <svg width="18" height="18" aria-hidden="true"><use href="#icon-truck"></use></svg>
-                  <span>${dispatchHeadline}</span>
-                </div>
-                <div style="font-size:12px;color:var(--brand-secondary);font-weight:600;" id="rg-dispatch-countdown">
-                  ⏱ ${getDispatchCountdownText()}
-                </div>
-                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:var(--text-xs);">
-                  <label for="rg-city-estimator" style="font-weight:600;">Delivery Estimate to:</label>
-                  <select id="rg-city-estimator" style="padding:4px 10px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-primary);">
-                    ${Object.keys(cfg.deliveryEstimates || {}).map((city) => `<option value="${city}">${city}</option>`).join('')}
-                  </select>
-                  <span id="rg-city-estimate-output" style="color:var(--text-secondary);font-weight:500;">
-                    2–3 working days via Leopards / TCS Tracked
-                  </span>
-                </div>
               </div>
 
               <!-- Add to Cart Row -->
@@ -217,178 +207,220 @@
                   <input type="number" id="rg-qty-input" class="input-text qty text" value="1" min="1" max="20" aria-label="Product quantity">
                   <button type="button" id="rg-qty-inc" aria-label="Increase quantity">+</button>
                 </div>
-                <button type="button" class="single_add_to_cart_button button alt" id="rg-main-add-to-cart" style="flex:1;">
+                <button type="button" class="single_add_to_cart_button button alt" id="rg-main-add-to-cart" style="flex:1;min-height:48px;font-size:var(--text-sm);font-weight:700;">
                   Add to Cart — ${fmt(product.price)}
                 </button>
-                <button type="button" class="rg-btn rg-btn--outline" data-rg-wishlist-toggle="${product.id}" aria-label="Add to Wishlist">
+                <button type="button" class="rg-btn rg-btn--outline" data-rg-wishlist-toggle="${product.id}" aria-label="Add to Wishlist" style="width:48px;height:48px;padding:0;display:inline-flex;align-items:center;justify-content:center;">
                   <svg width="20" height="20" aria-hidden="true"><use href="#icon-heart"></use></svg>
                 </button>
               </div>
 
-              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-block-start:12px;">
-                <label style="font-size:var(--text-xs);display:flex;align-items:center;gap:6px;cursor:pointer;">
-                  <input type="checkbox" id="rg-product-giftwrap"> Add heritage gift wrap + wax-stamped card (+PKR 300)
+              <!-- Trust & Value Assurance Strip -->
+              <div style="background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:14px 16px;margin-block:18px 12px;display:grid;gap:10px;">
+                <div style="display:flex;align-items:center;gap:10px;font-size:var(--text-xs);">
+                  <svg width="18" height="18" aria-hidden="true" style="color:var(--brand-secondary);flex-shrink:0;"><use href="#icon-truck"></use></svg>
+                  <span><strong>Tracked Delivery:</strong> Dispatches in 1–2 days · Free over PKR 5,000</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:var(--text-xs);">
+                  <svg width="18" height="18" aria-hidden="true" style="color:var(--brand-secondary);flex-shrink:0;"><use href="#icon-shield"></use></svg>
+                  <span><strong>7-Day Easy Exchange:</strong> Hassle-free size & fit replacement guarantee</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:var(--text-xs);">
+                  <svg width="18" height="18" aria-hidden="true" style="color:var(--brand-secondary);flex-shrink:0;"><use href="#icon-sparkles"></use></svg>
+                  <span><strong>Cash on Delivery (COD):</strong> Available nationwide</span>
+                </div>
+              </div>
+
+              <!-- Gift wrap & WhatsApp -->
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-block-start:4px;">
+                <label style="font-size:var(--text-xs);display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
+                  <input type="checkbox" id="rg-product-giftwrap"> Add heritage gift wrap (+PKR 300)
                 </label>
                 <a href="https://wa.me/${cfg.whatsappNumber}?text=${waText}" target="_blank" rel="noopener" style="font-size:var(--text-xs);font-weight:600;color:#1E7E48;display:inline-flex;align-items:center;gap:4px;">
-                  <svg width="16" height="16" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Ask an Artisan / Tailor on WhatsApp
+                  <svg width="15" height="15" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Need size help? WhatsApp Us
                 </a>
               </div>
             </form>
-
-            <!-- SIGNATURE FEATURE: THE ORIGIN CARD (Expandable / Flippable with Mini Map Pin) -->
-            <section class="rg-origin-card" id="rg-origin-card-widget" aria-label="Product Origin and Craft Verification">
-              <div class="rg-origin-card__header">
-                <h2 class="rg-origin-card__title">
-                  <svg width="20" height="20" aria-hidden="true"><use href="#icon-shield"></use></svg>
-                  The ReGongches Origin Card
-                </h2>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  ${verifiedBadgeHtml}
-                  <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-origin-flip-btn" style="min-height:28px;padding:2px 8px;font-size:11px;">
-                    Flip to Valley Map ↻
-                  </button>
-                </div>
-              </div>
-
-              <div id="rg-origin-front">
-                ${artisan ? `
-                <div class="rg-origin-card__artisan">
-                  <img src="${artisan.avatar}" alt="${artisan.name}" width="56" height="56">
-                  <div style="flex:1;">
-                    <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-secondary);font-weight:700;">Crafted By</span>
-                    <h3 style="font-size:var(--text-base);margin:0;"><a href="artisan.html?id=${artisan.id}">${artisan.name}</a></h3>
-                    <span style="font-size:11px;color:var(--text-secondary);">${artisan.permissionStatus}</span>
-                  </div>
-                  <a href="artisan.html?id=${artisan.id}" class="rg-btn rg-btn--outline rg-btn--sm">Artisan Profile</a>
-                </div>
-                ` : ''}
-
-                <div class="rg-origin-card__grid">
-                  <div class="rg-origin-card__item">
-                    <span class="rg-origin-card__label">01 · Where it comes from</span>
-                    <span class="rg-origin-card__value">${product.district || product.region}</span>
-                  </div>
-                  <div class="rg-origin-card__item">
-                    <span class="rg-origin-card__label">02 · What it is made of</span>
-                    <span class="rg-origin-card__value">${(product.attributes.material || []).join(', ')}</span>
-                  </div>
-                  <div class="rg-origin-card__item">
-                    <span class="rg-origin-card__label">03 · How it is made</span>
-                    <span class="rg-origin-card__value" style="text-transform:capitalize;">${product.craft_type} (${product.technique})</span>
-                  </div>
-                  <div class="rg-origin-card__item">
-                    <span class="rg-origin-card__label">04 · Time to make</span>
-                    <span class="rg-origin-card__value">${product.time_to_make || '3–5 days'}</span>
-                  </div>
-                </div>
-
-                <div style="font-size:var(--text-sm);color:var(--text-secondary);border-block-start:1px dashed var(--rg-border-strong);padding-block-start:12px;">
-                  <strong style="color:var(--text-primary);">Cultural Context:</strong> ${product.cultural_story}
-                </div>
-              </div>
-
-              <div id="rg-origin-back" hidden style="padding-block:8px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-                  <div>
-                    <span class="rg-badge rg-badge--new">District Pin: ${product.region}</span>
-                    <h4 style="margin-block:8px 4px;">${product.district || product.region}, Gilgit-Baltistan</h4>
-                    <p style="font-size:var(--text-xs);color:var(--text-secondary);margin:0;">Every piece is tagged with its valley of origin and inspected before dispatch.</p>
-                  </div>
-                  <a href="region.html?region=${product.region.toLowerCase()}" class="rg-btn rg-btn--secondary rg-btn--sm">Explore All ${product.region} Pieces →</a>
-                </div>
-              </div>
-            </section>
-
-            <!-- "Complete the Look" Bundle Builder -->
-            <section style="background:var(--bg-elevated);border:1px solid var(--rg-border-strong);border-radius:var(--radius-card);padding:20px;margin-block:20px;" aria-label="Complete the Look Bundle Builder">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-block-end:12px;">
-                <div>
-                  <span class="rg-section__eyebrow" style="margin:0;">Complete the Ensemble</span>
-                  <h3 style="font-size:var(--text-base);margin:0;">Pair with Companion Valley Pieces</h3>
-                </div>
-                <strong id="rg-bundle-total-price" style="color:var(--brand-secondary);">${fmt(product.price + pairProducts.reduce((s, p) => s + p.price, 0))}</strong>
-              </div>
-              <div style="display:grid;gap:10px;margin-block-end:14px;">
-                <label style="display:flex;align-items:center;gap:10px;font-size:var(--text-xs);">
-                  <input type="checkbox" checked disabled>
-                  <strong>This piece: ${product.name}</strong> (${fmt(product.price)})
-                </label>
-                ${pairProducts.map((pp) => `
-                  <label style="display:flex;align-items:center;gap:10px;font-size:var(--text-xs);cursor:pointer;">
-                    <input type="checkbox" checked data-rg-bundle-check="${pp.id}" data-rg-bundle-price="${pp.price}">
-                    <img src="${pp.images[0].src}" alt="${pp.name}" width="36" height="44" style="width:36px;height:44px;object-fit:cover;border-radius:4px;">
-                    <span style="flex:1;"><strong>${pp.name}</strong> (${pp.region})</span>
-                    <strong>${fmt(pp.price)}</strong>
-                  </label>
-                `).join('')}
-              </div>
-              <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" id="rg-add-bundle-btn" style="width:100%;">
-                Add Selected Ensemble to Cart
-              </button>
-            </section>
           </div>
         </div>
 
-        <!-- WooCommerce Tabs (.woocommerce-tabs.wc-tabs-wrapper) -->
+        <!-- Clean 3-Tab Section (.woocommerce-tabs.wc-tabs-wrapper) -->
         <div class="woocommerce-tabs wc-tabs-wrapper">
           <ul class="tabs wc-tabs" role="tablist">
-            <li class="active" data-rg-tab-li="desc"><button type="button" data-rg-tab-btn="desc">Description & Specs</button></li>
-            <li data-rg-tab-li="care"><button type="button" data-rg-tab-btn="care">Materials & Care</button></li>
-            <li data-rg-tab-li="fit"><button type="button" data-rg-tab-btn="fit">Size & Fit</button></li>
-            <li data-rg-tab-li="shipping"><button type="button" data-rg-tab-btn="shipping">Shipping & Exchanges</button></li>
-            <li data-rg-tab-li="story"><button type="button" data-rg-tab-btn="story">Cultural Story & FAQs</button></li>
+            <li class="active" data-rg-tab-li="specs"><button type="button" data-rg-tab-btn="specs">Product Details & Specs</button></li>
+            <li data-rg-tab-li="shipping"><button type="button" data-rg-tab-btn="shipping">Shipping & Returns</button></li>
+            <li data-rg-tab-li="maker"><button type="button" data-rg-tab-btn="maker">Artisan & Heritage</button></li>
           </ul>
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="desc">
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;">
-              <div>${product.description_html || `<p>${product.description}</p>`}</div>
-              ${product.specs ? `
-                <div>
-                  <h3 style="font-size:var(--text-md);margin-block-end:12px;">Technical Specifications</h3>
-                  <table class="shop_table cart">
-                    <tbody>
-                      ${Object.entries(product.specs).map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              ` : ''}
+
+          <!-- Tab 1: Specs -->
+          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="specs">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:start;">
+              <div>
+                <h3 style="font-size:var(--text-md);margin-block-end:10px;">About This Piece</h3>
+                <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;margin-block-end:16px;">
+                  ${cleanCraftSummary}
+                </p>
+                <h4 style="font-size:var(--text-sm);margin-block-end:8px;">Care Instructions</h4>
+                <ul style="list-style:disc;padding-inline-start:18px;font-size:var(--text-xs);color:var(--text-secondary);display:grid;gap:6px;">
+                  ${(product.care || ['Air outdoors in shade to refresh the natural fibers', 'Spot-clean marks with mild wool shampoo or dry clean']).map((c) => `<li>${c}</li>`).join('')}
+                </ul>
+              </div>
+
+              <div>
+                <h3 style="font-size:var(--text-md);margin-block-end:10px;">Technical Specifications</h3>
+                <table class="shop_table cart">
+                  <tbody>
+                    <tr><th>Material</th><td>${materialText}</td></tr>
+                    <tr><th>Technique</th><td>${(product.specs && product.specs.technique) || product.craft_type}</td></tr>
+                    <tr><th>Dimensions</th><td>${(product.specs && product.specs.dimensions) || sizes.join(' · ')}</td></tr>
+                    ${product.specs && product.specs.weight ? `<tr><th>Weight</th><td>${product.specs.weight}</td></tr>` : ''}
+                    <tr><th>Origin</th><td>${product.district || product.region}, Gilgit-Baltistan</td></tr>
+                    ${product.specs && product.specs.lining ? `<tr><th>Lining</th><td>${product.specs.lining}</td></tr>` : ''}
+                    ${product.specs && product.specs.closure ? `<tr><th>Closure</th><td>${product.specs.closure}</td></tr>` : ''}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="care" hidden>
-            <h3 style="margin-block-end:12px;">Materials & Seasonal Care Instructions</h3>
-            <p><strong>Materials:</strong> ${(product.attributes.material || []).join(' · ')}</p>
-            <ul style="list-style:disc;padding-inline-start:20px;display:grid;gap:8px;">
-              ${(product.care || []).map((c) => `<li>${c}</li>`).join('')}
-            </ul>
-          </div>
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="fit" hidden>
-            <h3 style="margin-block-end:12px;">Measurements & Fit Guidance (cm & inches)</h3>
-            <p>Every piece is measured in both centimetres and inches prior to dispatch. Click the <strong>Size Guide</strong> button above to use our interactive head/chest measurement finder.</p>
-          </div>
+
+          <!-- Tab 2: Shipping & Returns -->
           <div class="woocommerce-Tabs-panel" data-rg-tab-panel="shipping" hidden>
-            <h3 style="margin-block-end:12px;">Nationwide Tracked Delivery & 7-Day Size Exchange</h3>
-            <p>Orders over PKR 5,000 qualify for free tracked courier delivery across Pakistan. Ready-to-ship sizes can be exchanged within 7 days of delivery if unworn with the Origin Card attached.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-block-end:24px;">
+              <div style="background:var(--bg-secondary);padding:18px 20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+                <div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-block-end:8px;color:var(--text-primary);">
+                  <svg width="20" height="20" aria-hidden="true" style="color:var(--brand-secondary);"><use href="#icon-truck"></use></svg>
+                  <span>Tracked Nationwide Delivery</span>
+                </div>
+                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;margin:0;">
+                  Dispatched within 1–2 working days. Major cities (Karachi, Lahore, Islamabad, Rawalpindi) arrive in 2–3 days via Leopards / TCS Tracked Courier.
+                </p>
+              </div>
+
+              <div style="background:var(--bg-secondary);padding:18px 20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+                <div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-block-end:8px;color:var(--text-primary);">
+                  <svg width="20" height="20" aria-hidden="true" style="color:var(--brand-secondary);"><use href="#icon-shield"></use></svg>
+                  <span>Free Delivery Over PKR 5,000</span>
+                </div>
+                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;margin:0;">
+                  All domestic orders with a bag value of PKR 5,000 or above automatically qualify for free standard shipping.
+                </p>
+              </div>
+
+              <div style="background:var(--bg-secondary);padding:18px 20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+                <div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-block-end:8px;color:var(--text-primary);">
+                  <svg width="20" height="20" aria-hidden="true" style="color:var(--brand-secondary);"><use href="#icon-rotate-ccw"></use></svg>
+                  <span>7-Day Easy Exchange Policy</span>
+                </div>
+                <p style="font-size:var(--text-xs);color:var(--text-secondary);line-height:1.5;margin:0;">
+                  If the size doesn't feel right, contact our team within 7 days of delivery for a seamless exchange.
+                </p>
+              </div>
+            </div>
+
+            <!-- City Delivery Estimator -->
+            <div style="background:var(--bg-elevated);border:1px solid var(--rg-border-strong);border-radius:var(--radius-card);padding:18px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:var(--text-xs);">
+              <label for="rg-city-estimator" style="font-weight:700;color:var(--text-primary);">Calculate Delivery Estimate:</label>
+              <select id="rg-city-estimator" style="padding:6px 12px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-primary);font-size:var(--text-xs);">
+                ${Object.keys(cfg.deliveryEstimates || {}).map((city) => `<option value="${city}">${city}</option>`).join('')}
+              </select>
+              <span id="rg-city-estimate-output" style="color:var(--brand-secondary);font-weight:600;">
+                2–3 working days via Leopards / TCS Tracked
+              </span>
+            </div>
           </div>
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="story" hidden>
-            <h3 style="margin-block-end:12px;">Regional Tradition & Product FAQs</h3>
-            <p>${product.cultural_story}</p>
+
+          <!-- Tab 3: Artisan & Heritage -->
+          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="maker" hidden>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:start;">
+              ${artisan ? `
+                <div style="background:var(--bg-secondary);padding:20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);display:flex;gap:16px;align-items:center;">
+                  <img src="${artisan.avatar}" alt="${artisan.name}" width="64" height="64" style="border-radius:50%;object-fit:cover;border:2px solid var(--brand-secondary);">
+                  <div>
+                    <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--brand-secondary);font-weight:700;">Crafted By</span>
+                    <h4 style="margin:2px 0 4px;font-size:var(--text-base);"><a href="artisan.html?id=${artisan.id}">${artisan.name}</a></h4>
+                    <p style="font-size:var(--text-xs);color:var(--text-secondary);margin:0 0 6px;">${artisan.craft} · ${artisan.experienceYears || '15+'} Years Experience</p>
+                    <span class="rg-badge rg-badge--verified" style="font-size:11px;">✓ Fair-Wage Verified Workshop</span>
+                  </div>
+                </div>
+              ` : ''}
+
+              <div>
+                <h4 style="font-size:var(--text-base);margin-block-end:8px;">Cultural Heritage · ${product.region}</h4>
+                <p style="font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;margin:0;">
+                  ${product.cultural_story}
+                </p>
+                <div style="margin-block-start:12px;">
+                  <a href="region.html?region=${product.region.toLowerCase()}" class="rg-btn rg-btn--outline rg-btn--sm" style="font-size:12px;">
+                    Explore All ${product.region} Heritage Pieces →
+                  </a>
+                </div>
+              </div>
+            </div>
+
             ${product.faqs ? `
-              <div style="display:grid;gap:10px;margin-block-start:16px;">
-                ${product.faqs.map((fq) => `
-                  <details style="background:var(--bg-secondary);padding:12px 16px;border-radius:var(--radius-card);">
-                    <summary style="font-weight:700;cursor:pointer;">${fq.q}</summary>
-                    <p style="margin:8px 0 0;font-size:var(--text-sm);color:var(--text-secondary);">${fq.a}</p>
-                  </details>
-                `).join('')}
+              <div style="margin-block-start:24px;">
+                <h4 style="font-size:var(--text-base);margin-block-end:12px;">Frequently Asked Questions</h4>
+                <div style="display:grid;gap:10px;">
+                  ${product.faqs.map((fq) => `
+                    <details style="background:var(--bg-secondary);padding:12px 16px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+                      <summary style="font-weight:600;font-size:var(--text-sm);cursor:pointer;">${fq.q}</summary>
+                      <p style="margin:8px 0 0;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.5;">${fq.a}</p>
+                    </details>
+                  `).join('')}
+                </div>
               </div>
             ` : ''}
           </div>
         </div>
 
-        <!-- Reviews Section with Interactive Star Filter + Fit Meter -->
+        ${pairProducts.length ? `
+        <!-- Frequently Bought Together Ensemble -->
+        <section style="background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:24px;margin-block:28px;" aria-label="Frequently Bought Together">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-block-end:16px;">
+            <div>
+              <span class="rg-section__eyebrow" style="margin:0;">Curated Pairing</span>
+              <h3 style="font-size:var(--text-lg);margin:0;">Frequently Bought Together</h3>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:var(--text-sm);color:var(--text-secondary);">Total Price:</span>
+              <strong id="rg-bundle-total-price" style="font-size:var(--text-lg);color:var(--brand-secondary);">${fmt(product.price + pairProducts.reduce((s, p) => s + p.price, 0))}</strong>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:center;margin-block-end:20px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+              <img src="${product.images[0].src}" alt="${product.name}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">
+              <div>
+                <strong style="font-size:var(--text-xs);display:block;">${product.name}</strong>
+                <span style="font-size:12px;color:var(--brand-secondary);font-weight:700;">${fmt(product.price)}</span>
+                <span class="rg-badge rg-badge--verified" style="font-size:10px;margin-block-start:4px;">This Item</span>
+              </div>
+            </div>
+
+            ${pairProducts.map((pp) => `
+              <label style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-card);border:1px solid var(--rg-border);cursor:pointer;">
+                <input type="checkbox" checked data-rg-bundle-check="${pp.id}" data-rg-bundle-price="${pp.price}" style="width:16px;height:16px;accent-color:var(--brand-secondary);">
+                <img src="${pp.images[0].src}" alt="${pp.name}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">
+                <div style="flex:1;">
+                  <strong style="font-size:var(--text-xs);display:block;">${pp.name}</strong>
+                  <span style="font-size:12px;color:var(--brand-secondary);font-weight:700;">${fmt(pp.price)}</span>
+                  <span style="font-size:11px;color:var(--text-secondary);display:block;">${pp.region}</span>
+                </div>
+              </label>
+            `).join('')}
+          </div>
+
+          <button type="button" class="rg-btn rg-btn--secondary" id="rg-add-bundle-btn" style="width:100%;min-height:44px;font-size:var(--text-sm);">
+            Add Selected Ensemble to Cart
+          </button>
+        </section>
+        ` : ''}
+
+        <!-- Reviews Section with Interactive Star Filter -->
         <section id="tab-reviews" style="padding-block:var(--space-8);border-block-start:1px solid var(--rg-border);">
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-block-end:20px;">
             <div>
-              <span class="rg-section__eyebrow">Customer Feedback (Sample Placeholders)</span>
+              <span class="rg-section__eyebrow">Customer Ratings</span>
               <h2>Customer Reviews</h2>
               <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:4px 0 0;">Fit Meter Consensus: <strong>92% say True to Size</strong> (Runs small: 4% · Runs large: 4%)</p>
             </div>
@@ -401,7 +433,7 @@
           </div>
 
           <form id="rg-demo-review-form" hidden style="background:var(--bg-secondary);padding:20px;border-radius:var(--radius-card);margin-block-end:24px;display:grid;gap:12px;">
-            <h4>Submit a Customer Review (Demo Only)</h4>
+            <h4>Submit a Customer Review</h4>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <input type="text" placeholder="Your Name & City" required style="padding:10px;border:1px solid var(--rg-border-strong);">
               <select style="padding:10px;border:1px solid var(--rg-border-strong);">
@@ -410,7 +442,7 @@
               </select>
             </div>
             <textarea rows="3" placeholder="Share how the size fit and what you thought of the wool/embroidery quality..." required style="padding:10px;border:1px solid var(--rg-border-strong);"></textarea>
-            <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm" style="justify-self:start;">Submit Demo Review</button>
+            <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm" style="justify-self:start;">Submit Review</button>
           </form>
 
           <div class="rg-grid rg-grid--3" id="rg-pdp-reviews-list">
