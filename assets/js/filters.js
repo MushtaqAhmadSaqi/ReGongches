@@ -160,15 +160,35 @@
         });
       }
 
+      const setGridCols = (cols) => {
+        this.state.columns = String(cols);
+        const grid = document.getElementById('rg-shop-products-grid');
+        if (grid) grid.setAttribute('data-columns', String(cols));
+        try {
+          localStorage.setItem('rg_grid_cols', String(cols));
+        } catch (e) {}
+        document.querySelectorAll('[data-rg-grid-cols]').forEach((b) => {
+          const isActive = b.getAttribute('data-rg-grid-cols') === String(cols);
+          b.classList.toggle('rg-btn--secondary', isActive);
+          b.classList.toggle('rg-btn--outline', !isActive);
+          b.classList.toggle('is-active', isActive);
+          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      };
+
       document.querySelectorAll('[data-rg-grid-cols]').forEach((btn) => {
         btn.addEventListener('click', () => {
           const cols = btn.getAttribute('data-rg-grid-cols');
-          this.state.columns = cols;
-          const grid = document.getElementById('rg-shop-products-grid');
-          if (grid) grid.setAttribute('data-columns', cols);
-          document.querySelectorAll('[data-rg-grid-cols]').forEach((b) => b.classList.toggle('rg-btn--secondary', b === btn));
+          setGridCols(cols);
         });
       });
+
+      try {
+        const savedCols = localStorage.getItem('rg_grid_cols');
+        if (savedCols && ['2', '3', '4'].includes(savedCols)) {
+          setGridCols(savedCols);
+        }
+      } catch (e) {}
 
       const loadMoreBtn = document.getElementById('rg-load-more-btn');
       if (loadMoreBtn) {

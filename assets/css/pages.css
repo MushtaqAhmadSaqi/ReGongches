@@ -369,13 +369,21 @@
 .rg-shop-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-8);
+  gap: var(--space-6);
   align-items: start;
 }
 
 @media (min-width: 1024px) {
   .rg-shop-layout {
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-6);
+  }
+}
+
+@media (min-width: 1400px) {
+  .rg-shop-layout {
     grid-template-columns: 280px 1fr;
+    gap: var(--space-8);
   }
 }
 
@@ -436,6 +444,50 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
+}
+
+/* Luxury Segmented Grid Density Switcher */
+[aria-label="Grid column density"],
+.rg-grid-density-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-editorial);
+  padding: 2px;
+  gap: 2px;
+}
+
+[aria-label="Grid column density"] [data-rg-grid-cols],
+.rg-grid-density-group [data-rg-grid-cols] {
+  min-height: 28px !important;
+  padding: 4px 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  border-radius: var(--radius-editorial) !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  box-shadow: none !important;
+  transition: all var(--duration-fast) ease !important;
+  cursor: pointer;
+}
+
+[aria-label="Grid column density"] [data-rg-grid-cols]:hover,
+.rg-grid-density-group [data-rg-grid-cols]:hover {
+  color: var(--text-primary) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+[aria-label="Grid column density"] [data-rg-grid-cols].rg-btn--secondary,
+[aria-label="Grid column density"] [data-rg-grid-cols].is-active,
+.rg-grid-density-group [data-rg-grid-cols].rg-btn--secondary,
+.rg-grid-density-group [data-rg-grid-cols].is-active {
+  background: var(--brand-primary) !important;
+  color: #FFFFFF !important;
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
 }
 
 .rg-active-chips {
