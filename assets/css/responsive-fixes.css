@@ -178,6 +178,170 @@ a.site-branding:hover,
   font-size: clamp(2.8rem, 13.5vw, 13rem); /* slightly tighter min */
 }
 
+/* Before/after comparison used on the Our Story page. Keep both images in
+   the same frame so the range input reveals the raw layer instead of placing
+   it below the finished image. */
+.rg-ba-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--rg-border-strong);
+  border-radius: var(--radius-card);
+  background: var(--bg-secondary);
+  user-select: none;
+  isolation: isolate;
+}
+
+.rg-ba-slider > img,
+.rg-ba-slider__before {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rg-ba-slider > img,
+.rg-ba-slider__before img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rg-ba-slider__before {
+  z-index: 1;
+  overflow: hidden;
+  border-inline-end: 3px solid var(--brand-accent);
+}
+
+.rg-ba-slider__handle {
+  position: absolute;
+  inset-block: 0;
+  z-index: 2;
+  width: 3px;
+  background: var(--brand-accent);
+  pointer-events: none;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 1px rgba(19, 36, 59, 0.2);
+}
+
+.rg-ba-slider__handle::after {
+  content: "↔";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--brand-accent);
+  color: var(--rg-mountain-blue-dark);
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  box-shadow: var(--shadow-md);
+}
+
+.rg-ba-slider > input[type="range"] {
+  position: absolute;
+  inset-inline: 12px;
+  inset-block-end: 12px;
+  z-index: 3;
+  width: calc(100% - 24px);
+  height: 28px;
+  margin: 0;
+  cursor: ew-resize;
+  accent-color: var(--brand-accent);
+}
+
+@media (max-width: 639px) {
+  .rg-ba-slider {
+    aspect-ratio: 4 / 3;
+  }
+
+  .page-about .rg-section__header {
+    align-items: flex-start;
+    margin-block-end: var(--space-5);
+  }
+
+  .page-about .rg-section__header h2 {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+    line-height: 1.12;
+  }
+
+  .page-about .rg-section__header p {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  .rg-ba-slider > input[type="range"] {
+    inset-inline: 8px;
+    inset-block-end: 8px;
+    width: calc(100% - 16px);
+  }
+}
+
+/* Home page wool-to-wear comparison */
+#rg-wool-compare-slider {
+  width: 100%;
+  max-height: none !important;
+  aspect-ratio: 16 / 8 !important;
+}
+
+#rg-wool-compare-slider .rg-compare-slider__after,
+#rg-wool-compare-slider .rg-compare-slider__before {
+  height: 100%;
+}
+
+#rg-wool-compare-slider .rg-compare-slider__after img,
+#rg-wool-compare-slider .rg-compare-slider__before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 639px) {
+  .rg-wool-comparison-card {
+    padding: 16px !important;
+  }
+
+  .rg-wool-comparison-card > div:first-child {
+    align-items: flex-start !important;
+    flex-direction: column;
+    gap: 8px !important;
+  }
+
+  #rg-wool-compare-slider {
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  #rg-wool-compare-slider
+    .rg-badge {
+    max-width: calc(100% - 24px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    padding-inline: 8px;
+  }
+
+  #rg-wool-compare-slider
+    .rg-compare-slider__after > .rg-badge,
+  #rg-wool-compare-slider
+    .rg-compare-slider__before > .rg-badge {
+    inset-block-end: 10px !important;
+    inset-inline: 10px !important;
+  }
+
+  #rg-wool-compare-slider
+    .rg-compare-slider__before::after {
+    width: 28px;
+    height: 28px;
+    inset-inline-end: -14px;
+  }
+}
+
 /* FIX #18: Shop toolbar sticky offset — needs to clear announcement bar too.
    When announcement bar is visible, the toolbar must be offset by header + announcement. */
 .rg-shop-toolbar {
