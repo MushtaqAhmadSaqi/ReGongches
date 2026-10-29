@@ -518,6 +518,40 @@
         });
       });
 
+      // Mobile swipe gesture for main gallery
+      if (mainBox) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        mainBox.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+
+        mainBox.addEventListener('touchend', (e) => {
+          if (!e.changedTouches || e.changedTouches.length === 0) return;
+          const diffX = e.changedTouches[0].clientX - touchStartX;
+          const diffY = e.changedTouches[0].clientY - touchStartY;
+          // Trigger when horizontal swipe is dominant and exceeds 35px threshold
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+            const thumbs = Array.from(container.querySelectorAll('.woocommerce-product-gallery__thumb'));
+            if (thumbs.length > 1) {
+              const activeIndex = thumbs.findIndex((t) => t.classList.contains('is-active'));
+              let targetIndex = activeIndex;
+              if (diffX < 0) {
+                // Swipe left -> Next image
+                targetIndex = (activeIndex + 1) % thumbs.length;
+              } else {
+                // Swipe right -> Previous image
+                targetIndex = (activeIndex - 1 + thumbs.length) % thumbs.length;
+              }
+              thumbs[targetIndex].click();
+            }
+          }
+        }, { passive: true });
+      }
+
       if (videoThumbBtn && product.video) {
         videoThumbBtn.addEventListener('click', () => {
           container.querySelectorAll('.woocommerce-product-gallery__thumb').forEach((b) => b.classList.remove('is-active'));

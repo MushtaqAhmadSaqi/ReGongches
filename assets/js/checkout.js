@@ -61,7 +61,8 @@
           <div class="rg-shipping-bar__track"><div class="rg-shipping-bar__fill" style="width:${summary.freeShippingProgress}%"></div></div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr;gap:32px;align-items:start;" class="rg-cart-page-grid">
+        <!-- FIX: Use rg-cart-layout class for responsive 2-column on desktop, stacked on mobile -->
+        <div class="rg-cart-layout">
           <form class="woocommerce-cart-form" onsubmit="return false;">
             <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents">
               <thead>
@@ -77,7 +78,8 @@
               <tbody>
                 ${summary.items.map((item) => `
                   <tr class="woocommerce-cart-form__cart-item cart_item">
-                    <td>
+                    <!-- FIX: data-label attributes added for mobile card-stack CSS transform -->
+                    <td class="product-name" data-label="Product">
                       <div style="display:flex;align-items:center;gap:14px;">
                         <img src="${item.image}" alt="${item.name}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
                         <div>
@@ -87,21 +89,22 @@
                         </div>
                       </div>
                     </td>
-                    <td style="font-size:var(--text-xs);">
+                    <td class="product-variant" data-label="Variant" style="font-size:var(--text-xs);">
                       <div>Size: <strong>${item.size}</strong></div>
                       <div>Colour: <strong>${item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}</strong></div>
                     </td>
-                    <td>${fmt(item.price)}</td>
-                    <td>
-                      <div class="quantity" style="height:36px;">
-                        <button type="button" style="width:30px;height:34px;" data-rg-cart-dec="${item.key}">−</button>
-                        <input type="number" class="qty" value="${item.qty}" readonly style="width:36px;height:34px;">
-                        <button type="button" style="width:30px;height:34px;" data-rg-cart-inc="${item.key}">+</button>
+                    <td class="product-price" data-label="Price">${fmt(item.price)}</td>
+                    <td class="product-quantity" data-label="Qty">
+                      <div class="quantity" style="height:44px;">
+                        <!-- FIX: increased tap targets to 44px for mobile -->
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-dec="${item.key}" aria-label="Decrease quantity">−</button>
+                        <input type="number" class="qty" value="${item.qty}" readonly style="width:44px;height:44px;text-align:center;">
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-inc="${item.key}" aria-label="Increase quantity">+</button>
                       </div>
                     </td>
-                    <td><strong>${fmt(item.price * item.qty)}</strong></td>
-                    <td>
-                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${item.key}" aria-label="Remove item">Remove</button>
+                    <td class="product-subtotal" data-label="Subtotal"><strong>${fmt(item.price * item.qty)}</strong></td>
+                    <td class="product-remove" data-label="Remove">
+                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${item.key}" aria-label="Remove ${item.name} from cart">Remove</button>
                     </td>
                   </tr>
                 `).join('')}

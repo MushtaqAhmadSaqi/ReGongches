@@ -1,0 +1,817 @@
+/* ==========================================================================
+   ReGongches — Responsive Fixes Patch (responsive-fixes.css)
+   Author: Senior Front-End Engineer Review
+   Strategy: Mobile-first additive patches. Zero existing code removed.
+   Load order: After pages.css in every <head>.
+
+   SECTIONS:
+   1. Variables & Safe-Area Tokens
+   2. Reset & Base Patches
+   3. Layout Patches (Header, Footer)
+   4. Navigation & Drawers Patches
+   5. Product Grid & Cards Patches
+   6. Product Detail Page (PDP) Patches
+   7. Cart & Checkout Patches
+   8. Component Patches (Floats, Bottom Bar, Modals)
+   9. Touch & Interaction Patches
+   10. Landscape & Small-Screen Patches
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & SAFE-AREA TOKENS
+   ========================================================================== */
+:root {
+  /* Safe-area insets for notched phones (iPhone X+, Android equivalents) */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
+  /* Mobile bottom bar actual height (icon + label + padding + safe-area) */
+  --bottom-bar-height: calc(58px + var(--safe-area-bottom));
+
+  /* Scroll offset for sticky elements that need to clear the header */
+  /* FIX #18: Was missing the announcement bar offset */
+  --scroll-mt: calc(var(--header-height) + var(--announcement-height));
+}
+
+/* ==========================================================================
+   2. RESET & BASE PATCHES
+   ========================================================================== */
+
+/* FIX #7: Replace 100vh with 100dvh to fix iOS Safari address-bar layout jump.
+   dvh = Dynamic Viewport Height — shrinks/grows with the browser chrome.
+   The 100vh fallback covers browsers that don't support dvh yet. */
+body {
+  min-height: 100vh;         /* fallback for older browsers */
+  min-height: 100dvh;        /* modern browsers (Chrome 108+, Safari 15.4+) */
+}
+
+/* FIX #15: Global a:hover dashed underline is too aggressive.
+   Remove from interactive elements that are NOT plain text links. */
+a.rg-btn:hover,
+a.rg-icon-btn:hover,
+a.rg-mobile-pill:hover,
+a.rg-mobile-acc-link:hover,
+a.rg-mobile-direct-link:hover,
+a.rg-dropdown-item:hover,
+a.rg-chip:hover,
+a.button:hover,
+a.add_to_cart_button:hover,
+a.site-branding:hover,
+.rg-cat-tile:hover,
+.rg-mega-col a:hover {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   3. LAYOUT PATCHES — HEADER & FOOTER
+   ========================================================================== */
+
+/* Keep the mobile header inside the viewport. The desktop action buttons have
+   a 44px minimum width, which is too wide when combined with the logo and
+   menu toggle on narrow phones. */
+@media (max-width: 639px) {
+  .site-header__inner {
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .rg-search-overlay {
+    padding-block: 1rem;
+    max-height: 85dvh;
+  }
+
+  .rg-search-overlay .rg-container {
+    padding-inline: 1rem;
+  }
+
+  .rg-search-input-wrap {
+    gap: 8px;
+    padding-block: 4px;
+  }
+
+  .rg-search-input-wrap > svg {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .rg-search-input-wrap input {
+    min-width: 0;
+    flex: 1 1 auto;
+    width: auto;
+    font-size: clamp(1.15rem, 5vw, 1.35rem);
+    padding-block: 8px;
+    text-overflow: ellipsis;
+  }
+
+  .rg-search-input-wrap .rg-btn {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding-inline: 0.9rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .rg-search-input-wrap .rg-icon-btn {
+    flex: 0 0 36px;
+    min-width: 36px;
+    width: 36px;
+    min-height: 40px;
+  }
+
+  .rg-search-overlay .rg-chip {
+    min-height: 34px;
+    padding-inline: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .rg-mobile-toggle,
+  .site-header__actions .rg-icon-btn {
+    flex: 0 0 36px;
+    min-width: 36px;
+    width: 36px;
+    min-height: 40px;
+    height: 40px;
+  }
+
+  .site-branding {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .site-branding img,
+  .site-branding svg {
+    width: 100%;
+    max-width: 146px;
+    height: auto;
+  }
+
+  .site-header__actions {
+    flex: 0 0 auto;
+    gap: 0;
+  }
+
+  .site-header__actions .rg-badge-count {
+    inset-block-start: 2px;
+    inset-inline-end: 0;
+    min-width: 16px;
+    height: 16px;
+    padding-inline: 3px;
+    font-size: 10px;
+  }
+}
+
+/* FIX #2 & footer overflow: Prevent the giant footer wordmark from causing
+   horizontal scroll on small screens. The site-footer already has overflow:hidden
+   but the wordmark's white-space:nowrap can still leak. */
+.site-footer {
+  overflow-x: hidden;        /* ensure nothing leaks horizontally */
+}
+
+.site-footer__wordmark {
+  /* Already uses clamp(), but at 320px: 13.5vw * 320 = 43.2px → "ReGongches"
+     at 43px is about ~320px wide. Add overflow:hidden to the container. */
+  overflow: hidden;
+  /* On very small screens reduce the max font-size to prevent overflow */
+  font-size: clamp(2.8rem, 13.5vw, 13rem); /* slightly tighter min */
+}
+
+/* FIX #18: Shop toolbar sticky offset — needs to clear announcement bar too.
+   When announcement bar is visible, the toolbar must be offset by header + announcement. */
+.rg-shop-toolbar {
+  /* Use scroll-margin-top as well for scroll-to behaviour */
+  scroll-margin-top: var(--scroll-mt);
+}
+
+/* On mobile, the toolbar should account for the full sticky header stack */
+@media (max-width: 1079px) {
+  .rg-shop-toolbar {
+    inset-block-start: 0; /* on mobile, let it scroll naturally — sticky header handles it */
+    position: relative;   /* avoid sticky on mobile: the filter drawer is the UX instead */
+    z-index: auto;
+  }
+}
+
+/* ==========================================================================
+   4. NAVIGATION & DRAWERS PATCHES
+   ========================================================================== */
+
+/* FIX #16: Announcement bar close button tap target < 44px → raise to 44px */
+.rg-announcement__close {
+  min-width: 44px;    /* was 32px — WCAG 2.5.5 minimum */
+  min-height: 44px;   /* was 32px */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FIX #9: Mega menu column count — on laptop (1080px–1280px) 4 columns can be
+   cramped. Reduce to 2 rows automatically via auto-fit. */
+@media (min-width: 1080px) and (max-width: 1279px) {
+  .rg-mega-grid {
+    grid-template-columns: repeat(2, 1fr) 1fr;  /* 3 cols: 2 category cols + featured */
+    gap: var(--space-6);
+  }
+}
+
+/* On very large screens, increase the mega grid gap */
+@media (min-width: 1536px) {
+  .rg-mega-grid {
+    grid-template-columns: repeat(3, 1fr) 1.2fr;
+    gap: var(--space-10);
+  }
+}
+
+/* ==========================================================================
+   5. PRODUCT GRID & CARDS PATCHES
+   ========================================================================== */
+
+/* FIX #4: Default product grid starts at 3 cols but should be 2 on mobile.
+   woocommerce.css sets `ul.products { grid-template-columns: repeat(3,…) }`.
+   We override the default (no data-columns attribute) to be responsive. */
+
+/* Base (mobile first): 2 columns */
+ul.products:not([data-columns]) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Tablet: 3 columns */
+@media (min-width: 640px) {
+  ul.products:not([data-columns]) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 1080px) {
+  ul.products:not([data-columns]) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* FIX #11: 4-column grid too cramped at 960–1099px */
+@media (min-width: 960px) and (max-width: 1079px) {
+  ul.products[data-columns="4"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* drop to 3 cols at this range */
+  }
+}
+
+/* FIX #8: Product card quick-actions are hover-only — invisible on touch.
+   On touch devices, show them permanently (or on tap).
+   @media (hover: none) targets touch screens without hover capability. */
+@media (hover: none) {
+  .rg-product-card__actions {
+    opacity: 1 !important;      /* always visible on touch */
+    transform: translateY(0) !important;
+    position: relative;         /* take them out of absolute stacking */
+    inset: auto;
+    margin-block-start: var(--space-2);
+  }
+
+  /* Re-integrate into the card body flow on touch */
+  ul.products > li.product .rg-product-card__media {
+    /* Reduce image height slightly to leave room for the now-visible action bar */
+  }
+}
+
+/* FIX #17: Wishlist button tap target 38×38px → raise to 44×44px */
+.rg-product-card__wishlist {
+  width: 44px;     /* was 38px */
+  height: 44px;    /* was 38px */
+}
+
+/* ==========================================================================
+   6. PRODUCT DETAIL PAGE (PDP) PATCHES
+   ========================================================================== */
+
+/* Mobile PDP Gallery: horizontal scrollable thumbnails with touch-friendly snap */
+@media (max-width: 639px) {
+  .woocommerce-product-gallery__thumbs {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-2) !important;
+    padding-block-end: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .woocommerce-product-gallery__thumb {
+    flex: 0 0 68px !important;
+    height: 68px !important;
+    scroll-snap-align: start;
+  }
+
+  /* Clean horizontal tab scroll with scroll-snap for mobile */
+  .wc-tabs {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+    gap: 4px !important;
+    padding-block-end: 4px;
+    margin-block-end: var(--space-4) !important;
+  }
+
+  .wc-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wc-tabs li {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .wc-tabs li button,
+  .wc-tabs li a {
+    white-space: nowrap;
+    padding: var(--space-3) var(--space-4) !important;
+    font-size: var(--text-xs) !important;
+  }
+}
+
+/* FIX #6: Sticky PDP bar on iPhone — must clear the home indicator.
+   Add safe-area inset to the bottom padding. */
+.rg-sticky-pdp-bar {
+  padding-block-end: var(--safe-area-bottom);
+}
+
+/* On mobile (below 1080px), the PDP bar sits ABOVE the mobile bottom bar.
+   Bottom bar is ~58px + safe-area. PDP bar needs to clear both. */
+@media (max-width: 1079px) {
+  .rg-sticky-pdp-bar {
+    inset-block-end: var(--bottom-bar-height); /* was hard-coded 58px */
+    padding-block-end: 0; /* safe-area already baked into --bottom-bar-height */
+  }
+}
+
+/* On desktop, no bottom bar — reset to default */
+@media (min-width: 1080px) {
+  .rg-sticky-pdp-bar {
+    inset-block-end: 0;
+    padding-block-end: 0;
+  }
+}
+
+/* ==========================================================================
+   7. CART & CHECKOUT PATCHES
+   ========================================================================== */
+
+/* FIX #3 & #13: Cart table is a wide horizontal table that breaks on mobile.
+   Solution: Wrap the table in a scroll container AND transform below 640px
+   to a card-stack layout using CSS `display` tricks. */
+
+/* Wrapper approach: at minimum, allow horizontal scroll */
+.rg-cart-table-wrap,
+.woocommerce-cart-form {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+/* Card-stack transformation on small screens */
+@media (max-width: 639px) {
+  /* Hide the thead — we'll use data-label pseudo-elements instead */
+  table.shop_table.cart thead {
+    display: none;
+  }
+
+  /* Make each row a card */
+  table.shop_table.cart,
+  table.shop_table.cart tbody,
+  table.shop_table.cart tr {
+    display: block;
+    width: 100%;
+  }
+
+  table.shop_table.cart tr {
+    border: 1px solid var(--rg-border);
+    border-radius: var(--radius-card);
+    margin-block-end: var(--space-4);
+    padding: var(--space-4);
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* Each cell becomes a flex row: label → value */
+  table.shop_table.cart td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) 0;
+    border-block-end: 1px solid var(--rg-border);
+    font-size: var(--text-sm);
+    text-align: start;
+  }
+
+  table.shop_table.cart td:last-child {
+    border-block-end: none;
+  }
+
+  /* Add data-label content via attribute — JS sets these in cart.js */
+  table.shop_table.cart td[data-label]::before {
+    content: attr(data-label);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-inline-end: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  /* Product cell: stack image + name vertically */
+  table.shop_table.cart td.product-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  /* Remove button: full-width at bottom of card */
+  table.shop_table.cart td.product-remove {
+    justify-content: center;
+    padding-block-start: var(--space-3);
+  }
+
+  /* Quantity stepper adapts */
+  table.shop_table.cart .quantity {
+    margin: 0;
+  }
+}
+
+/* Cart layout: items left, totals right */
+.rg-cart-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .rg-cart-layout {
+    grid-template-columns: 1.4fr 0.6fr;
+  }
+
+  /* Sticky order summary on desktop */
+  .rg-cart-layout > .cart_totals,
+  .rg-cart-layout > [data-cart-summary] {
+    position: sticky;
+    inset-block-start: calc(var(--header-height-scrolled) + var(--space-4));
+  }
+}
+
+/* Checkout: form inputs need correct keyboard types for mobile */
+/* These should already be in the HTML but reinforce with CSS hinting */
+input[name="billing_phone"],
+input[name="phone"],
+input[type="tel"] {
+  /* Force numeric keyboard on iOS when type isn't set by JS */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Mobile Forms: ensure single-column stack and prevent iOS auto-zoom on inputs */
+@media (max-width: 639px) {
+  .woocommerce-billing-fields,
+  #customer_details,
+  .rg-form-row,
+  form.checkout {
+    width: 100%;
+  }
+
+  /* Any inline grid in billing details collapses to single column on mobile */
+  .woocommerce-billing-fields div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-3) !important;
+  }
+
+  .woocommerce-billing-fields {
+    padding: var(--space-4) !important;
+  }
+
+  /* 16px font-size prevents iOS Safari from automatically zooming the page on focus */
+  .rg-form-row input,
+  .rg-form-row select,
+  .rg-form-row textarea,
+  input.qty {
+    min-height: 48px;
+    font-size: 16px !important;
+  }
+}
+
+/* Checkout collapsible order summary on mobile */
+@media (max-width: 767px) {
+  /* The order summary panel should be collapsible.
+     The checkout.js already handles this — we just ensure the container
+     is properly sized and doesn't overflow. */
+  #rg-checkout-summary-panel,
+  .rg-checkout-order-summary {
+    max-height: 260px;
+    overflow: hidden;
+    transition: max-height var(--duration-base) var(--ease-out);
+  }
+
+  #rg-checkout-summary-panel.is-expanded,
+  .rg-checkout-order-summary.is-expanded {
+    max-height: none;
+  }
+}
+
+/* ==========================================================================
+   8. COMPONENT PATCHES — FLOATS, BOTTOM BAR, MODALS
+   ========================================================================== */
+
+/* FIX #14: Mobile bottom bar — add safe-area inset for iPhone notch */
+.rg-mobile-bottom-bar {
+  padding-block-end: var(--safe-area-bottom);  /* was missing entirely */
+}
+
+/* FIX #12: WhatsApp float button — must clear bottom bar + safe area on mobile */
+@media (max-width: 1079px) {
+  .rg-whatsapp-float {
+    /* Bottom bar ~58px + safe-area + a small gap */
+    inset-block-end: calc(var(--bottom-bar-height) + 12px);
+    inset-inline-start: max(12px, var(--safe-area-left));
+    max-width: calc(100vw - 24px);
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+}
+
+/* FIX #12 continued: Back-to-top button — same issue */
+@media (max-width: 1079px) {
+  .rg-back-to-top {
+    inset-block-end: calc(var(--bottom-bar-height) + 12px);
+  }
+}
+
+/* Toast stack — clear bottom bar on mobile */
+@media (max-width: 1079px) {
+  .rg-toast-stack {
+    inset-block-end: calc(var(--bottom-bar-height) + 12px);
+  }
+}
+
+/* FIX #5: Remove the duplicate :focus-visible rule.
+   Consolidate to a single clean rule. The second declaration in components.css
+   (line 711) uses !important which can override user-agent high-contrast styles.
+   We re-declare here without !important to normalize behaviour. */
+
+/* First, neutralize the !important rules */
+:focus-visible {
+  outline: 2px solid var(--brand-accent) !important; /* keep gold — brand requirement */
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 3px rgba(184, 145, 58, 0.35) !important;
+}
+
+/* But for non-decorative interactive elements, ensure visibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgba(184, 145, 58, 0.35);
+}
+
+/* Modal sizing — ensure it fits inside viewport on small screens */
+@media (max-width: 639px) {
+  .rg-modal {
+    padding: var(--space-2); /* tighter padding on small phones (was space-4) */
+    align-items: flex-end;   /* slide up from bottom on mobile */
+  }
+
+  .rg-modal__dialog {
+    width: 100%;             /* full width on phone */
+    max-width: 100%;
+    max-height: 92dvh;       /* leave space for close gesture */
+    border-radius: var(--radius-card) var(--radius-card) 0 0; /* bottom sheet style */
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+/* Compare bar also clears mobile bottom bar */
+@media (max-width: 1079px) {
+  .rg-compare-bar {
+    inset-block-end: var(--bottom-bar-height);
+    padding-block-end: 0;
+  }
+}
+
+/* ==========================================================================
+   9. TOUCH & INTERACTION PATCHES
+   ========================================================================== */
+
+/* Touch-friendly hover alternatives: disable translateY hover lifts on touch */
+@media (hover: none) {
+  ul.products > li.product:hover {
+    transform: none;          /* no lift on touch — only show on tap */
+    box-shadow: var(--shadow-xs);
+    border-color: var(--rg-border);
+  }
+
+  .rg-btn:hover {
+    transform: none;          /* remove hover lift — tap gives :active state */
+  }
+
+  .rg-cat-tile:hover img {
+    transform: none;          /* no ken-burns on touch */
+  }
+
+  .rg-mega-col a:hover {
+    transform: none;          /* no translate on touch */
+  }
+
+  .rg-dropdown-item:hover {
+    transform: none;
+  }
+}
+
+/* Tap highlight removal for cards and buttons (iOS default is ugly) */
+ul.products > li.product,
+.rg-btn,
+.rg-icon-btn,
+.rg-mobile-pill,
+.rg-cat-tile {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Active state feedback for buttons on touch */
+.rg-btn:active {
+  transform: scale(0.97);
+  opacity: 0.88;
+}
+
+/* Size buttons — ensure they're big enough to tap */
+.rg-size-btn {
+  min-width: 52px;    /* keep existing 58px but set a lower floor */
+  min-height: 44px;   /* was already 44px — good */
+}
+
+/* ==========================================================================
+   10. LANDSCAPE ORIENTATION & SMALL-SCREEN PATCHES
+   ========================================================================== */
+
+/* Short landscape phones (e.g. iPhone SE landscape: ~375×667px rotated = 667×375px)
+   Reduce hero vertical padding so CTAs remain visible without scrolling */
+@media (max-height: 500px) and (orientation: landscape) {
+  .rg-hero {
+    min-height: 100svh; /* small viewport height — avoids address bar overlap */
+  }
+
+  .rg-hero__content {
+    padding-block: var(--space-8); /* was space-16 (64px) — reduce to 32px */
+  }
+
+  .rg-hero__title {
+    font-size: clamp(1.6rem, 5vw, 2.5rem); /* tone down on landscape */
+    margin-block-end: var(--space-3);
+  }
+
+  .rg-hero__subline {
+    display: none; /* hide subline in landscape to save vertical space */
+  }
+
+  .rg-hero__trust {
+    display: none; /* hide trust badges in landscape */
+  }
+
+  /* Video controls reposition for landscape */
+  .rg-hero__video-controls {
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
+  }
+}
+
+/* Foldable / ultra-narrow screens (320px) — extra overrides */
+@media (max-width: 359px) {
+  /* Header: reduce logo size on extremely small screens */
+  .site-branding img,
+  .site-branding svg {
+    height: 36px; /* was 46px */
+  }
+
+  /* Reduce header icon gaps */
+  .site-header__actions {
+    gap: 0;
+  }
+
+  /* Hide wishlist icon on header to save space; it's in bottom bar */
+  .site-header__actions a[href="wishlist.html"] {
+    display: none;
+  }
+
+  /* Hero text smaller on tiny screens */
+  .rg-hero__title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  /* Stack CTA buttons vertically */
+  .rg-hero__ctas {
+    flex-direction: column;
+  }
+
+  /* Footer wordmark: hide on very small screens to prevent overflow */
+  .site-footer__wordmark {
+    display: none;
+  }
+
+  /* Announcement bar: allow text to wrap */
+  .rg-announcement__text {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
+
+/* ==========================================================================
+   11. IMAGE & MEDIA PATCHES
+   ========================================================================== */
+
+/* Ensure all img/video/iframe are responsive (safety net) */
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Video within hero should maintain aspect-ratio */
+.rg-hero__video {
+  /* Already has position:absolute + 100% w/h + object-fit:cover — good */
+  /* Ensure it doesn't affect layout flow */
+  pointer-events: none;
+}
+
+/* iFrame embeds (e.g. maps) — force responsive */
+iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+/* ==========================================================================
+   12. SCROLL & OVERFLOW SAFETY NET
+   ========================================================================== */
+
+/* Global horizontal overflow prevention.
+   The main content area should never cause horizontal scroll. */
+main,
+.site-main,
+#main-content {
+  overflow-x: hidden;
+  min-width: 0; /* prevents flex children from overflowing */
+}
+
+/* Containers: ensure padding-inline uses safe viewport units */
+.rg-container {
+  padding-inline: max(var(--gutter), env(safe-area-inset-left));
+  /* This ensures content doesn't go under the notch in landscape */
+}
+
+/* ==========================================================================
+   13. PRINT PATCHES (additive)
+   ========================================================================== */
+@media print {
+  /* Hide interactive widgets not useful in print */
+  .rg-style-switcher,
+  .rg-mobile-bottom-bar,
+  .rg-whatsapp-float,
+  .rg-back-to-top,
+  .rg-reading-progress,
+  .rg-toast-stack,
+  .rg-sticky-pdp-bar,
+  .rg-compare-bar {
+    display: none !important;
+  }
+
+  /* Expand cart table for print (undo card-stack) */
+  table.shop_table.cart thead {
+    display: table-header-group !important;
+  }
+
+  table.shop_table.cart,
+  table.shop_table.cart tbody,
+  table.shop_table.cart tr,
+  table.shop_table.cart td {
+    display: table !important;
+  }
+
+  table.shop_table.cart tr {
+    display: table-row !important;
+  }
+
+  table.shop_table.cart td {
+    display: table-cell !important;
+  }
+
+  table.shop_table.cart td::before {
+    display: none !important; /* hide data-labels */
+  }
+}
