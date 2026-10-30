@@ -627,24 +627,31 @@
 
   <section class="rg-section">
     <div class="rg-container" id="rg-account-container">
-      <div class="woocommerce-info">
-        <span id="rg-account-greeting">Manage your orders, delivery updates, saved addresses, and Mountain Points loyalty rewards.</span>
+      <div class="rg-account-welcome">
+        <div>
+          <span class="rg-account-welcome__eyebrow">Your ReGongches account</span>
+          <h1>Keep every order close.</h1>
+          <p id="rg-account-greeting">Sign in to track deliveries, view receipts, save addresses, and collect Mountain Points.</p>
+        </div>
+        <span class="rg-account-welcome__icon" aria-hidden="true">
+          <svg width="26" height="26"><use href="#icon-user"></use></svg>
+        </span>
       </div>
 
       <div class="rg-account-layout">
         <nav class="woocommerce-MyAccount-navigation" aria-label="Account Pages">
           <ul>
-            <li class="is-active" data-rg-acc-li="orders"><button type="button" data-rg-acc-tab="orders">Orders &amp; Receipts</button></li>
+            <li data-rg-acc-li="orders"><button type="button" data-rg-acc-tab="orders">Orders &amp; Receipts</button></li>
             <li data-rg-acc-li="tracking"><button type="button" data-rg-acc-tab="tracking">Order Status Timeline</button></li>
             <li data-rg-acc-li="loyalty"><button type="button" data-rg-acc-tab="loyalty">Mountain Points (Loyalty)</button></li>
             <li data-rg-acc-li="addresses"><button type="button" data-rg-acc-tab="addresses">Saved Addresses</button></li>
-            <li data-rg-acc-li="login"><button type="button" data-rg-acc-tab="login">Login / Register</button></li>
+            <li class="is-active" data-rg-acc-li="login"><button type="button" data-rg-acc-tab="login">Sign In / Register</button></li>
           </ul>
         </nav>
 
         <div class="woocommerce-MyAccount-content">
           <!-- Orders Panel -->
-          <div data-rg-acc-panel="orders">
+          <div data-rg-acc-panel="orders" hidden>
             <h2 style="margin-block-end:16px;">Your Orders</h2>
             <table class="shop_table cart">
               <thead><tr><th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Action</th></tr></thead>
@@ -694,26 +701,37 @@
           <div data-rg-acc-panel="addresses" hidden>
             <h2 style="margin-block-end:12px;">Saved Delivery Address</h2>
             <div style="padding:20px;background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);">
-              <strong>Mushtaq Ahmad</strong><br>
-              Department of Computer Science, COMSATS University<br>
-              Islamabad Capital Territory, Pakistan · 0300-1234567
+              <strong>Your saved address will appear here</strong><br>
+              Sign in to save your delivery details for a faster checkout.
             </div>
           </div>
 
           <!-- Login / Register Panel -->
-          <div data-rg-acc-panel="login" hidden>
-            <h2 style="margin-block-end:12px;">Sign In / Register</h2>
-            <form id="rg-demo-login-form" style="max-width:440px;display:grid;gap:12px;">
+          <div data-rg-acc-panel="login">
+            <div class="rg-account-auth">
+              <div class="rg-account-auth__intro">
+                <span class="rg-badge rg-badge--verified">Welcome back</span>
+                <h2>Sign in to your account</h2>
+                <p>Access your orders, delivery updates, saved details, and rewards in one place.</p>
+                <ul>
+                  <li><svg width="16" height="16"><use href="#icon-check"></use></svg>Track every order from confirmation to delivery</li>
+                  <li><svg width="16" height="16"><use href="#icon-check"></use></svg>Save your details for a quicker checkout</li>
+                  <li><svg width="16" height="16"><use href="#icon-check"></use></svg>Collect Mountain Points with every purchase</li>
+                </ul>
+              </div>
+              <form id="rg-demo-login-form" class="rg-account-auth__form">
               <div class="rg-form-row">
-                <label for="demo_name">Your Name</label>
-                <input type="text" name="demo_name" id="demo_name" value="Areeba Khan" required>
+                <label for="demo_name">Your name</label>
+                <input type="text" name="demo_name" id="demo_name" placeholder="Enter your name" autocomplete="name" required>
               </div>
               <div class="rg-form-row">
-                <label for="demo_email">Email Address</label>
-                <input type="email" name="demo_email" id="demo_email" value="areeba@example.edu.pk" required>
+                <label for="demo_email">Email address</label>
+                <input type="email" name="demo_email" id="demo_email" placeholder="you@example.com" autocomplete="email" required>
               </div>
-              <button type="submit" class="rg-btn rg-btn--primary">Continue</button>
-            </form>
+              <button type="submit" class="rg-btn rg-btn--primary">Continue securely</button>
+              <p class="rg-account-auth__note">New here? Continue to create your account. No password is required at this stage.</p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
