@@ -692,7 +692,8 @@
         const wrapEl = document.getElementById('rg-product-giftwrap');
         const qty = qtyInput ? Number(qtyInput.value) : 1;
 
-        if (sizes.length > 1 && !sizeEl) {
+        const availableSizes = (product.attributes && product.attributes.size) || ['Standard'];
+        if (availableSizes.length > 1 && !sizeEl) {
           window.RG.ui.toast('Please choose a size. Not sure? Open the size guide.');
           return;
         }

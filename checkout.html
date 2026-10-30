@@ -656,18 +656,18 @@
 
             <div class="rg-form-row">
               <label for="billing_full_name">Full Name *</label>
-              <input type="text" name="billing_full_name" id="billing_full_name" required placeholder="e.g. Areeba Khan or Farhan Mahmood" value="Mushtaq Ahmad">
+              <input type="text" name="billing_full_name" id="billing_full_name" required placeholder="e.g. Areeba Khan or Farhan Mahmood">
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
               <div class="rg-form-row">
                 <label for="billing_phone">Mobile Number (Pakistani Format 03XX-XXXXXXX) *</label>
-                <input type="tel" name="billing_phone" id="billing_phone" required placeholder="0300-1234567" value="0300-1234567">
+                <input type="tel" name="billing_phone" id="billing_phone" required placeholder="e.g. 0300-1234567">
                 <span class="rg-field-error" id="rg-phone-error" aria-live="polite"></span>
               </div>
               <div class="rg-form-row">
                 <label for="billing_email">Email Address (Optional for Receipt)</label>
-                <input type="email" name="billing_email" id="billing_email" placeholder="you@example.com" value="mushtaq@regongches.store">
+                <input type="email" name="billing_email" id="billing_email" placeholder="e.g. you@example.com">
               </div>
             </div>
 
@@ -675,6 +675,7 @@
               <div class="rg-form-row">
                 <label for="billing_state">Province / Territory *</label>
                 <select name="billing_state" id="billing_state" required>
+                  <option value="" selected disabled>Select your province or territory</option>
                   <option value="Islamabad Capital Territory">Islamabad Capital Territory</option>
                   <option value="Punjab">Punjab</option>
                   <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
@@ -686,13 +687,13 @@
               </div>
               <div class="rg-form-row">
                 <label for="billing_city">City *</label>
-                <input type="text" name="billing_city" id="billing_city" required placeholder="e.g. Islamabad, Lahore, Gilgit" value="Islamabad">
+                <input type="text" name="billing_city" id="billing_city" required placeholder="e.g. Islamabad, Lahore, Gilgit">
               </div>
             </div>
 
             <div class="rg-form-row">
               <label for="billing_address_1">Full Street Address, Sector / Mohallah &amp; House No. *</label>
-              <input type="text" name="billing_address_1" id="billing_address_1" required placeholder="House #, Street #, Sector / Area" value="Department of Computer Science, COMSATS University, Park Road">
+              <input type="text" name="billing_address_1" id="billing_address_1" required placeholder="e.g. House 12, Street 4, Sector F-7">
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
