@@ -949,7 +949,7 @@
  document.querySelectorAll('[data-rg-demo-form]').forEach((form) => {
  form.addEventListener('submit', (e) => {
  e.preventDefault();
- const msg = form.getAttribute('data-rg-demo-form') || 'Submitted successfully (Demo mode).';
+ const msg = form.getAttribute('data-rg-demo-form') || 'Submitted successfully.';
  window.RG.ui.toast(msg);
  form.reset();
  });

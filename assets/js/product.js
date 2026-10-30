@@ -772,7 +772,7 @@
         revForm.addEventListener('submit', (e) => {
           e.preventDefault();
           revForm.hidden = true;
-          window.RG.ui.toast('Thank you! Demo review submitted for moderation.');
+          window.RG.ui.toast('Thank you! Your review was submitted for moderation.');
         });
       }
     },

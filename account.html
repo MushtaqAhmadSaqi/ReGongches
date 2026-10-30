@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Account, Order Tracking & Mountain Points — ReGongches</title>
-  <meta name="description" content="Manage your demo ReGongches orders, track dispatch timeline, and view Mountain Points loyalty rewards.">
+  <meta name="description" content="Manage your ReGongches orders, track dispatch timeline, and view Mountain Points loyalty rewards.">
   <meta property="og:title" content="My Account, Order Tracking & Mountain Points — ReGongches">
-  <meta property="og:description" content="Manage your demo ReGongches orders, track dispatch timeline, and view Mountain Points loyalty rewards.">
+  <meta property="og:description" content="Manage your ReGongches orders, track dispatch timeline, and view Mountain Points loyalty rewards.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/img/hero-mountains.webp">
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -628,7 +628,7 @@
   <section class="rg-section">
     <div class="rg-container" id="rg-account-container">
       <div class="woocommerce-info">
-        <span id="rg-account-greeting"><strong>Demo Account Dashboard:</strong> Uses browser <code>localStorage</code> to simulate customer login, order history, and Mountain Points loyalty rewards.</span>
+        <span id="rg-account-greeting">Manage your orders, delivery updates, saved addresses, and Mountain Points loyalty rewards.</span>
       </div>
 
       <div class="rg-account-layout">
@@ -638,14 +638,14 @@
             <li data-rg-acc-li="tracking"><button type="button" data-rg-acc-tab="tracking">Order Status Timeline</button></li>
             <li data-rg-acc-li="loyalty"><button type="button" data-rg-acc-tab="loyalty">Mountain Points (Loyalty)</button></li>
             <li data-rg-acc-li="addresses"><button type="button" data-rg-acc-tab="addresses">Saved Addresses</button></li>
-            <li data-rg-acc-li="login"><button type="button" data-rg-acc-tab="login">Login / Register (Demo)</button></li>
+            <li data-rg-acc-li="login"><button type="button" data-rg-acc-tab="login">Login / Register</button></li>
           </ul>
         </nav>
 
         <div class="woocommerce-MyAccount-content">
           <!-- Orders Panel -->
           <div data-rg-acc-panel="orders">
-            <h2 style="margin-block-end:16px;">Your Demo Orders</h2>
+            <h2 style="margin-block-end:16px;">Your Orders</h2>
             <table class="shop_table cart">
               <thead><tr><th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Action</th></tr></thead>
               <tbody id="rg-account-orders-tbody"></tbody>
@@ -700,9 +700,9 @@
             </div>
           </div>
 
-          <!-- Login / Register Demo Panel -->
+          <!-- Login / Register Panel -->
           <div data-rg-acc-panel="login" hidden>
-            <h2 style="margin-block-end:12px;">Demo Sign In / Register</h2>
+            <h2 style="margin-block-end:12px;">Sign In / Register</h2>
             <form id="rg-demo-login-form" style="max-width:440px;display:grid;gap:12px;">
               <div class="rg-form-row">
                 <label for="demo_name">Your Name</label>
@@ -712,7 +712,7 @@
                 <label for="demo_email">Email Address</label>
                 <input type="email" name="demo_email" id="demo_email" value="areeba@example.edu.pk" required>
               </div>
-              <button type="submit" class="rg-btn rg-btn--primary">Save Demo Session</button>
+              <button type="submit" class="rg-btn rg-btn--primary">Continue</button>
             </form>
           </div>
         </div>
@@ -781,10 +781,10 @@
   <svg width="20" height="20" aria-hidden="true"><use href="#icon-arrow-up"></use></svg>
 </button>
 
-<!-- Floating Style Preset Switcher (Demo Customizer — toggled via Theme button or ?styles=1) -->
+<!-- Floating Style Preset Switcher -->
 <aside class="rg-style-switcher" id="rg-style-switcher" hidden aria-label="Visual Theme Preset Switcher">
   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-    <strong>Theme Preset (WP Customizer Demo)</strong>
+    <strong>Theme Preset</strong>
     <button type="button" data-rg-toggle-styles aria-label="Hide style switcher">✕</button>
   </div>
   <div class="rg-style-switcher__btns">

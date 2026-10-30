@@ -286,7 +286,7 @@
         orderNumber: 'RG-202647',
         date: '2026-10-22',
         status: 'Confirmed',
-        customer: { name: 'Mushtaq Ahmad (Demo)', phone: '0300-1234567', city: 'Islamabad', province: 'Islamabad Capital Territory', address: 'COMSATS University Road, Park Road' },
+        customer: { name: 'ReGongches Customer', phone: '', city: 'Islamabad', province: 'Islamabad Capital Territory', address: '' },
         paymentMethod: 'Cash on Delivery (COD)',
         summary: {
           items: [{ name: 'Traditional Gilgiti Cap (Hand-Woven Patti)', size: '56 cm (M)', qty: 1, price: 1800, region: 'Gilgit' }],
@@ -301,7 +301,7 @@
 
       box.innerHTML = `
         <div class="woocommerce-message">
-          <span><strong>Thank you, ${firstName}. Order ${order.orderNumber} is confirmed.</strong> We'll message you on WhatsApp when it's quality-checked and dispatched. (Demo store: no payment is taken and no order is sent.)</span>
+          <span><strong>Thank you, ${firstName}. Order ${order.orderNumber} is confirmed.</strong> We'll message you on WhatsApp when it's quality-checked and dispatched.</span>
           <button type="button" class="rg-btn rg-btn--outline rg-btn--sm no-print" data-rg-print-receipt="1">Print Receipt</button>
         </div>
 

@@ -1,6 +1,6 @@
 /* ==========================================================================
    ReGongches My Account & Loyalty Controller (assets/js/account.js)
-   Demo login/register, Orders, Tracking Timeline, Addresses, Mountain Points
+   Login/register, orders, tracking timeline, addresses, Mountain Points
    ========================================================================== */
 (function (window, document) {
   'use strict';
@@ -38,7 +38,7 @@
       if (!orders.length) {
         tbody.innerHTML = `
           <tr>
-            <td><strong>RG-202647 (Sample)</strong></td>
+            <td><strong>RG-202647</strong></td>
             <td>2026-10-18</td>
             <td><span class="rg-badge rg-badge--verified">Quality Checked</span></td>
             <td>PKR 6,800 (2 items)</td>
@@ -69,8 +69,8 @@
           window.localStorage.setItem(USER_KEY, JSON.stringify({ name }));
         } catch (err) {}
         const greeting = document.getElementById('rg-account-greeting');
-        if (greeting) greeting.textContent = `Welcome back, ${name} (Demo Session Active)`;
-        window.RG.ui.toast(`Signed in as ${name} (Demo localStorage session).`);
+        if (greeting) greeting.textContent = `Welcome back, ${name}.`;
+        window.RG.ui.toast(`Signed in as ${name}.`);
       });
     },
 

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout (Nationwide Tracked Delivery & COD) — ReGongches</title>
-  <meta name="description" content="Complete your demo ReGongches order with Cash on Delivery, Bank Transfer, Easypaisa, or JazzCash.">
+  <meta name="description" content="Complete your ReGongches order with Cash on Delivery, Bank Transfer, Easypaisa, or JazzCash.">
   <meta property="og:title" content="Checkout (Nationwide Tracked Delivery & COD) — ReGongches">
-  <meta property="og:description" content="Complete your demo ReGongches order with Cash on Delivery, Bank Transfer, Easypaisa, or JazzCash.">
+  <meta property="og:description" content="Complete your ReGongches order with Cash on Delivery, Bank Transfer, Easypaisa, or JazzCash.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/img/hero-mountains.webp">
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -625,11 +625,18 @@
     </div>
   </nav>
 
-  <section class="rg-section" style="padding-block-start:var(--space-6);">
+  <section class="rg-section rg-checkout-page" style="padding-block-start:var(--space-6);">
     <div class="rg-container">
-      <!-- Mandatory Demo Store Notice -->
-      <div class="woocommerce-info" role="status">
-        <span><strong>Demo store: no payment is taken and no order is sent.</strong> All demo orders are recorded locally in your browser to demonstrate the complete WooCommerce checkout flow.</span>
+      <div class="rg-checkout-intro">
+        <div>
+          <span class="rg-checkout-kicker">Your mountain selection is reserved</span>
+          <h1>Complete your order</h1>
+          <p>Just a few details and we’ll prepare your heritage piece for delivery across Pakistan.</p>
+        </div>
+        <div class="rg-checkout-trust" aria-label="Checkout benefits">
+          <span><svg width="16" height="16" aria-hidden="true"><use href="#icon-shield"></use></svg> Trusted checkout</span>
+          <span><svg width="16" height="16" aria-hidden="true"><use href="#icon-truck"></use></svg> Tracked delivery</span>
+        </div>
       </div>
 
       <div class="woocommerce-error" id="rg-checkout-mto-notice" hidden>
@@ -637,43 +644,48 @@
       </div>
 
       <!-- Checkout Stepper Indicator -->
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-block-end:24px;font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
-        <span class="rg-badge rg-badge--new">1. Contact</span>
-        <span>→</span>
-        <span class="rg-badge rg-badge--new">2. Delivery Address</span>
-        <span>→</span>
-        <span class="rg-badge rg-badge--new">3. Payment Method</span>
-        <span>→</span>
-        <span class="rg-badge rg-badge--handmade">4. Place Demo Order</span>
+      <div class="rg-checkout-steps" aria-label="Checkout progress">
+        <span class="is-current"><b>1</b><span>Contact</span></span>
+        <i aria-hidden="true"></i>
+        <span><b>2</b><span>Delivery</span></span>
+        <i aria-hidden="true"></i>
+        <span><b>3</b><span>Payment</span></span>
+        <i aria-hidden="true"></i>
+        <span><b>4</b><span>Confirm</span></span>
       </div>
 
       <!-- WooCommerce Checkout Form (form.checkout.woocommerce-checkout) -->
       <form name="checkout" method="post" class="checkout woocommerce-checkout" id="rg-checkout-form" novalidate>
         <div id="customer_details">
-          <div class="woocommerce-billing-fields" style="background:var(--bg-elevated);padding:28px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
-            <h2 style="font-size:var(--text-xl);margin-block-end:16px;">1. Contact &amp; Nationwide Delivery Details</h2>
-            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-block-end:20px;">Guest checkout is enabled by default. We send courier tracking updates via SMS/WhatsApp.</p>
+          <div class="woocommerce-billing-fields rg-checkout-card">
+            <div class="rg-section-heading">
+              <span class="rg-section-number">01</span>
+              <div>
+                <h2>Contact &amp; delivery details</h2>
+                <p>We use these details only to deliver your order and send tracking updates.</p>
+              </div>
+            </div>
 
             <div class="rg-form-row">
-              <label for="billing_full_name">Full Name *</label>
-              <input type="text" name="billing_full_name" id="billing_full_name" required placeholder="e.g. Areeba Khan or Farhan Mahmood">
+              <label for="billing_full_name">Full name <span class="rg-required">*</span></label>
+              <input type="text" name="billing_full_name" id="billing_full_name" required autocomplete="name" placeholder="e.g. Areeba Khan or Farhan Mahmood">
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
               <div class="rg-form-row">
-                <label for="billing_phone">Mobile Number (Pakistani Format 03XX-XXXXXXX) *</label>
-                <input type="tel" name="billing_phone" id="billing_phone" required placeholder="e.g. 0300-1234567">
+                <label for="billing_phone">Mobile number <span class="rg-required">*</span><small>Pakistan format: 03XX-XXXXXXX</small></label>
+                <input type="tel" name="billing_phone" id="billing_phone" required autocomplete="tel" inputmode="tel" placeholder="e.g. 0300-1234567">
                 <span class="rg-field-error" id="rg-phone-error" aria-live="polite"></span>
               </div>
               <div class="rg-form-row">
-                <label for="billing_email">Email Address (Optional for Receipt)</label>
-                <input type="email" name="billing_email" id="billing_email" placeholder="e.g. you@example.com">
+                <label for="billing_email">Email address <span class="rg-optional">Optional</span><small>For your receipt</small></label>
+                <input type="email" name="billing_email" id="billing_email" autocomplete="email" placeholder="e.g. you@example.com">
               </div>
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
               <div class="rg-form-row">
-                <label for="billing_state">Province / Territory *</label>
+                <label for="billing_state">Province / territory <span class="rg-required">*</span></label>
                 <select name="billing_state" id="billing_state" required>
                   <option value="" selected disabled>Select your province or territory</option>
                   <option value="Islamabad Capital Territory">Islamabad Capital Territory</option>
@@ -686,36 +698,42 @@
                 </select>
               </div>
               <div class="rg-form-row">
-                <label for="billing_city">City *</label>
-                <input type="text" name="billing_city" id="billing_city" required placeholder="e.g. Islamabad, Lahore, Gilgit">
+                <label for="billing_city">City <span class="rg-required">*</span></label>
+                <input type="text" name="billing_city" id="billing_city" required autocomplete="address-level2" placeholder="e.g. Islamabad, Lahore, Gilgit">
               </div>
             </div>
 
             <div class="rg-form-row">
-              <label for="billing_address_1">Full Street Address, Sector / Mohallah &amp; House No. *</label>
-              <input type="text" name="billing_address_1" id="billing_address_1" required placeholder="e.g. House 12, Street 4, Sector F-7">
+              <label for="billing_address_1">Delivery address <span class="rg-required">*</span><small>House number, street, sector or mohallah</small></label>
+              <input type="text" name="billing_address_1" id="billing_address_1" required autocomplete="street-address" placeholder="e.g. House 12, Street 4, Sector F-7">
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
               <div class="rg-form-row">
-                <label for="billing_landmark">Nearest Landmark (Helpful for Courier)</label>
+                <label for="billing_landmark">Nearest landmark <span class="rg-optional">Optional</span></label>
                 <input type="text" name="billing_landmark" id="billing_landmark" placeholder="e.g. Near Main Gate / Mosque">
               </div>
               <div class="rg-form-row">
-                <label for="billing_postcode">Postal Code (Optional)</label>
-                <input type="text" name="billing_postcode" id="billing_postcode" placeholder="45550">
+                <label for="billing_postcode">Postal code <span class="rg-optional">Optional</span></label>
+                <input type="text" name="billing_postcode" id="billing_postcode" inputmode="numeric" autocomplete="postal-code" placeholder="e.g. 45550">
               </div>
             </div>
           </div>
         </div>
 
         <!-- Order Review & Payment Column (#order_review & #payment) -->
-        <div id="order_review" class="woocommerce-checkout-review-order" style="background:var(--bg-elevated);padding:28px;border-radius:var(--radius-card);border:1px solid var(--rg-border-strong);position:sticky;inset-block-start:90px;">
-          <h2 style="font-size:var(--text-xl);margin-block-end:16px;">2. Order Summary &amp; Payment</h2>
+        <div id="order_review" class="woocommerce-checkout-review-order rg-checkout-card rg-checkout-summary-card">
+          <div class="rg-section-heading">
+            <span class="rg-section-number">02</span>
+            <div>
+              <h2>Review &amp; payment</h2>
+              <p>Review your selection before placing the order.</p>
+            </div>
+          </div>
           <div id="rg-checkout-order-review"></div>
 
           <div id="payment" class="woocommerce-checkout-payment" style="margin-block-start:20px;">
-            <h3 style="font-size:var(--text-base);margin-block-end:12px;">Select Payment Method</h3>
+            <h3 class="rg-payment-heading">Choose how you’d like to pay</h3>
             <div style="display:grid;gap:10px;margin-block-end:20px;">
               <label style="display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);cursor:pointer;">
                 <input type="radio" name="payment_method" value="cod" checked style="margin-block-start:4px;">
@@ -729,7 +747,7 @@
                 <input type="radio" name="payment_method" value="bacs" style="margin-block-start:4px;">
                 <div>
                   <strong style="font-size:var(--text-sm);display:block;">Direct Bank Transfer (IBFT / Raast)</strong>
-                  <span style="font-size:12px;color:var(--text-secondary);">Account Title: ReGongches Heritage Store [Placeholder IBAN: PK00MEZN0000000000000000].</span>
+                  <span style="font-size:12px;color:var(--text-secondary);">Account details and payment instructions will be shared after order confirmation.</span>
                 </div>
               </label>
 
@@ -737,7 +755,7 @@
                 <input type="radio" name="payment_method" value="easypaisa" style="margin-block-start:4px;">
                 <div>
                   <strong style="font-size:var(--text-sm);display:block;">Easypaisa Mobile Wallet</strong>
-                  <span style="font-size:12px;color:var(--text-secondary);">Send to Merchant Till / 0300-0000000 [Demo Placeholder].</span>
+                  <span style="font-size:12px;color:var(--text-secondary);">Send to the ReGongches merchant account. Payment instructions will be shared after order confirmation.</span>
                 </div>
               </label>
 
@@ -745,7 +763,7 @@
                 <input type="radio" name="payment_method" value="jazzcash" style="margin-block-start:4px;">
                 <div>
                   <strong style="font-size:var(--text-sm);display:block;">JazzCash Mobile Wallet</strong>
-                  <span style="font-size:12px;color:var(--text-secondary);">Instant mobile transfer [Demo Placeholder].</span>
+                  <span style="font-size:12px;color:var(--text-secondary);">Pay securely through your JazzCash mobile wallet after order confirmation.</span>
                 </div>
               </label>
 
@@ -759,8 +777,12 @@
             </div>
 
             <button type="submit" class="button alt rg-btn rg-btn--primary" id="place_order" style="width:100%;">
-              Place Demo Order (No Payment Processed)
+              Place Order
             </button>
+            <div class="rg-checkout-reassurance">
+              <svg width="18" height="18" aria-hidden="true"><use href="#icon-shield"></use></svg>
+              <span><strong>You’re in control.</strong> Review or change your details before confirming your order.</span>
+            </div>
           </div>
         </div>
       </form>
@@ -805,10 +827,10 @@
   <svg width="20" height="20" aria-hidden="true"><use href="#icon-arrow-up"></use></svg>
 </button>
 
-<!-- Floating Style Preset Switcher (Demo Customizer — toggled via Theme button or ?styles=1) -->
+<!-- Floating Style Preset Switcher -->
 <aside class="rg-style-switcher" id="rg-style-switcher" hidden aria-label="Visual Theme Preset Switcher">
   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
-    <strong>Theme Preset (WP Customizer Demo)</strong>
+    <strong>Theme Preset</strong>
     <button type="button" data-rg-toggle-styles aria-label="Hide style switcher">✕</button>
   </div>
   <div class="rg-style-switcher__btns">
