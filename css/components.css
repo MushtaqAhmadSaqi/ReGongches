@@ -1,0 +1,1065 @@
+/* ==========================================================================
+   ReGongches Component Stylesheet — css/components.css
+   Award-grade editorial components: Header, Hero, Product Cards,
+   Native <dialog> Modals, Slide-over Cart Drawer, Checkout, and Footer.
+   Zero generic template clichés. Zero heavy murky scrims.
+   ========================================================================== */
+
+/* ── 1. Buttons & Form Controls ───────────────────────────────────────────── */
+.rg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-body-base);
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-editorial);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-craft),
+              background-color var(--duration-fast) var(--ease-craft),
+              border-color var(--duration-fast) var(--ease-craft),
+              color var(--duration-fast) var(--ease-craft);
+  border: 1px solid transparent;
+  min-height: 44px;
+}
+
+.rg-btn:hover {
+  transform: translateY(-1px);
+}
+
+.rg-btn:active {
+  transform: translateY(0);
+}
+
+.rg-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rg-btn--primary {
+  background-color: var(--brand-primary);
+  color: var(--text-inverse);
+  border-color: var(--brand-primary);
+}
+
+.rg-btn--primary:hover {
+  background-color: var(--rg-slate-900);
+  border-color: var(--rg-slate-900);
+  color: var(--text-inverse);
+}
+
+.rg-btn--secondary {
+  background-color: var(--brand-highlight);
+  color: var(--text-inverse);
+  border-color: var(--brand-highlight);
+}
+
+.rg-btn--secondary:hover {
+  background-color: var(--rg-terracotta-dark);
+  border-color: var(--rg-terracotta-dark);
+  color: var(--text-inverse);
+}
+
+.rg-btn--outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--rg-border-strong);
+}
+
+.rg-btn--outline:hover {
+  background-color: var(--bg-surface);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.rg-btn--outline-light {
+  background-color: transparent;
+  color: var(--text-inverse);
+  border-color: rgba(247, 245, 240, 0.4);
+}
+
+.rg-btn--outline-light:hover {
+  background-color: rgba(247, 245, 240, 0.12);
+  border-color: var(--text-inverse);
+  color: var(--text-inverse);
+}
+
+.rg-btn--sm {
+  padding: 0.45rem 0.95rem;
+  font-size: var(--text-body-sm);
+  min-height: 36px;
+}
+
+.rg-btn--full {
+  width: 100%;
+}
+
+/* ── 2. Header & Navigation ───────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 100;
+  background-color: transparent;
+  transition: background-color var(--duration-base) var(--ease-craft),
+              box-shadow var(--duration-base) var(--ease-craft),
+              border-color var(--duration-base) var(--ease-craft);
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-scrolled {
+  background-color: rgba(247, 245, 240, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rg-border);
+  box-shadow: var(--shadow-subtle);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: var(--space-4);
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.site-header__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--rg-slate-900);
+}
+
+.site-header__tagline {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  border-left: 1px solid var(--rg-border-strong);
+  padding-left: var(--space-3);
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .site-header__tagline {
+    display: inline-block;
+  }
+}
+
+.site-header__nav {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+}
+
+.site-header__link {
+  font-size: var(--text-body-base);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  position: relative;
+  padding-block: var(--space-1);
+}
+
+.site-header__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--brand-accent);
+  transition: width var(--duration-fast) var(--ease-craft);
+}
+
+.site-header__link:hover::after,
+.site-header__link.is-active::after {
+  width: 100%;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.site-header__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-editorial);
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-craft),
+              color var(--duration-fast) var(--ease-craft);
+  position: relative;
+}
+
+.site-header__icon-btn:hover {
+  background-color: rgba(19, 36, 59, 0.06);
+  color: var(--brand-primary);
+}
+
+.site-header__cart-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-highlight);
+  color: var(--text-inverse);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  transform: scale(1);
+  transition: transform var(--duration-fast) var(--ease-craft);
+}
+
+.site-header__cart-badge.is-bumped {
+  transform: scale(1.3);
+}
+
+.site-header__search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-editorial);
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  background-color: var(--bg-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-craft),
+              box-shadow var(--duration-fast) var(--ease-craft);
+}
+
+.site-header__search-trigger:hover {
+  border-color: var(--rg-border-strong);
+  box-shadow: var(--shadow-subtle);
+  color: var(--text-primary);
+}
+
+.site-header__kbd {
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.35rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-editorial);
+  color: var(--text-secondary);
+}
+
+/* ── 3. Opening Hero (Full-Bleed, Editorial Takeover) ─────────────────────── */
+.rg-hero {
+  position: relative;
+  width: 100%;
+  min-height: clamp(520px, 82vh, 760px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--rg-slate-900);
+  color: var(--text-inverse);
+}
+
+.rg-hero__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.rg-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  filter: saturate(1.08) contrast(1.02);
+}
+
+/* Crisp directional vignette for text readability WITHOUT murky dark wash */
+.rg-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 22, 32, 0.85) 0%,
+    rgba(14, 22, 32, 0.55) 45%,
+    rgba(14, 22, 32, 0.15) 100%
+  );
+  pointer-events: none;
+}
+
+.rg-hero__content {
+  position: relative;
+  z-index: 3;
+  max-width: 680px;
+  padding-block: var(--space-12);
+}
+
+.rg-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--rg-apricot);
+  letter-spacing: var(--tracking-label);
+  margin-block-end: var(--space-4);
+}
+
+.rg-hero__title {
+  color: var(--text-inverse);
+  font-size: var(--text-hero);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  margin-block-end: var(--space-4);
+}
+
+.rg-hero__subline {
+  font-size: var(--text-body-lg);
+  color: rgba(247, 245, 240, 0.92);
+  line-height: var(--leading-relaxed);
+  margin-block-end: var(--space-8);
+  max-width: 54ch;
+}
+
+.rg-hero__cta-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ── 4. Product Cards & Catalog Grid ──────────────────────────────────────── */
+.rg-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.rg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-craft),
+              box-shadow var(--duration-base) var(--ease-craft),
+              border-color var(--duration-base) var(--ease-craft);
+}
+
+.rg-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--rg-border-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.rg-card__media-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--aspect-product);
+  overflow: hidden;
+  background-color: var(--rg-wool-raw);
+}
+
+.rg-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform var(--duration-base) var(--ease-craft);
+}
+
+.rg-card:hover .rg-card__img {
+  transform: scale(1.03);
+}
+
+.rg-card__quick-actions {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  gap: var(--space-2);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--duration-fast) var(--ease-craft),
+              transform var(--duration-fast) var(--ease-craft);
+  z-index: 2;
+}
+
+.rg-card:hover .rg-card__quick-actions,
+.rg-card:focus-within .rg-card__quick-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rg-card__body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.rg-card__meta {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+}
+
+.rg-card__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--rg-slate-900);
+  line-height: var(--leading-snug);
+  margin-block: 0.15rem 0.35rem;
+}
+
+.rg-card__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.rg-card__title a:hover {
+  color: var(--brand-accent);
+}
+
+.rg-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.rg-card__price {
+  font-size: var(--text-body-base);
+  font-weight: 700;
+  color: var(--rg-slate-900);
+}
+
+.rg-card__regular-price {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+/* Swatches */
+.rg-swatches {
+  display: flex;
+  gap: var(--space-1);
+  margin-block-start: var(--space-2);
+}
+
+.rg-swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--rg-border);
+  padding: 0;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-craft),
+              border-color var(--duration-fast) var(--ease-craft);
+}
+
+.rg-swatch:hover,
+.rg-swatch.is-active {
+  transform: scale(1.2);
+  border-color: var(--brand-primary);
+  outline: 1px solid var(--brand-primary);
+}
+
+/* ── 5. Heritage & Craftsmanship Storytelling (Asymmetric) ───────────────── */
+.rg-story-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .rg-story-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-12);
+  }
+}
+
+.rg-story-media {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: var(--aspect-editorial);
+  background-color: var(--rg-wool-raw);
+}
+
+.rg-story-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rg-story-media__caption {
+  position: absolute;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background-color: rgba(247, 245, 240, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-editorial);
+  font-size: var(--text-body-sm);
+  color: var(--rg-slate-900);
+}
+
+.rg-story-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rg-craft-steps-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-block-start: var(--space-4);
+}
+
+.rg-craft-step-item {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--rg-border);
+}
+
+.rg-craft-step-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.rg-craft-step-marker {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand-highlight);
+  line-height: 1;
+  padding-top: 2px;
+}
+
+/* ── 6. Native <dialog> Modals (Quick View & Size Guide) ──────────────────── */
+dialog.rg-dialog {
+  border: none;
+  border-radius: var(--radius-card);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  padding: 0;
+  max-width: min(92vw, 840px);
+  width: 100%;
+  box-shadow: var(--shadow-flyout);
+  margin: auto;
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  transition: opacity var(--duration-base) var(--ease-craft),
+              transform var(--duration-base) var(--ease-craft);
+}
+
+dialog.rg-dialog::backdrop {
+  background-color: rgba(14, 22, 32, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity var(--duration-base) var(--ease-craft);
+}
+
+/* @starting-style Entry Transitions for Baseline Modern Browsers */
+@starting-style {
+  dialog.rg-dialog[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  dialog.rg-dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+dialog.rg-dialog[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.rg-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--rg-border);
+}
+
+.rg-dialog__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.rg-dialog__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-editorial);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-craft),
+              color var(--duration-fast) var(--ease-craft);
+}
+
+.rg-dialog__close:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.rg-dialog__body {
+  padding: var(--space-6);
+  max-height: calc(85vh - 70px);
+  overflow-y: auto;
+}
+
+/* Sizing Table Inside Dialog */
+.rg-size-table th,
+.rg-size-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--rg-border);
+  font-size: var(--text-body-sm);
+}
+
+.rg-size-table th {
+  background-color: var(--bg-secondary);
+  font-weight: 600;
+  color: var(--rg-slate-900);
+}
+
+.rg-size-table tr:hover td {
+  background-color: var(--rg-wool-raw);
+}
+
+/* ── 7. Slide-Over Cart Drawer ────────────────────────────────────────────── */
+dialog.rg-drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline: auto 0;
+  margin: 0;
+  width: min(100vw, 440px);
+  height: 100%;
+  max-height: 100dvh;
+  border: none;
+  background-color: var(--bg-surface);
+  box-shadow: -8px 0 32px rgba(14, 22, 32, 0.2);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--duration-base) var(--ease-craft),
+              opacity var(--duration-base) var(--ease-craft);
+}
+
+dialog.rg-drawer::backdrop {
+  background-color: rgba(14, 22, 32, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+@starting-style {
+  dialog.rg-drawer[open] {
+    transform: translateX(100%);
+  }
+  dialog.rg-drawer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+dialog.rg-drawer[open] {
+  transform: translateX(0);
+}
+
+.rg-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--rg-border);
+}
+
+.rg-drawer__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.rg-drawer__shipping-bar {
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--rg-border);
+  font-size: var(--text-body-sm);
+}
+
+.rg-progress-track {
+  width: 100%;
+  height: 4px;
+  background-color: var(--rg-border);
+  border-radius: var(--radius-pill);
+  margin-top: var(--space-2);
+  overflow: hidden;
+}
+
+.rg-progress-fill {
+  height: 100%;
+  background-color: var(--rg-success);
+  transition: width var(--duration-base) var(--ease-craft);
+}
+
+.rg-drawer__items {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.rg-drawer-item {
+  display: flex;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--rg-border);
+  position: relative;
+}
+
+.rg-drawer-item__img {
+  width: 68px;
+  height: 85px;
+  aspect-ratio: var(--aspect-product);
+  object-fit: cover;
+  border-radius: var(--radius-editorial);
+  background-color: var(--rg-wool-raw);
+}
+
+.rg-drawer-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rg-drawer-item__title {
+  font-size: var(--text-body-base);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+}
+
+.rg-drawer-item__variant {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+}
+
+.rg-drawer-item__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.rg-drawer-item__price {
+  font-weight: 700;
+  font-size: var(--text-body-base);
+  font-variant-numeric: tabular-nums;
+}
+
+.rg-drawer__footer {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--rg-border);
+  background-color: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rg-drawer__summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.rg-drawer__summary-row--total {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--rg-slate-900);
+  border-top: 1px solid var(--rg-border);
+  padding-top: var(--space-2);
+}
+
+/* Quantity Stepper (44px Accessible Hit Targets) */
+.rg-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--rg-border-strong);
+  border-radius: var(--radius-editorial);
+  overflow: hidden;
+  height: 34px;
+}
+
+.rg-stepper__btn {
+  width: 32px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-secondary);
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: background-color var(--duration-fast) var(--ease-craft);
+}
+
+.rg-stepper__btn:hover {
+  background-color: var(--rg-border);
+}
+
+.rg-stepper__val {
+  width: 34px;
+  text-align: center;
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 8. Checkout Components & Validation ─────────────────────────────────── */
+.rg-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+@media (min-width: 960px) {
+  .rg-checkout-grid {
+    grid-template-columns: 1.25fr 0.75fr;
+  }
+}
+
+.rg-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-block-end: var(--space-4);
+}
+
+.rg-form-label {
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--rg-slate-900);
+}
+
+.rg-form-input,
+.rg-form-select,
+.rg-form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--rg-border-strong);
+  border-radius: var(--radius-editorial);
+  background-color: var(--bg-surface);
+  font-size: var(--text-body-base);
+  color: var(--text-primary);
+  transition: border-color var(--duration-fast) var(--ease-craft),
+              box-shadow var(--duration-fast) var(--ease-craft);
+  min-height: 44px;
+}
+
+.rg-form-input:focus,
+.rg-form-select:focus,
+.rg-form-textarea:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.15);
+}
+
+.rg-form-input.is-invalid {
+  border-color: var(--rg-error);
+  background-color: var(--rg-error-bg);
+}
+
+.rg-form-hint {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+}
+
+.rg-form-error {
+  font-size: var(--text-body-sm);
+  color: var(--rg-error);
+  font-weight: 500;
+}
+
+/* Courier Selection Cards */
+.rg-courier-options {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-end: var(--space-6);
+}
+
+.rg-courier-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-editorial);
+  background-color: var(--bg-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-craft),
+              background-color var(--duration-fast) var(--ease-craft);
+}
+
+.rg-courier-card.is-selected {
+  border-color: var(--brand-primary);
+  background-color: rgba(31, 58, 95, 0.04);
+}
+
+.rg-courier-card__details {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.rg-courier-card__price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-body-base);
+}
+
+/* ── 9. Toast Notification System (aria-live="polite") ────────────────────── */
+.rg-toast-stack {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.rg-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--rg-slate-900);
+  color: var(--text-inverse);
+  border-radius: var(--radius-editorial);
+  box-shadow: var(--shadow-flyout);
+  font-size: var(--text-body-sm);
+  border-left: 3px solid var(--brand-accent);
+  animation: rgToastIn var(--duration-fast) var(--ease-craft);
+}
+
+@keyframes rgToastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 10. Refined Editorial Colophon Footer ────────────────────────────────── */
+.site-footer {
+  background-color: var(--bg-dark);
+  color: var(--text-inverse);
+  padding-block: clamp(3rem, 6vw, 5rem) var(--space-6);
+  border-top: 1px solid rgba(184, 134, 11, 0.25);
+  position: relative;
+}
+
+.site-footer a {
+  color: rgba(247, 245, 240, 0.85);
+  text-decoration: none;
+  font-size: var(--text-body-sm);
+}
+
+.site-footer a:hover {
+  color: var(--brand-accent);
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-8);
+  margin-block-end: var(--space-12);
+}
+
+.site-footer__col h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-inverse);
+  margin-block-end: var(--space-4);
+  font-weight: 600;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.site-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(247, 245, 240, 0.12);
+  font-size: var(--text-body-sm);
+  color: rgba(247, 245, 240, 0.65);
+}
+
+.site-footer__pay-options {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.site-footer__pay-pill {
+  padding: 0.25rem 0.65rem;
+  background-color: rgba(247, 245, 240, 0.08);
+  border: 1px solid rgba(247, 245, 240, 0.18);
+  border-radius: var(--radius-editorial);
+  font-size: 0.75rem;
+  color: rgba(247, 245, 240, 0.88);
+}

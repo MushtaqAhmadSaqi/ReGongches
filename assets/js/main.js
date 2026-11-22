@@ -268,7 +268,8 @@
  }
 
  if (!res.products.length && !res.journal.length && !res.regions.length && !(res.artisans && res.artisans.length)) {
- resultsBox.innerHTML = `<p style="padding-block:16px;color:var(--text-secondary);">We couldn't find '${term}'. Try 'cap', 'shawl' or 'waistcoat', or ask us on WhatsApp. We may have it in the workshop.</p>`;
+ const safeTerm = String(term || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+ resultsBox.innerHTML = `<p style="padding-block:16px;color:var(--text-secondary);">We couldn't find '${safeTerm}'. Try 'cap', 'shawl' or 'waistcoat', or ask us on WhatsApp. We may have it in the workshop.</p>`;
  return;
  }
 

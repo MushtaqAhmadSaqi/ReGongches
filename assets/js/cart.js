@@ -165,8 +165,13 @@
       const wrapFee = cfg.giftWrapFee || 300;
       const coupons = cfg.coupons || {};
 
-      const count = state.items.reduce((acc, i) => acc + Number(i.qty || 0), 0);
-      const subtotal = state.items.reduce((acc, i) => acc + (Number(i.price) * Number(i.qty)), 0);
+      const count = state.items.reduce((acc, i) => acc + Math.max(1, Math.min(20, parseInt(i.qty, 10) || 1)), 0);
+      const subtotal = state.items.reduce((acc, i) => {
+        const prod = window.RG.data.getProductById(i.productId);
+        const realPrice = prod ? prod.price : Number(i.price);
+        const realQty = Math.max(1, Math.min(20, parseInt(i.qty, 10) || 1));
+        return acc + (realPrice * realQty);
+      }, 0);
 
       let discount = 0;
       let couponLabel = '';

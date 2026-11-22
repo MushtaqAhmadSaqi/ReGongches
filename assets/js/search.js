@@ -39,10 +39,12 @@
     },
 
     highlight(text, query) {
+      const escape = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+      const cleanText = escape(text);
       const q = String(query || '').trim();
-      if (!q) return text;
-      const safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return String(text || '').replace(new RegExp(`(${safe})`, 'gi'), '<mark style="background:var(--rg-antique-gold-soft);color:inherit;padding:0 2px;border-radius:2px;">$1</mark>');
+      if (!q) return cleanText;
+      const safe = escape(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return cleanText.replace(new RegExp(`(${safe})`, 'gi'), '<mark style="background:var(--rg-antique-gold-soft);color:inherit;padding:0 2px;border-radius:2px;">$1</mark>');
     },
 
     query(rawTerm) {
