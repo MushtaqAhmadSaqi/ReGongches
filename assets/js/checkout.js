@@ -22,10 +22,6 @@
     } catch (e) {}
   }
 
-  function escapeHtml(s) {
-    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-  }
-
   const RGCheckout = {
     init() {
       this.initCartPage();
@@ -85,30 +81,30 @@
                     <!-- FIX: data-label attributes added for mobile card-stack CSS transform -->
                     <td class="product-name" data-label="Product">
                       <div style="display:flex;align-items:center;gap:14px;">
-                        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
+                        <img src="${item.image}" alt="${item.name}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
                         <div>
-                          <a href="product.html?id=${encodeURIComponent(item.productId)}" style="font-weight:700;">${escapeHtml(item.name)}</a>
-                          <div style="font-size:12px;color:var(--text-secondary);">Origin: ${escapeHtml(item.region)} · ${escapeHtml(item.craft_type)}</div>
-                          ${item.customNote ? `<div style="font-size:11px;color:var(--rg-warning);">Custom Note: ${escapeHtml(item.customNote)}</div>` : ''}
+                          <a href="product.html?id=${item.productId}" style="font-weight:700;">${item.name}</a>
+                          <div style="font-size:12px;color:var(--text-secondary);">Origin: ${item.region} · ${item.craft_type}</div>
+                          ${item.customNote ? `<div style="font-size:11px;color:var(--rg-warning);">Custom Note: ${item.customNote}</div>` : ''}
                         </div>
                       </div>
                     </td>
                     <td class="product-variant" data-label="Variant" style="font-size:var(--text-xs);">
-                      <div>Size: <strong>${escapeHtml(item.size)}</strong></div>
-                      <div>Colour: <strong>${escapeHtml(item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, ''))}</strong></div>
+                      <div>Size: <strong>${item.size}</strong></div>
+                      <div>Colour: <strong>${item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}</strong></div>
                     </td>
                     <td class="product-price" data-label="Price">${fmt(item.price)}</td>
                     <td class="product-quantity" data-label="Qty">
                       <div class="quantity" style="height:44px;">
                         <!-- FIX: increased tap targets to 44px for mobile -->
-                        <button type="button" style="width:44px;height:44px;" data-rg-cart-dec="${escapeHtml(item.key)}" aria-label="Decrease quantity">−</button>
-                        <input type="number" class="qty" value="${escapeHtml(item.qty)}" readonly style="width:44px;height:44px;text-align:center;">
-                        <button type="button" style="width:44px;height:44px;" data-rg-cart-inc="${escapeHtml(item.key)}" aria-label="Increase quantity">+</button>
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-dec="${item.key}" aria-label="Decrease quantity">−</button>
+                        <input type="number" class="qty" value="${item.qty}" readonly style="width:44px;height:44px;text-align:center;">
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-inc="${item.key}" aria-label="Increase quantity">+</button>
                       </div>
                     </td>
                     <td class="product-subtotal" data-label="Subtotal"><strong>${fmt(item.price * item.qty)}</strong></td>
                     <td class="product-remove" data-label="Remove">
-                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${escapeHtml(item.key)}" aria-label="Remove ${escapeHtml(item.name)} from cart">Remove</button>
+                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${item.key}" aria-label="Remove ${item.name} from cart">Remove</button>
                     </td>
                   </tr>
                 `).join('')}
@@ -197,7 +193,7 @@
         <div style="display:grid;gap:10px;margin-block-end:16px;">
           ${summary.items.map((i) => `
             <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
-              <span>${escapeHtml(i.qty)} × ${escapeHtml(i.name)} <small style="color:var(--text-secondary);">(${escapeHtml(i.size)})</small></span>
+              <span>${i.qty} × ${i.name} <small style="color:var(--text-secondary);">(${i.size})</small></span>
               <strong>${fmt(i.price * i.qty)}</strong>
             </div>
           `).join('')}
@@ -225,15 +221,13 @@
       }
       this.renderCheckoutSummary();
 
-      let isSubmitting = false;
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (isSubmitting) return;
         let valid = true;
 
         const phoneInput = form.elements.billing_phone;
         const phoneErr = document.getElementById('rg-phone-error');
-        const pkPhoneRegex = /^(\+92|0)?3[0-9]{2}-?[0-9]{7}$/;
+        const pkPhoneRegex = /^03\d{2}-?\d{7}$/;
 
         form.querySelectorAll('[required]').forEach((field) => {
           field.classList.remove('is-invalid');
@@ -245,7 +239,7 @@
 
         if (phoneInput && !pkPhoneRegex.test(String(phoneInput.value || '').trim())) {
           phoneInput.classList.add('is-invalid');
-          if (phoneErr) phoneErr.textContent = 'Enter a valid Pakistani mobile number like 0340-8500976 or +923408500976.';
+          if (phoneErr) phoneErr.textContent = 'Enter a Pakistani mobile number like 0312-3456789.';
           valid = false;
         } else if (phoneErr) {
           phoneErr.textContent = '';
@@ -254,13 +248,6 @@
         if (!valid) {
           window.RG.ui.toast('Please check the highlighted delivery fields.');
           return;
-        }
-
-        isSubmitting = true;
-        const submitBtn = form.querySelector('button[type="submit"]') || document.getElementById('place_order');
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Securing order...';
         }
 
         const summary = window.RG.cart.getSummary();

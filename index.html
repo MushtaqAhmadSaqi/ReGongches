@@ -1,439 +1,3010 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="heritage">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; media-src 'self'; font-src 'self'; connect-src 'self';">
-  <title>ReGongches — Threads of Mountain Heritage | Gilgit-Baltistan Craft</title>
-  <meta name="description" content="Hand-loomed sheep and yak wool pattu, traditional rolled Gilgiti caps, and artisanal shawls crafted across the high valleys of Gilgit-Baltistan.">
-  <meta property="og:title" content="ReGongches — Threads of Mountain Heritage">
-  <meta property="og:description" content="Handcrafted traditional clothing, wool shawls, and Gilgiti caps directly from artisan communities in Hunza, Gilgit, and Skardu.">
+  <title>ReGongches — Threads of Mountain Heritage | Gilgit-Baltistan Clothing & Craft</title>
+  <meta name="description"
+    content="Authentic traditional clothing, hand-woven wool shawls, Gilgiti caps, pattu waistcoats, and heritage gifts from Gilgit-Baltistan.">
+  <meta property="og:title" content="ReGongches — Threads of Mountain Heritage | Gilgit-Baltistan Clothing & Craft">
+  <meta property="og:description"
+    content="Authentic traditional clothing, hand-woven wool shawls, Gilgiti caps, pattu waistcoats, and heritage gifts from Gilgit-Baltistan.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://regongches.store/">
   <meta property="og:image" content="assets/img/hero-mountains.webp">
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
-
-  <!-- Typography & Modular Stylesheets -->
   <link rel="stylesheet" href="assets/fonts/fonts.css">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-</head>
-<body>
-  <!-- Accessible Skip Link -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/themes.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/woocommerce.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <link rel="stylesheet" href="assets/css/responsive-fixes.css">
+  <link rel="stylesheet" href="assets/css/print.css" media="print">
 
-  <!-- Global Site Header (Single Compact Line, y = 0, Borderless over Hero) -->
+  <style>
+    /* Critical Inline Above-the-Fold CSS */
+    .rg-first-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #13243B;
+      color: #F7F4EE;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "ReGongches",
+        "alternateName": "Threads of Mountain Heritage",
+        "url": "https://regongches.store",
+        "logo": "https://regongches.store/assets/img/logo.svg",
+        "founder": { "@type": "Person", "name": "Mushtaq Ahmad" }
+      },
+      {
+        "@type": "WebSite",
+        "name": "ReGongches",
+        "url": "https://regongches.store",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://regongches.store/search.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
+
+</head>
+
+<body class="woocommerce woocommerce-page home page">
+  <!-- RG:HEADER START -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7.5" />
+      <line x1="20" y1="20" x2="16.35" y2="16.35" />
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </symbol>
+    <symbol id="icon-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="15" y2="18" />
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </symbol>
+    <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </symbol>
+    <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <polyline points="9 12 11 14 15 10" />
+    </symbol>
+    <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1" y="3" width="15" height="13" />
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+      <circle cx="5.5" cy="18.5" r="2.5" />
+      <circle cx="18.5" cy="18.5" r="2.5" />
+    </symbol>
+    <symbol id="icon-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z" />
+      <path d="m14.5 12.5 2-2" />
+      <path d="m11.5 9.5 2-2" />
+      <path d="m8.5 6.5 2-2" />
+      <path d="m17.5 15.5 2-2" />
+    </symbol>
+    <symbol id="icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+    </symbol>
+    <symbol id="icon-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="21" x2="4" y2="14" />
+      <line x1="4" y1="10" x2="4" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12" y2="3" />
+      <line x1="20" y1="21" x2="20" y2="16" />
+      <line x1="20" y1="12" x2="20" y2="3" />
+      <line x1="1" y1="14" x2="7" y2="14" />
+      <line x1="9" y1="8" x2="15" y2="8" />
+      <line x1="17" y1="16" x2="23" y2="16" />
+    </symbol>
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </symbol>
+    <symbol id="icon-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 12 20 22 4 22 4 12" />
+      <rect x="2" y="7" width="20" height="5" />
+      <line x1="12" y1="22" x2="12" y2="7" />
+      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+    </symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    </symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5">
+      <polygon
+        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </symbol>
+  </svg>
+
+  <!-- Announcement Bar (Dismissible, remembered in localStorage, threshold from site-config.js) -->
+  <div class="rg-announcement" id="rg-announcement-bar" role="region" aria-label="Store Announcements">
+    <div class="rg-container rg-announcement__inner">
+      <p class="rg-announcement__text" id="rg-announcement-text">
+        Free tracked delivery across Pakistan on orders over PKR 5,000 · Cash on Delivery available
+      </p>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button type="button" class="rg-announcement__close" data-rg-toggle-styles title="Switch Visual Theme Preset">
+          Theme
+        </button>
+        <button type="button" class="rg-announcement__close" id="rg-announcement-close"
+          aria-label="Dismiss announcement">
+          ✕
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Header (.site-header — shrinks on scroll, hides on scroll-down, shows on scroll-up) -->
   <header class="site-header" id="masthead">
     <div class="rg-container site-header__inner">
-      <!-- Wordmark Branding -->
-      <a href="index.html" class="site-header__brand" aria-label="ReGongches Home">
-        <span class="site-header__wordmark">ReGongches</span>
-        <span class="site-header__tagline">Mountain Craftsmanship</span>
+      <!-- Mobile Hamburger Toggle -->
+      <button type="button" class="rg-icon-btn rg-mobile-toggle" data-rg-open-drawer="rg-mobile-menu-drawer"
+        aria-label="Open navigation menu">
+        <svg width="24" height="24" aria-hidden="true">
+          <use href="#icon-menu"></use>
+        </svg>
+      </button>
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="site-branding" rel="home" aria-label="ReGongches — Threads of Mountain Heritage Home">
+        <img src="assets/img/logo.svg" alt="ReGongches — Threads of Mountain Heritage" width="220" height="52">
       </a>
 
-      <!-- Primary Navigation -->
-      <nav class="site-header__nav" aria-label="Main Navigation">
-        <a href="shop.html" class="site-header__link is-active">Collection</a>
-        <a href="category.html?cat=Caps+%26+Headwear" class="site-header__link">Caps &amp; Headwear</a>
-        <a href="category.html?cat=Shawls+%26+Scarves" class="site-header__link">Hand-Woven Shawls</a>
-        <a href="category.html?cat=Waistcoats+%26+Outerwear" class="site-header__link">Pattu Waistcoats</a>
-        <a href="artisans.html" class="site-header__link">Makers</a>
+      <!-- Main Navigation (Plain nested ul > li > a for wp_nav_menu('primary')) -->
+      <nav id="site-navigation" class="main-navigation" aria-label="Primary Navigation">
+        <!-- WP: wp_nav_menu('primary') -->
+        <ul class="menu">
+          <!-- 1. SHOP MEGA MENU -->
+          <li class="menu-item menu-item-has-children">
+            <a href="shop.html" data-rg-mega-toggle aria-expanded="false" aria-haspopup="true">
+              Shop
+              <svg width="14" height="14" aria-hidden="true" class="rg-menu-arrow">
+                <use href="#icon-chevron-down"></use>
+              </svg>
+            </a>
+            <div class="sub-menu" role="region" aria-label="Shop Catalogue Mega Menu">
+              <div class="rg-mega-grid">
+                <div class="rg-mega-col">
+                  <h4>Traditional Apparel</h4>
+                  <ul>
+                    <li><a href="category.html?cat=Traditional+Dresses">Traditional Dresses (8)</a></li>
+                    <li><a href="category.html?cat=Waistcoats+%26+Outerwear">Waistcoats &amp; Outerwear (6)</a></li>
+                    <li><a href="category.html?cat=Custom+%26+Festive+Wear">Custom &amp; Festive Wear (4)</a></li>
+                    <li><a href="shop.html" style="font-weight:700;color:var(--brand-secondary);">View All Catalogue
+                        (27) →</a></li>
+                  </ul>
+                </div>
+                <div class="rg-mega-col">
+                  <h4>Headwear &amp; Shawls</h4>
+                  <ul>
+                    <li><a href="category.html?cat=Caps+%26+Headwear">Caps &amp; Headwear (6)</a></li>
+                    <li><a href="category.html?cat=Shawls+%26+Scarves">Shawls &amp; Scarves (5)</a></li>
+                    <li><a href="search.html?q=Pakol">Hand-Rolled Pakols</a></li>
+                    <li><a href="size-guide.html">Cap &amp; Waistcoat Size Finder</a></li>
+                  </ul>
+                </div>
+                <div class="rg-mega-col">
+                  <h4>Craft &amp; Living</h4>
+                  <ul>
+                    <li><a href="category.html?cat=Textile+Accessories">Textile Accessories (3)</a></li>
+                    <li><a href="category.html?cat=Home+Textiles">Home Textiles (3)</a></li>
+                    <li><a href="gift-sets.html">Heritage Gift Sets &amp; Builder</a></li>
+                    <li><a href="shop.html?craft=handmade">100% Handmade Pieces</a></li>
+                  </ul>
+                </div>
+                <div class="rg-mega-col rg-mega-featured-card">
+                  <img src="assets/img/craft-weaving.webp" alt="New Winter Shawls and Hand-Woven Wool" width="320"
+                    height="200"
+                    style="width:100%;height:130px;object-fit:cover;border-radius:6px;margin-block-end:8px;">
+                  <span class="rg-badge rg-badge--new">Featured Drop</span>
+                  <h4
+                    style="border:none;padding:0;margin-block:6px 4px;color:var(--text-primary);font-size:var(--text-sm);">
+                    Winter Shawls &amp; Pattu</h4>
+                  <p style="font-size:12px;color:var(--text-secondary);margin-block-end:8px;line-height:1.4;">
+                    Hand-loomed in Hunza, Nagar &amp; Skardu with verified Origin Cards.</p>
+                  <a href="category.html?cat=Shawls+%26+Scarves"
+                    style="font-weight:700;color:var(--brand-secondary);">Explore Winter Looms →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 2. REGIONS MEGA MENU -->
+          <li class="menu-item menu-item-has-children">
+            <a href="region.html?region=hunza" data-rg-mega-toggle aria-expanded="false" aria-haspopup="true">
+              By Region
+              <svg width="14" height="14" aria-hidden="true" class="rg-menu-arrow">
+                <use href="#icon-chevron-down"></use>
+              </svg>
+            </a>
+            <div class="sub-menu" role="region" aria-label="Shop by Region Mega Menu">
+              <div class="rg-mega-grid" style="grid-template-columns:1fr 1fr 1.6fr;">
+                <div class="rg-mega-col">
+                  <h4>Gilgit &amp; Diamer</h4>
+                  <ul>
+                    <li><a href="region.html?region=hunza">Hunza District (6)</a></li>
+                    <li><a href="region.html?region=gilgit">Gilgit District (4)</a></li>
+                    <li><a href="region.html?region=nagar">Nagar District (3)</a></li>
+                    <li><a href="region.html?region=ghizer">Ghizer District (2)</a></li>
+                    <li><a href="region.html?region=astore">Astore District (1)</a></li>
+                    <li><a href="region.html?region=diamer">Diamer District (1)</a></li>
+                  </ul>
+                </div>
+                <div class="rg-mega-col">
+                  <h4>Baltistan Division</h4>
+                  <ul>
+                    <li><a href="region.html?region=skardu">Skardu District (3)</a></li>
+                    <li><a href="region.html?region=shigar">Shigar District (2)</a></li>
+                    <li><a href="region.html?region=ghanche">Ghanche District (1)</a></li>
+                    <li><a href="region.html?region=kharmang">Kharmang District (1)</a></li>
+                  </ul>
+                  <div
+                    style="margin-block-start:16px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-card);"
+                    data-rg-map-preview>
+                    <span class="rg-badge rg-badge--handmade">Interactive Map</span>
+                    <h4 style="border:none;padding:0;margin-block:6px 4px;color:var(--text-primary);">Hover Any District
+                    </h4>
+                    <p style="font-size:12px;color:var(--text-secondary);margin:0;">Discover valley-specific weaving,
+                      patti cap blocking, and cross-stitch traditions.</p>
+                  </div>
+                </div>
+                <div class="rg-mega-col">
+                  <div
+                    style="background:var(--bg-secondary);padding:12px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" fill="none" class="rg-gb-map"
+                      role="img" aria-label="Interactive stylised map of Gilgit-Baltistan districts">
+                      <g class="rg-gb-map__districts" stroke="#F7F4EE" stroke-width="2" stroke-linejoin="round">
+                        <path data-district="ghizer" d="M40 160 L140 95 L220 120 L210 205 L105 225 Z" fill="#1F3A5F"
+                          opacity="0.82" />
+                        <path data-district="hunza" d="M220 120 L315 45 L425 90 L385 165 L285 160 Z" fill="#7A1F2B"
+                          opacity="0.9" />
+                        <path data-district="nagar" d="M285 160 L385 165 L395 215 L295 210 Z" fill="#2B4C78"
+                          opacity="0.86" />
+                        <path data-district="gilgit" d="M210 205 L285 160 L295 210 L270 265 L195 250 Z" fill="#B8913A"
+                          opacity="0.9" />
+                        <path data-district="diamer" d="M85 235 L195 250 L235 320 L125 350 L65 295 Z" fill="#3B5B82"
+                          opacity="0.8" />
+                        <path data-district="astore" d="M235 320 L270 265 L345 285 L335 375 L245 380 Z" fill="#466891"
+                          opacity="0.84" />
+                        <path data-district="shigar" d="M385 165 L425 90 L535 125 L515 225 L395 215 Z" fill="#28476E"
+                          opacity="0.88" />
+                        <path data-district="skardu" d="M295 210 L395 215 L515 225 L485 305 L345 285 L270 265 Z"
+                          fill="#1F3A5F" opacity="0.92" />
+                        <path data-district="ghanche" d="M515 225 L535 125 L635 165 L620 285 L535 285 Z" fill="#54232C"
+                          opacity="0.85" />
+                        <path data-district="kharmang" d="M485 305 L515 225 L535 285 L605 315 L545 385 L445 355 Z"
+                          fill="#34537A" opacity="0.82" />
+                      </g>
+                      <g class="rg-gb-map__labels" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600"
+                        fill="#F7F4EE" text-anchor="middle" pointer-events="none">
+                        <text x="135" y="168">Ghizer</text>
+                        <text x="325" y="118">Hunza</text>
+                        <text x="342" y="192">Nagar</text>
+                        <text x="245" y="222">Gilgit</text>
+                        <text x="150" y="302">Diamer</text>
+                        <text x="288" y="335">Astore</text>
+                        <text x="462" y="172">Shigar</text>
+                        <text x="405" y="258">Skardu</text>
+                        <text x="578" y="228">Ghanche</text>
+                        <text x="525" y="342">Kharmang</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 3. CUSTOM ORDERS -->
+          <li class="menu-item">
+            <a href="custom-orders.html">
+              Custom Orders
+              <span class="rg-nav-badge">Bespoke</span>
+            </a>
+          </li>
+
+          <!-- 4. OUR HERITAGE DROPDOWN -->
+          <li class="menu-item menu-item-has-children menu-item--dropdown">
+            <a href="our-story.html" data-rg-mega-toggle aria-expanded="false" aria-haspopup="true">
+              Our Heritage
+              <svg width="14" height="14" aria-hidden="true" class="rg-menu-arrow">
+                <use href="#icon-chevron-down"></use>
+              </svg>
+            </a>
+            <div class="sub-menu" role="region" aria-label="Our Heritage Submenu">
+              <ul class="rg-dropdown-list">
+                <li>
+                  <a href="artisans.html" class="rg-dropdown-item">
+                    <span class="rg-dropdown-title">Meet the Artisans</span>
+                    <span class="rg-dropdown-desc">The master spinners, weavers &amp; embroiderers</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="authenticity.html" class="rg-dropdown-item">
+                    <span class="rg-dropdown-title">Authenticity Standard</span>
+                    <span class="rg-dropdown-desc">3-tier verified origin &amp; genuine mountain craft</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="our-story.html" class="rg-dropdown-item">
+                    <span class="rg-dropdown-title">Our Story &amp; Mission</span>
+                    <span class="rg-dropdown-desc">Founder's vision &amp; COMSATS project journey</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="size-guide.html" class="rg-dropdown-item">
+                    <span class="rg-dropdown-title">Size &amp; Fit Guide</span>
+                    <span class="rg-dropdown-desc">Accurate cm &amp; inches measurement charts</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="collections.html" class="rg-dropdown-item">
+                    <span class="rg-dropdown-title">Curated Collections</span>
+                    <span class="rg-dropdown-desc">Seasonal edits &amp; cultural capsule series</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- 5. JOURNAL -->
+          <li class="menu-item">
+            <a href="journal.html">Journal</a>
+          </li>
+        </ul>
       </nav>
 
-      <!-- Utility Actions -->
+      <!-- Header Right Actions: Search, Account, Wishlist, Cart -->
       <div class="site-header__actions">
-        <!-- Live Search Trigger -->
-        <button type="button" class="site-header__search-trigger" data-action="open-search" aria-label="Open search overlay (Press Command K)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <span>Search</span>
-          <kbd class="site-header__kbd">⌘K</kbd>
-        </button>
-
-        <!-- Sizing Guide Trigger -->
-        <button type="button" class="site-header__icon-btn" data-action="open-size-guide" data-chart="cap" aria-label="Open cap and garment size guide" title="Size Guide">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
-            <path d="m14.5 12.5 2-2"></path>
-            <path d="m11.5 9.5 2-2"></path>
-            <path d="m8.5 6.5 2-2"></path>
+        <button type="button" class="rg-icon-btn" data-rg-open-search aria-label="Open instant search">
+          <svg width="20" height="20" aria-hidden="true">
+            <use href="#icon-search"></use>
           </svg>
         </button>
-
-        <!-- Cart Drawer Trigger -->
-        <button type="button" class="site-header__icon-btn" data-action="open-cart" aria-label="View shopping bag" title="Shopping Bag">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
+        <a href="account.html" class="rg-icon-btn" aria-label="My Account">
+          <svg width="20" height="20" aria-hidden="true">
+            <use href="#icon-user"></use>
           </svg>
-          <span class="site-header__cart-badge" data-rg-cart-count aria-live="polite">0</span>
+        </a>
+        <a href="wishlist.html" class="rg-icon-btn" aria-label="Wishlist">
+          <svg width="20" height="20" aria-hidden="true">
+            <use href="#icon-heart"></use>
+          </svg>
+          <span class="rg-badge-count" data-rg-wishlist-count>0</span>
+        </a>
+        <button type="button" class="rg-icon-btn" data-rg-open-drawer="rg-minicart-drawer"
+          aria-label="Open shopping bag">
+          <svg width="20" height="20" aria-hidden="true">
+            <use href="#icon-bag"></use>
+          </svg>
+          <span class="rg-badge-count" data-rg-cart-count>0</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main id="main-content">
-    <!-- 1. OPENING HERO (Full-Bleed Edge-to-Edge Takeover, No 50/50 Split, Zero Trust Strips) -->
-    <section class="rg-hero" aria-label="Mountain Heritage Collection Hero">
-      <div class="rg-hero__media" aria-hidden="true">
-        <img src="assets/img/hero-mountains.webp" alt="Karakoram mountains and traditional hand-loomed textiles in Gilgit-Baltistan" class="rg-hero__bg-img" fetchpriority="high" width="1920" height="1080">
+  <!-- Full-Width Instant Search Overlay -->
+  <div class="rg-search-overlay" id="rg-search-overlay" role="dialog" aria-modal="true"
+    aria-label="Search ReGongches Store">
+    <div class="rg-container">
+      <form action="search.html" method="get" class="rg-search-input-wrap">
+        <svg width="24" height="24" aria-hidden="true">
+          <use href="#icon-search"></use>
+        </svg>
+        <input type="search" name="q" id="rg-search-overlay-input"
+          placeholder="Search Gilgiti caps, Hunza shawls, pattu waistcoats, regions..." autocomplete="off"
+          aria-label="Search query">
+        <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm">Search</button>
+        <button type="button" class="rg-icon-btn" data-rg-close-overlays aria-label="Close search">
+          <svg width="22" height="22" aria-hidden="true">
+            <use href="#icon-close"></use>
+          </svg>
+        </button>
+      </form>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-block-start:12px;">
+        <span style="font-size:var(--text-xs);color:var(--text-secondary);font-weight:600;">Popular searches:</span>
+        <button type="button" class="rg-chip" data-rg-search-chip="Gilgiti cap">Gilgiti cap</button>
+        <button type="button" class="rg-chip" data-rg-search-chip="Pakol">Pakol</button>
+        <button type="button" class="rg-chip" data-rg-search-chip="woollen shawl">woollen shawl</button>
+        <button type="button" class="rg-chip" data-rg-search-chip="waistcoat">waistcoat</button>
+        <button type="button" class="rg-chip" data-rg-search-chip="gift set">gift set</button>
       </div>
-      <div class="rg-hero__scrim" aria-hidden="true"></div>
+      <div id="rg-search-instant-results" aria-live="polite"></div>
+    </div>
+  </div>
 
-      <div class="rg-container">
-        <div class="rg-hero__content">
-          <span class="rg-hero__kicker">Highland Textiles of Gilgit-Baltistan</span>
-          <h1 class="rg-hero__title">Threads of Mountain Heritage</h1>
-          <p class="rg-hero__subline">
-            Hand-loomed sheep and yak wool pattu, traditional rolled Gilgiti caps, and artisanal shawls crafted across the high valleys of Gilgit-Baltistan.
-          </p>
-          <div class="rg-hero__cta-group">
-            <a href="shop.html" class="rg-btn rg-btn--primary">Shop the Collection</a>
-            <button type="button" class="rg-btn rg-btn--outline-light" data-action="open-size-guide" data-chart="cap">
-              Explore Cap Sizing (cm)
-            </button>
-          </div>
-        </div>
+  <!-- Mobile Navigation Full-Screen Drawer -->
+  <aside class="rg-drawer rg-drawer--left" id="rg-mobile-menu-drawer" aria-label="Mobile Navigation">
+    <div class="rg-drawer__header">
+      <a href="index.html" class="site-branding" aria-label="ReGongches Home">
+        <img src="assets/img/logo.svg" alt="ReGongches" width="160" height="38">
+      </a>
+      <button type="button" class="rg-icon-btn" data-rg-close-overlays aria-label="Close menu">
+        <svg width="22" height="22" aria-hidden="true">
+          <use href="#icon-close"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="rg-drawer__body">
+      <!-- Quick Search Form -->
+      <form action="search.html" method="get" class="rg-drawer-search">
+        <svg width="18" height="18" aria-hidden="true">
+          <use href="#icon-search"></use>
+        </svg>
+        <input type="search" name="q" placeholder="Search caps, shawls, waistcoats, districts..." autocomplete="off"
+          aria-label="Search mobile">
+        <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm">Go</button>
+      </form>
+
+      <!-- Primary Quick Actions -->
+      <div class="rg-mobile-quick-links">
+        <a href="index.html" class="rg-mobile-pill"><svg width="14" height="14" aria-hidden="true">
+            <use href="#icon-eye"></use>
+          </svg> Home</a>
+        <a href="shop.html" class="rg-mobile-pill"><svg width="14" height="14" aria-hidden="true">
+            <use href="#icon-bag"></use>
+          </svg> Shop All (27)</a>
+        <a href="gift-sets.html" class="rg-mobile-pill"><svg width="14" height="14" aria-hidden="true">
+            <use href="#icon-gift"></use>
+          </svg> Gift Sets</a>
       </div>
-    </section>
 
-    <!-- 2. DOCUMENTED MOUNTAIN CRAFTS (Catalog Grid with 4:5 Cards & Tabular Prices) -->
-    <section class="rg-section" id="featured-crafts" aria-label="Curated Pieces from the Valleys">
-      <div class="rg-container">
-        <div class="rg-section-header rg-section-header--split">
-          <div>
-            <span class="rg-eyebrow">Documented Workshop Pieces</span>
-            <h2>Curated Valley Crafts</h2>
-          </div>
-          <a href="shop.html" class="rg-btn rg-btn--outline rg-btn--sm">View All 27 Pieces →</a>
-        </div>
+      <!-- Accordion Navigation -->
+      <div class="rg-mobile-acc">
 
-        <!-- Product Grid (Hydrated by js/ui.js with safe DOM elements) -->
-        <div class="rg-product-grid" id="rg-featured-products-grid">
-          <!-- Fallback Semantic Cards for No-JS Baseline -->
-          <article class="rg-card" data-product-id="1">
-            <div class="rg-card__media-wrap">
-              <img src="assets/img/products/traditional-gilgiti-cap-1.webp" alt="Traditional Gilgiti Cap" class="rg-card__img" width="640" height="800" loading="lazy">
-              <div class="rg-card__quick-actions">
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--outline" data-action="quick-view" data-id="1" style="flex:1;">Quick View</button>
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--primary" data-action="add-to-cart" data-id="1" style="flex:1;">+ Add</button>
-              </div>
-            </div>
-            <div class="rg-card__body">
-              <div class="rg-card__meta">Gilgit Valley · Hand-spun</div>
-              <h3 class="rg-card__title"><a href="product.html?id=1">Traditional Gilgiti Cap</a></h3>
-              <div class="rg-card__price-row">
-                <span class="rg-card__price">PKR 1,800</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="rg-card" data-product-id="6">
-            <div class="rg-card__media-wrap">
-              <img src="assets/img/products/embroidered-shawl-1.webp" alt="Embroidered Wool Shawl" class="rg-card__img" width="640" height="800" loading="lazy">
-              <div class="rg-card__quick-actions">
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--outline" data-action="quick-view" data-id="6" style="flex:1;">Quick View</button>
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--primary" data-action="add-to-cart" data-id="6" style="flex:1;">+ Add</button>
-              </div>
-            </div>
-            <div class="rg-card__body">
-              <div class="rg-card__meta">Hunza Valley · Hand-loomed</div>
-              <h3 class="rg-card__title"><a href="product.html?id=6">Embroidered Wool Shawl</a></h3>
-              <div class="rg-card__price-row">
-                <span class="rg-card__price">PKR 5,000</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="rg-card" data-product-id="10">
-            <div class="rg-card__media-wrap">
-              <img src="assets/img/products/traditional-waistcoat-1.webp" alt="Traditional Men's Waistcoat" class="rg-card__img" width="640" height="800" loading="lazy">
-              <div class="rg-card__quick-actions">
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--outline" data-action="quick-view" data-id="10" style="flex:1;">Quick View</button>
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--primary" data-action="add-to-cart" data-id="10" style="flex:1;">+ Add</button>
-              </div>
-            </div>
-            <div class="rg-card__body">
-              <div class="rg-card__meta">Gilgit Guild · Pattu Wool</div>
-              <h3 class="rg-card__title"><a href="product.html?id=10">Traditional Men's Waistcoat</a></h3>
-              <div class="rg-card__price-row">
-                <span class="rg-card__price">PKR 6,500</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="rg-card" data-product-id="4">
-            <div class="rg-card__media-wrap">
-              <img src="assets/img/products/balti-woollen-cap/balti-woollen-cap-hero-oatmeal.webp" alt="Balti Woollen Cap" class="rg-card__img" width="640" height="800" loading="lazy">
-              <div class="rg-card__quick-actions">
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--outline" data-action="quick-view" data-id="4" style="flex:1;">Quick View</button>
-                <button type="button" class="rg-btn rg-btn--sm rg-btn--primary" data-action="add-to-cart" data-id="4" style="flex:1;">+ Add</button>
-              </div>
-            </div>
-            <div class="rg-card__body">
-              <div class="rg-card__meta">Skardu · Hand-rolled</div>
-              <h3 class="rg-card__title"><a href="product.html?id=4">Balti Woollen Cap</a></h3>
-              <div class="rg-card__price-row">
-                <span class="rg-card__price">PKR 2,200</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. ASYMMETRIC CRAFTSMANSHIP STORYTELLING (Tactile Material Details, <= 65ch Reading Width) -->
-    <section class="rg-section rg-section--alt" aria-label="Craftsmanship and Loom Story">
-      <div class="rg-container">
-        <div class="rg-story-grid">
-          <div class="rg-story-media">
-            <img src="assets/img/craft-weaving.webp" alt="Pit-loom hand weaving in Hunza Valley workshop" width="960" height="600" loading="lazy">
-            <div class="rg-story-media__caption">
-              <strong>Traditional Pit-Loom Weaving:</strong> Tension is maintained entirely by hand to produce dense, wind-defying sheep wool pattu cloth.
-            </div>
-          </div>
-
-          <div class="rg-story-content">
-            <span class="rg-eyebrow">Material Integrity</span>
-            <h2>From High Highland Pastures to Woven Heirloom</h2>
-            <p>
-              In the valleys of Gilgit, Hunza, and Skardu, sheep wool has shielded mountain households for generations. ReGongches works directly with village weavers who spin hand-washed highland fleece on wooden drop-spindles, preserving natural lanolin for water and chill resistance.
-            </p>
-
-            <div class="rg-craft-steps-list">
-              <div class="rg-craft-step-item">
-                <span class="rg-craft-step-marker">01</span>
-                <div>
-                  <h3 style="font-size:1rem;margin-bottom:2px;">Hand-Spun Sheep Wool</h3>
-                  <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-                    Naturally washed and spun on family wooden spindles without industrial harsh scouring agents.
-                  </p>
-                </div>
-              </div>
-
-              <div class="rg-craft-step-item">
-                <span class="rg-craft-step-marker">02</span>
-                <div>
-                  <h3 style="font-size:1rem;margin-bottom:2px;">Pit-Loom Patti Weaving</h3>
-                  <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-                    Dense herringbone and twill weaves constructed on traditional pit looms for longevity.
-                  </p>
-                </div>
-              </div>
-
-              <div class="rg-craft-step-item">
-                <span class="rg-craft-step-marker">03</span>
-                <div>
-                  <h3 style="font-size:1rem;margin-bottom:2px;">Silk Needlework Motifs</h3>
-                  <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-                    Geometric mountain symbols hand-stitched thread-by-thread in pure silk floss without printed tracings.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. PAKISTANI SIZING & TAILORING REASSURANCE (Clean Section with Dialog Trigger) -->
-    <section class="rg-section" aria-label="Sizing and Fitting Standards">
-      <div class="rg-container">
-        <div style="background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:clamp(2rem, 4vw, 3.5rem);display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--space-8);align-items:center;">
-          <div>
-            <span class="rg-eyebrow">Precise Regional Fit</span>
-            <h2 style="margin-block-end:var(--space-3);">Exact Centimetre Sizing</h2>
-            <p style="margin-block-end:var(--space-6);color:var(--text-secondary);">
-              Traditional caps and pattu waistcoats should sit comfortably without guesswork. Our sizing is calibrated in exact centimetres by local tailor collectives, ensuring your Gilgiti cap rests naturally above the brow.
-            </p>
-            <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;">
-              <button type="button" class="rg-btn rg-btn--secondary" data-action="open-size-guide" data-chart="cap">
-                Open Cap Size Chart (54–60 cm)
-              </button>
-              <button type="button" class="rg-btn rg-btn--outline" data-action="open-size-guide" data-chart="waistcoat">
-                Waistcoat Dimensions
-              </button>
-            </div>
-          </div>
-
-          <div style="border-left:1px solid var(--rg-border);padding-left:clamp(0rem, 3vw, var(--space-8));">
-            <h3 style="font-size:1.15rem;margin-bottom:var(--space-3);">Our Tailor Commitment</h3>
-            <ul style="display:grid;gap:var(--space-3);font-size:var(--text-body-sm);color:var(--text-secondary);">
-              <li style="display:flex;gap:var(--space-2);">
-                <strong style="color:var(--rg-success);">✓</strong>
-                <span>Every cap measured by hand circumference before dispatch.</span>
-              </li>
-              <li style="display:flex;gap:var(--space-2);">
-                <strong style="color:var(--rg-success);">✓</strong>
-                <span>Hand-stitched cotton inner sweatband prevents forehead itching.</span>
-              </li>
-              <li style="display:flex;gap:var(--space-2);">
-                <strong style="color:var(--rg-success);">✓</strong>
-                <span>Hassle-free 7-day size exchange across all major Pakistani cities.</span>
+        <!-- Accordion 1: Shop Categories -->
+        <div class="rg-mobile-acc-item is-open">
+          <button type="button" class="rg-mobile-acc-header" data-rg-accordion-toggle aria-expanded="true">
+            <span class="rg-mobile-acc-title">
+              <svg width="18" height="18" aria-hidden="true">
+                <use href="#icon-sparkles"></use>
+              </svg>
+              Shop Categories
+            </span>
+            <svg width="16" height="16" aria-hidden="true" class="rg-mobile-acc-arrow">
+              <use href="#icon-chevron-down"></use>
+            </svg>
+          </button>
+          <div class="rg-mobile-acc-content" style="max-height: 500px;">
+            <ul>
+              <li><a href="shop.html" class="rg-mobile-acc-link highlight"><span>View All 27 Products</span> <span
+                    class="rg-badge rg-badge--new">All</span></a></li>
+              <li><a href="category.html?cat=Traditional+Dresses" class="rg-mobile-acc-link"><span>Traditional
+                    Dresses</span> <span class="rg-count">8</span></a></li>
+              <li><a href="category.html?cat=Caps+%26+Headwear" class="rg-mobile-acc-link"><span>Caps &amp;
+                    Headwear</span> <span class="rg-count">6</span></a></li>
+              <li><a href="category.html?cat=Shawls+%26+Scarves" class="rg-mobile-acc-link"><span>Shawls &amp;
+                    Scarves</span> <span class="rg-count">5</span></a></li>
+              <li><a href="category.html?cat=Waistcoats+%26+Outerwear" class="rg-mobile-acc-link"><span>Waistcoats &amp;
+                    Outerwear</span> <span class="rg-count">6</span></a></li>
+              <li><a href="category.html?cat=Textile+Accessories" class="rg-mobile-acc-link"><span>Textile
+                    Accessories</span> <span class="rg-count">3</span></a></li>
+              <li><a href="category.html?cat=Home+Textiles" class="rg-mobile-acc-link"><span>Home Textiles</span> <span
+                    class="rg-count">3</span></a></li>
+              <li><a href="gift-sets.html" class="rg-mobile-acc-link"><span>Heritage Gift Sets &amp; Builder</span></a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 5. ARTISAN SPOTLIGHT (Grounded Craft Profiles) -->
-    <section class="rg-section rg-section--alt" aria-label="Meet the Makers">
-      <div class="rg-container">
-        <div class="rg-section-header">
-          <span class="rg-eyebrow">Collective Heritage</span>
-          <h2>The Hands Behind the Stitches</h2>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:var(--space-6);">
-          <div style="background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);">
-            <div style="display:flex;align-items:center;gap:var(--space-4);">
-              <img src="assets/img/artisans/artisan-1.webp" alt="Gulshan Bibi Collective" width="72" height="72" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--brand-accent);">
-              <div>
-                <h3 style="margin:0;font-size:1.15rem;">Gulshan Bibi Collective</h3>
-                <span style="font-size:var(--text-body-sm);color:var(--text-secondary);">Karimabad, Hunza · 18 Years Weaving</span>
-              </div>
-            </div>
-            <p style="font-style:italic;color:var(--text-secondary);font-size:var(--text-body-sm);margin:0;line-height:1.6;">
-              "Every diamond motif in our shawls is counted by thread. When someone wears our work in Islamabad or Lahore, they carry weeks of quiet focus from our valley."
-            </p>
-            <div style="margin-top:auto;">
-              <a href="artisan.html?id=artisan-1" class="rg-btn rg-btn--outline rg-btn--sm">View Their Shawls</a>
-            </div>
-          </div>
-
-          <div style="background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);">
-            <div style="display:flex;align-items:center;gap:var(--space-4);">
-              <img src="assets/img/artisans/artisan-2.webp" alt="Ali Madad Tailoring Guild" width="72" height="72" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--brand-accent);">
-              <div>
-                <h3 style="margin:0;font-size:1.15rem;">Ali Madad Tailoring Guild</h3>
-                <span style="font-size:var(--text-body-sm);color:var(--text-secondary);">Gilgit Bazaar · Master Cap Maker</span>
-              </div>
-            </div>
-            <p style="font-style:italic;color:var(--text-secondary);font-size:var(--text-body-sm);margin:0;line-height:1.6;">
-              "Rolling raw wool into a durable Gilgiti cap requires the exact moisture and hand tension. A well-made cap retains its shape for over twenty winters."
-            </p>
-            <div style="margin-top:auto;">
-              <a href="artisan.html?id=artisan-2" class="rg-btn rg-btn--outline rg-btn--sm">View Their Caps</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. NATIONWIDE DISPATCH & LOGISTICS (Courier Partners & COD) -->
-    <section class="rg-section" aria-label="Courier Logistics and Ordering">
-      <div class="rg-container">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:var(--space-6);">
-          <div style="padding:var(--space-6);background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);">
-            <h3 style="font-size:1.1rem;margin-bottom:var(--space-2);">Tracked Nationwide Delivery</h3>
-            <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-              Dispatched via Leopards Courier, TCS Express, and Pakistan Post with live tracking on every parcel.
-            </p>
-          </div>
-
-          <div style="padding:var(--space-6);background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);">
-            <h3 style="font-size:1.1rem;margin-bottom:var(--space-2);">Cash on Delivery (COD)</h3>
-            <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-              Inspect your parcel upon arrival. Pay cash to the courier representative anywhere in Pakistan.
-            </p>
-          </div>
-
-          <div style="padding:var(--space-6);background-color:var(--bg-surface);border:1px solid var(--rg-border);border-radius:var(--radius-card);">
-            <h3 style="font-size:1.1rem;margin-bottom:var(--space-2);">Raast &amp; Bank Transfer</h3>
-            <p style="font-size:var(--text-body-sm);color:var(--text-secondary);margin:0;">
-              Instant fee-free IBFT payments via Raast to our verified Meezan Bank account with automated verification.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Native <dialog> Quick View Modal -->
-  <dialog id="rg-quickview-dialog" class="rg-dialog" aria-labelledby="rg-qv-title"></dialog>
-
-  <!-- Native <dialog> Size Guide Modal -->
-  <dialog id="rg-sizeguide-dialog" class="rg-dialog" aria-labelledby="rg-sg-title"></dialog>
-
-  <!-- Native <dialog> Slide-Over Cart Drawer -->
-  <dialog id="rg-cart-drawer" class="rg-drawer" aria-labelledby="rg-drawer-title"></dialog>
-
-  <!-- Refined Editorial Colophon Footer (Clean 4-Column Layout) -->
-  <footer class="site-footer" id="colophon">
-    <div class="rg-container">
-      <div class="site-footer__grid">
-        <!-- Col 1: Brand & Origin -->
-        <div class="site-footer__col">
-          <h3>ReGongches</h3>
-          <p style="font-size:var(--text-body-sm);color:rgba(247,245,240,0.8);line-height:1.6;margin-bottom:var(--space-4);">
-            Documenting and preserving the mountain craft traditions of Gilgit-Baltistan through fair artisan compensation and certified regional materials.
-          </p>
-          <div style="font-family:'Noto Nastaliq Urdu', Georgia, serif;font-size:0.95rem;color:var(--brand-accent);line-height:1.8;">
-            پہاڑی ورثے کے دھاگے — گلگت بلتستان کی مستند دستکاری
-          </div>
-        </div>
-
-        <!-- Col 2: Collection Navigation -->
-        <div class="site-footer__col">
-          <h3>Collection</h3>
-          <div class="site-footer__links">
-            <a href="shop.html">All 27 Heritage Pieces</a>
-            <a href="category.html?cat=Caps+%26+Headwear">Gilgiti &amp; Pakol Caps</a>
-            <a href="category.html?cat=Shawls+%26+Scarves">Hand-Loomed Wool Shawls</a>
-            <a href="category.html?cat=Waistcoats+%26+Outerwear">Pattu Wool Waistcoats</a>
-            <a href="gift-sets.html">Curated Heritage Gift Sets</a>
-          </div>
-        </div>
-
-        <!-- Col 3: Assistance & Policies -->
-        <div class="site-footer__col">
-          <h3>Assistance</h3>
-          <div class="site-footer__links">
-            <a href="size-guide.html">Cap &amp; Garment Size Charts</a>
-            <a href="shipping-policy.html">Shipping Timelines &amp; Rates</a>
-            <a href="returns-exchange.html">7-Day Return &amp; Exchange Policy</a>
-            <a href="authenticity.html">Artisan Origin Verification</a>
-            <a href="faq.html">Frequently Asked Questions</a>
-          </div>
-        </div>
-
-        <!-- Col 4: Contact & Workshop -->
-        <div class="site-footer__col">
-          <h3>Client Services</h3>
-          <div class="site-footer__links">
-            <a href="https://wa.me/923408500976" target="_blank" rel="noopener noreferrer">WhatsApp: +92 340 8500976</a>
-            <a href="tel:03408500976">Call: 0340-8500976</a>
-            <a href="mailto:care@regongches.store">Email: care@regongches.store</a>
-            <span style="font-size:0.75rem;color:rgba(247,245,240,0.6);margin-top:var(--space-2);">
-              Workshops: Karimabad (Hunza) &amp; Main Bazaar (Gilgit)
+        <!-- Accordion 2: Shop by Region -->
+        <div class="rg-mobile-acc-item">
+          <button type="button" class="rg-mobile-acc-header" data-rg-accordion-toggle aria-expanded="false">
+            <span class="rg-mobile-acc-title">
+              <svg width="18" height="18" aria-hidden="true">
+                <use href="#icon-map-pin"></use>
+              </svg>
+              Shop by Region (10 Districts)
             </span>
+            <svg width="16" height="16" aria-hidden="true" class="rg-mobile-acc-arrow">
+              <use href="#icon-chevron-down"></use>
+            </svg>
+          </button>
+          <div class="rg-mobile-acc-content">
+            <div class="rg-mobile-region-group">
+              <span class="rg-mobile-group-label">Gilgit &amp; Diamer Divisions</span>
+              <div class="rg-mobile-chips">
+                <a href="region.html?region=hunza">Hunza (6)</a>
+                <a href="region.html?region=gilgit">Gilgit (4)</a>
+                <a href="region.html?region=nagar">Nagar (3)</a>
+                <a href="region.html?region=ghizer">Ghizer (2)</a>
+                <a href="region.html?region=astore">Astore (1)</a>
+                <a href="region.html?region=diamer">Diamer (1)</a>
+              </div>
+              <span class="rg-mobile-group-label" style="margin-block-start:10px;">Baltistan Division</span>
+              <div class="rg-mobile-chips">
+                <a href="region.html?region=skardu">Skardu (3)</a>
+                <a href="region.html?region=shigar">Shigar (2)</a>
+                <a href="region.html?region=ghanche">Ghanche (1)</a>
+                <a href="region.html?region=kharmang">Kharmang (1)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Custom Orders (Direct link) -->
+        <div class="rg-mobile-direct-item">
+          <a href="custom-orders.html" class="rg-mobile-direct-link">
+            <span class="rg-mobile-acc-title">
+              <svg width="18" height="18" aria-hidden="true">
+                <use href="#icon-ruler"></use>
+              </svg>
+              Custom &amp; Wedding Orders
+            </span>
+            <span class="rg-nav-badge">Bespoke</span>
+          </a>
+        </div>
+
+        <!-- Accordion 4: Our Heritage -->
+        <div class="rg-mobile-acc-item">
+          <button type="button" class="rg-mobile-acc-header" data-rg-accordion-toggle aria-expanded="false">
+            <span class="rg-mobile-acc-title">
+              <svg width="18" height="18" aria-hidden="true">
+                <use href="#icon-shield"></use>
+              </svg>
+              Our Heritage &amp; Artisans
+            </span>
+            <svg width="16" height="16" aria-hidden="true" class="rg-mobile-acc-arrow">
+              <use href="#icon-chevron-down"></use>
+            </svg>
+          </button>
+          <div class="rg-mobile-acc-content">
+            <ul>
+              <li><a href="artisans.html" class="rg-mobile-acc-link"><span>Meet the Artisans</span></a></li>
+              <li><a href="authenticity.html" class="rg-mobile-acc-link"><span>Origin &amp; Authenticity
+                    Standard</span></a></li>
+              <li><a href="our-story.html" class="rg-mobile-acc-link"><span>Our Story &amp; Founder Mission</span></a>
+              </li>
+              <li><a href="size-guide.html" class="rg-mobile-acc-link"><span>Size &amp; Fit Guide (cm &amp;
+                    in)</span></a></li>
+              <li><a href="collections.html" class="rg-mobile-acc-link"><span>Curated Seasonal Edits</span></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Item 5: Journal (Direct link) -->
+        <div class="rg-mobile-direct-item">
+          <a href="journal.html" class="rg-mobile-direct-link">
+            <span class="rg-mobile-acc-title">
+              <svg width="18" height="18" aria-hidden="true">
+                <use href="#icon-sparkles"></use>
+              </svg>
+              Cultural Journal
+            </span>
+            <svg width="14" height="14" aria-hidden="true">
+              <use href="#icon-chevron-right"></use>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <div class="rg-drawer__footer rg-mobile-drawer-footer">
+      <div class="rg-mobile-footer-actions">
+        <a href="account.html" class="rg-btn rg-btn--outline rg-btn--sm">
+          <svg width="15" height="15" aria-hidden="true">
+            <use href="#icon-user"></use>
+          </svg>
+          My Account
+        </a>
+        <a href="contact.html" class="rg-btn rg-btn--secondary rg-btn--sm">
+          <svg width="15" height="15" aria-hidden="true">
+            <use href="#icon-whatsapp"></use>
+          </svg>
+          WhatsApp Care
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mini-Cart Drawer (Slides from Right) -->
+  <aside class="rg-drawer" id="rg-minicart-drawer" aria-label="Shopping Bag Drawer">
+    <div class="rg-drawer__header">
+      <h2 style="font-size:var(--text-lg);margin:0;">Your Heritage Bag (<span data-rg-cart-count>0</span>)</h2>
+      <button type="button" class="rg-icon-btn" data-rg-close-overlays aria-label="Close shopping bag">
+        <svg width="22" height="22" aria-hidden="true">
+          <use href="#icon-close"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="rg-drawer__body" id="rg-minicart-body"></div>
+    <div class="rg-drawer__footer" id="rg-minicart-footer"></div>
+  </aside>
+
+  <!-- Product-Type-Specific Size Guide Modal (Caps, Waistcoats, Dresses, Shawls in cm AND inches) -->
+  <div class="rg-modal" id="rg-size-guide-modal" role="dialog" aria-modal="true" aria-labelledby="rg-size-guide-title">
+    <div class="rg-modal__dialog">
+      <div
+        style="display:flex;align-items:center;justify-content:space-between;margin-block-end:16px;padding-block-end:12px;border-block-end:1px solid var(--rg-border);">
+        <div>
+          <span class="rg-section__eyebrow">Apparel Measurement Standard</span>
+          <h2 id="rg-size-guide-title" style="font-size:var(--text-xl);margin:0;">ReGongches Size &amp; Fit Guide (cm
+            &amp; inches)</h2>
+        </div>
+        <button type="button" class="rg-icon-btn" data-rg-close-overlays aria-label="Close size guide">
+          <svg width="22" height="22" aria-hidden="true">
+            <use href="#icon-close"></use>
+          </svg>
+        </button>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-block-end:20px;">
+        <button type="button" class="rg-btn rg-btn--primary rg-btn--sm" data-size-tab="cap">Caps &amp; Headwear</button>
+        <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-size-tab="waistcoat">Waistcoats &amp;
+          Outerwear</button>
+        <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-size-tab="dress">Traditional
+          Dresses</button>
+        <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-size-tab="shawl">Shawls &amp;
+          Stoles</button>
+      </div>
+
+      <!-- Cap Size Panel -->
+      <div data-size-panel="cap">
+        <div
+          style="background:var(--bg-secondary);padding:14px 16px;border-radius:var(--radius-card);border:1px solid var(--rg-border-strong);margin-block-end:14px;">
+          <label for="rg-modal-cap-slider"
+            style="font-size:var(--text-xs);font-weight:700;text-transform:uppercase;display:block;margin-block-end:6px;">
+            Interactive Cap Size Finder (Slide 53 cm – 61 cm):
+          </label>
+          <input type="range" id="rg-modal-cap-slider" min="53" max="61" step="0.5" value="56"
+            data-rg-cap-slider="rg-modal-cap-slider-out" style="width:100%;">
+          <div id="rg-modal-cap-slider-out" style="font-size:var(--text-xs);margin-block-start:6px;">
+            Head Circumference: <strong>56 cm (22.0 in)</strong> → Recommended ReGongches Size: <span
+              class="rg-badge rg-badge--verified">Medium (M — 56 cm)</span>
+          </div>
+        </div>
+
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);">
+          <strong>How to measure your head for a Gilgiti or Hunza Cap:</strong> Wrap a flexible tape measure around your
+          head 1.5 cm (0.6 in) above your ears and across the middle of your forehead. Hold comfortably snug.
+        </p>
+        <table class="shop_table cart" style="margin-block:16px;">
+          <thead>
+            <tr>
+              <th>Label Size</th>
+              <th>Head Circumference (cm)</th>
+              <th>Head Circumference (inches)</th>
+              <th>Fit Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Small (S)</strong></td>
+              <td>54 cm</td>
+              <td>21.2 in</td>
+              <td>Snug crown; youths or smaller adult head</td>
+            </tr>
+            <tr>
+              <td><strong>Medium (M)</strong></td>
+              <td>56 cm</td>
+              <td>22.0 in</td>
+              <td>Most common standard adult fit</td>
+            </tr>
+            <tr>
+              <td><strong>Large (L)</strong></td>
+              <td>58 cm</td>
+              <td>22.8 in</td>
+              <td>Relaxed fit or thicker hair</td>
+            </tr>
+            <tr>
+              <td><strong>Extra Large (XL)</strong></td>
+              <td>60 cm</td>
+              <td>23.6 in</td>
+              <td>Generous crown circumference</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Waistcoat Size Panel -->
+      <div data-size-panel="waistcoat" hidden>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);">
+          <strong>How to measure for a Pattu Waistcoat or Jacket:</strong> Measure around the fullest part of your chest
+          over a light kameez or shirt. Our waistcoats include a 4 cm (1.5 in) comfort ease.
+        </p>
+        <table class="shop_table cart" style="margin-block:16px;">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest (inches / cm)</th>
+              <th>Shoulder Width (in / cm)</th>
+              <th>Garment Length (in / cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Small (S)</strong></td>
+              <td>38 in / 96.5 cm</td>
+              <td>16.5 in / 42 cm</td>
+              <td>27.0 in / 68.5 cm</td>
+            </tr>
+            <tr>
+              <td><strong>Medium (M)</strong></td>
+              <td>40 in / 101.5 cm</td>
+              <td>17.5 in / 44.5 cm</td>
+              <td>28.0 in / 71.0 cm</td>
+            </tr>
+            <tr>
+              <td><strong>Large (L)</strong></td>
+              <td>42 in / 106.5 cm</td>
+              <td>18.5 in / 47.0 cm</td>
+              <td>29.0 in / 73.5 cm</td>
+            </tr>
+            <tr>
+              <td><strong>Extra Large (XL)</strong></td>
+              <td>44 in / 112.0 cm</td>
+              <td>19.2 in / 49.0 cm</td>
+              <td>30.0 in / 76.0 cm</td>
+            </tr>
+            <tr>
+              <td><strong>XXL</strong></td>
+              <td>46 in / 117.0 cm</td>
+              <td>20.0 in / 51.0 cm</td>
+              <td>30.5 in / 77.5 cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Dress Size Panel -->
+      <div data-size-panel="dress" hidden>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);">
+          <strong>Traditional Cultural Dresses:</strong> Relaxed straight-cut silhouette with hand-embroidered yoke.
+        </p>
+        <table class="shop_table cart" style="margin-block:16px;">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust / Chest (in / cm)</th>
+              <th>Shoulder (in / cm)</th>
+              <th>Kameez Length (in / cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>XS</strong></td>
+              <td>34 in / 86 cm</td>
+              <td>13.5 in / 34 cm</td>
+              <td>41 in / 104 cm</td>
+            </tr>
+            <tr>
+              <td><strong>S</strong></td>
+              <td>36 in / 91.5 cm</td>
+              <td>14.0 in / 35.5 cm</td>
+              <td>42 in / 106.5 cm</td>
+            </tr>
+            <tr>
+              <td><strong>M</strong></td>
+              <td>38 in / 96.5 cm</td>
+              <td>14.5 in / 37 cm</td>
+              <td>43 in / 109 cm</td>
+            </tr>
+            <tr>
+              <td><strong>L</strong></td>
+              <td>41 in / 104 cm</td>
+              <td>15.5 in / 39.5 cm</td>
+              <td>44 in / 112 cm</td>
+            </tr>
+            <tr>
+              <td><strong>XL</strong></td>
+              <td>44 in / 112 cm</td>
+              <td>16.5 in / 42 cm</td>
+              <td>44 in / 112 cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Shawl Size Panel -->
+      <div data-size-panel="shawl" hidden>
+        <table class="shop_table cart" style="margin-block:16px;">
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Dimensions (cm)</th>
+              <th>Dimensions (inches)</th>
+              <th>Drape Style</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Everyday Neck Stole</strong></td>
+              <td>190 × 65 cm</td>
+              <td>75 × 25.5 in</td>
+              <td>Lightweight neck wrap or shoulder drape</td>
+            </tr>
+            <tr>
+              <td><strong>Standard Embroidered Shawl</strong></td>
+              <td>210 × 85 cm</td>
+              <td>82.5 × 33.5 in</td>
+              <td>Full shoulder &amp; festive drape</td>
+            </tr>
+            <tr>
+              <td><strong>Men's / Oversized Blanket Shawl</strong></td>
+              <td>230 × 100 cm</td>
+              <td>90.5 × 39.5 in</td>
+              <td>Traditional double-shoulder winter wrap</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;font-size:var(--text-xs);color:var(--text-secondary);padding-block-start:8px;">
+        <span>Need custom measurements? We offer made-to-measure tailoring.</span>
+        <a href="size-guide.html" style="font-weight:700;color:var(--brand-primary);text-decoration:underline;">Open
+          Full Printable Size Guide →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick View & Lightbox Modal -->
+  <div class="rg-modal" id="rg-quickview-modal" role="dialog" aria-modal="true" aria-label="Product Quick View">
+    <div class="rg-modal__dialog">
+      <div style="display:flex;justify-content:flex-end;margin-block-end:8px;">
+        <button type="button" class="rg-icon-btn" data-rg-close-overlays aria-label="Close quick view">
+          <svg width="22" height="22" aria-hidden="true">
+            <use href="#icon-close"></use>
+          </svg>
+        </button>
+      </div>
+      <div id="rg-quickview-body"></div>
+    </div>
+  </div>
+
+  <!-- Global Backdrop -->
+  <div class="rg-backdrop" id="rg-global-backdrop"></div>
+  <!-- RG:HEADER END -->
+
+  <main id="main-content" class="site-main">
+
+    <!-- Skippable First-Visit Branded Loader (< 1.2s) -->
+    <div class="rg-first-loader" id="rg-first-visit-loader" role="status" aria-label="Loading ReGongches">
+      <img src="assets/img/logo-mark.svg" alt="" width="76" height="60">
+      <strong style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;">ReGongches —
+        Threads of Mountain Heritage</strong>
+      <span style="font-size:12px;color:rgba(247,244,238,0.7);">Click anywhere to skip</span>
+    </div>
+    <!-- 1. HERO (Full-Viewport Cinematic Mountain Video & SVG Thread Drawing) -->
+    <section class="rg-hero" id="hero-banner-section">
+      <div class="rg-hero__media" aria-hidden="true">
+        <video class="rg-hero__video" id="rg-hero-video" autoplay muted loop playsinline preload="auto"
+          poster="assets/img/banners/hero-video-poster.webp">
+          <source src="assets/video/hero-mountain-heritage.mp4" type="video/mp4">
+          <img src="assets/img/banners/hero-video-poster.webp"
+            alt="Snow-capped Karakoram and Hunza Valley peaks with traditional hand-woven wool shawl and Gilgiti cap"
+            class="rg-hero__bg-img">
+        </video>
+        <img src="assets/img/banners/hero-video-poster.webp" alt="" class="rg-hero__fallback-img"
+          id="rg-hero-fallback-img">
+      </div>
+
+      <div class="rg-hero__overlay"></div>
+
+      <svg class="rg-hero__thread-svg" viewBox="0 0 1440 180" fill="none" aria-hidden="true">
+        <path class="rg-hero__thread-path" d="M-20 130 C240 20, 460 170, 740 70 C1020 -20, 1220 140, 1460 40"
+          stroke="#B8913A" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
+
+      <div class="rg-container rg-hero__content">
+        <span class="rg-badge rg-badge--handmade" style="margin-block-end:16px;">From the valleys of
+          Gilgit-Baltistan</span>
+        <h1 class="rg-hero__title">Threads of Mountain Heritage</h1>
+        <p class="rg-hero__subline">
+          Traditional clothing, shawls and caps made by artisans in Hunza, Gilgit, Skardu and beyond, with the maker,
+          material and origin shown on every piece.
+        </p>
+        <div class="rg-hero__ctas">
+          <a href="shop.html" class="rg-btn rg-btn--primary">Shop the Collection</a>
+          <a href="artisans.html" class="rg-btn rg-btn--outline" style="color:#F7F4EE;border-color:#F7F4EE;">Meet the
+            makers</a>
+        </div>
+        <div class="rg-hero__trust" role="list" aria-label="Authenticity and Service Guarantees">
+          <div class="rg-hero__trust-badge" role="listitem">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+            <span>Verified Valley Origin</span>
+          </div>
+          <div class="rg-hero__trust-badge" role="listitem">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-ruler"></use></svg>
+            <span>Exact Sizing (cm &amp; in)</span>
+          </div>
+          <div class="rg-hero__trust-badge" role="listitem">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-truck"></use></svg>
+            <span>Tracked Delivery Nationwide</span>
+          </div>
+          <div class="rg-hero__trust-badge" role="listitem">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-shield"></use></svg>
+            <span>Cash on Delivery</span>
           </div>
         </div>
       </div>
 
-      <!-- Bottom Colophon Row -->
-      <div class="site-footer__bottom">
-        <div class="site-footer__pay-options" aria-label="Accepted Payment Methods">
-          <span class="site-footer__pay-pill">Cash on Delivery (COD)</span>
-          <span class="site-footer__pay-pill">Raast Instant IBFT</span>
-          <span class="site-footer__pay-pill">Meezan Bank</span>
-          <span class="site-footer__pay-pill">JazzCash / Easypaisa</span>
+      <!-- Banner Video Controls Toolbar -->
+      <div class="rg-hero__video-controls" role="toolbar" aria-label="Banner Video Controls">
+        <button type="button" class="rg-hero__video-btn" id="rg-hero-play-pause-btn" aria-label="Pause background video"
+          title="Pause / Play background video">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="rg-icon-pause"
+            aria-hidden="true">
+            <rect x="5" y="4" width="4.5" height="16" rx="1.5"></rect>
+            <rect x="14.5" y="4" width="4.5" height="16" rx="1.5"></rect>
+          </svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="rg-icon-play"
+            aria-hidden="true" style="display:none;">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>
+          <span class="rg-hero__video-btn-text" id="rg-hero-play-pause-label">Pause</span>
+        </button>
+
+        <div class="rg-hero__video-switcher" role="group" aria-label="Switch Banner Video Scene">
+          <button type="button" class="rg-hero__scene-btn is-active"
+            data-video-src="assets/video/hero-mountain-heritage.mp4"
+            data-video-poster="assets/img/banners/hero-video-poster.webp"
+            title="Switch to Karakoram Valley Mountain &amp; Shawl scene">
+            <span>Karakoram Valley</span>
+          </button>
+          <button type="button" class="rg-hero__scene-btn" data-video-src="assets/video/artisan-hunza-loom.mp4"
+            data-video-poster="assets/img/banners/hero-artisan-poster.webp"
+            title="Switch to Hunza Artisan Frame-Loom Weaving scene">
+            <span>Hunza Artisan Loom</span>
+          </button>
         </div>
-        <div>
-          © 2026 ReGongches. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+      </div>
+    </section>
+    <!-- 2. SHOP BY CRAFT — Interactive Scene Rail (20 Products with 8 Center Crafts & Cursor Pan) -->
+    <style>
+      /* ── Shop by Craft: Scene Rail ──────────────────────────────────── */
+      .sr-craft-section {
+        background: #f7f5f0;
+        border-top: 1px solid #ebe5dc;
+        border-bottom: 1px solid #ebe5dc;
+        padding-top: clamp(40px, 5vw, 64px);
+        padding-bottom: clamp(44px, 5vw, 68px);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .sr-craft-section .rg-section__eyebrow {
+        color: #8A282B;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .sr-craft-section h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 3.8vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #1a1410;
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      /* Stage: holds the curved rod, edge masks and hanging items */
+      .sr-stage {
+        position: relative;
+        width: 100%;
+        min-height: 490px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-top: 24px;
+        user-select: none;
+      }
+
+      /* Subtle edge gradient masks for seamless overflow */
+      .sr-stage::before,
+      .sr-stage::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 80px;
+        width: clamp(30px, 5vw, 80px);
+        z-index: 4;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+
+      .sr-stage::before {
+        left: 0;
+        background: linear-gradient(to right, #f7f5f0 20%, rgba(247, 245, 240, 0));
+      }
+
+      .sr-stage::after {
+        right: 0;
+        background: linear-gradient(to left, #f7f5f0 20%, rgba(247, 245, 240, 0));
+      }
+
+      /* Floating cursor guidance pill */
+      .sr-cursor-guide {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(184, 145, 58, 0.25);
+        color: #7a6e60;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        padding: 5px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+        z-index: 5;
+        transition: opacity 0.3s, transform 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      }
+
+      .sr-cursor-guide svg {
+        color: #B8913A;
+      }
+
+      /* Curved overhead hanging rod */
+      .sr-rod {
+        position: absolute;
+        top: 28px;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        pointer-events: none;
+        z-index: 2;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+      }
+
+      /* Rail scroll container */
+      .sr-rail {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: visible;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 24px clamp(32px, 6vw, 100px) 58px;
+        cursor: grab;
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .sr-rail::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sr-rail.is-dragging {
+        cursor: grabbing;
+      }
+
+      /* Individual craft garment item */
+      .sr-item {
+        flex: 0 0 auto;
+        width: 124px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        text-decoration: none;
+        padding: 0 4px;
+      }
+
+      .sr-item:hover,
+      .sr-item.is-focused {
+        transform: translateY(-22px) scale(1.04);
+      }
+
+      /* Hanger wire + hook */
+      .sr-item__hanger {
+        width: 52px;
+        height: 38px;
+        margin-bottom: -4px;
+        position: relative;
+        z-index: 4;
+        transition: filter 0.25s, transform 0.25s;
+      }
+
+      .sr-item:hover .sr-item__hanger {
+        filter: drop-shadow(0 2px 6px rgba(184, 145, 58, 0.6));
+      }
+
+      /* Garment card */
+      .sr-item__card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sr-item__img-wrap {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(26, 20, 16, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.35s, transform 0.35s;
+      }
+
+      .sr-item:hover .sr-item__img-wrap {
+        box-shadow: 0 20px 36px rgba(26, 20, 16, 0.2), 0 4px 10px rgba(184, 145, 58, 0.25);
+      }
+
+      .sr-item__img {
+        width: 110px;
+        height: 156px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .sr-item:hover .sr-item__img {
+        transform: scale(1.06);
+      }
+
+      /* Craft Tag below piece */
+      .sr-item__craft-tag {
+        margin-top: 10px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #5a4f43;
+        text-align: center;
+        white-space: nowrap;
+        background: #ede8df;
+        padding: 3px 10px;
+        border-radius: 12px;
+        letter-spacing: 0.02em;
+        transition: background 0.2s, color 0.2s;
+        max-width: 116px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .sr-item.is-main-craft .sr-item__craft-tag {
+        background: #f2ebd9;
+        color: #6a5328;
+        border: 1px solid rgba(184, 145, 58, 0.25);
+      }
+
+      .sr-item:hover .sr-item__craft-tag {
+        background: #1a1410;
+        color: #f7f4ee;
+        border-color: #1a1410;
+      }
+
+      /* Bottom info row */
+      .sr-bottom {
+        padding: 20px 48px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        border-top: 1px solid #ebe5dc;
+        position: relative;
+        z-index: 5;
+        flex-wrap: wrap;
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .sr-bottom__info {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+      }
+
+      .sr-bottom__name {
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 700;
+        color: #1a1410;
+        letter-spacing: -0.01em;
+      }
+
+      .sr-bottom__price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #B8913A;
+      }
+
+      .sr-bottom__hint {
+        font-size: 12px;
+        color: #8c8275;
+        margin-top: 3px;
+      }
+
+      /* Progress dots */
+      .sr-dots {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        max-width: 240px;
+        overflow-x: auto;
+        padding: 4px 2px;
+        scrollbar-width: none;
+      }
+
+      .sr-dots::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sr-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d6cfc4;
+        transition: all 0.25s;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .sr-dot.is-main {
+        background: #baa992;
+      }
+
+      .sr-dot.is-active {
+        width: 20px;
+        border-radius: 4px;
+        background: #1a1410;
+      }
+
+      .sr-bottom__right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .sr-bottom__tagline {
+        font-size: 12px;
+        color: #7a6e60;
+        text-align: right;
+        line-height: 1.4;
+      }
+
+      .sr-bottom__cta {
+        padding: 10px 22px;
+        border-radius: 24px;
+        background: #1a1410;
+        color: #F7F4EE;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: background 0.2s, transform 0.15s;
+      }
+
+      .sr-bottom__cta:hover {
+        background: #B8913A;
+        transform: translateY(-1px);
+      }
+
+      /* ── Quick View Modal ─────────────────────────────────────────── */
+      .sr-qv-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: rgba(19, 36, 59, 0.7);
+        backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .sr-qv-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .sr-qv {
+        background: #fff;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 820px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+        box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+        position: relative;
+        transform: scale(0.95) translateY(12px);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        max-height: 90vh;
+      }
+
+      .sr-qv-overlay.is-open .sr-qv {
+        transform: scale(1) translateY(0);
+      }
+
+      .sr-qv__close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #f4f2ef;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #1a1410;
+        z-index: 10;
+        transition: background 0.2s, transform 0.15s;
+      }
+
+      .sr-qv__close:hover {
+        background: #1a1410;
+        color: #fff;
+        transform: rotate(90deg);
+      }
+
+      .sr-qv__img-panel {
+        background: #f7f5f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        position: relative;
+      }
+
+      .sr-qv__counter {
+        position: absolute;
+        top: 20px;
+        left: 24px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        color: #a09282;
+      }
+
+      .sr-qv__main-img {
+        max-width: 250px;
+        max-height: 330px;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.12));
+        margin-bottom: 16px;
+        transition: opacity 0.3s;
+      }
+
+      .sr-qv__view-tabs {
+        display: flex;
+        gap: 8px;
+      }
+
+      .sr-qv__view-tab {
+        padding: 5px 16px;
+        border-radius: 20px;
+        border: 1.5px solid #dcd6cc;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        color: #777;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .sr-qv__view-tab.is-active {
+        background: #1a1410;
+        color: #fff;
+        border-color: #1a1410;
+      }
+
+      .sr-qv__info-panel {
+        padding: 36px 32px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 14px;
+        overflow-y: auto;
+      }
+
+      .sr-qv__craft-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fdf5e7;
+        color: #8A282B;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        width: fit-content;
+      }
+
+      .sr-qv__name {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        color: #1a1410;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      .sr-qv__price {
+        font-size: 18px;
+        font-weight: 600;
+        color: #B8913A;
+      }
+
+      .sr-qv__desc {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #665f56;
+      }
+
+      .sr-qv__size-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #888;
+        margin-bottom: 6px;
+      }
+
+      .sr-qv__sizes {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .sr-qv__size-btn {
+        padding: 6px 14px;
+        border-radius: 16px;
+        border: 1.5px solid #e0e0e0;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        color: #555;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.18s;
+      }
+
+      .sr-qv__size-btn:hover {
+        border-color: #B8913A;
+        color: #B8913A;
+      }
+
+      .sr-qv__size-btn.is-selected {
+        background: #1a1410;
+        border-color: #1a1410;
+        color: #fff;
+      }
+
+      .sr-qv__atc {
+        width: 100%;
+        padding: 14px;
+        border-radius: 40px;
+        border: none;
+        background: #1a1410;
+        color: #F7F4EE;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .sr-qv__atc:hover {
+        background: #B8913A;
+        transform: scale(1.01);
+      }
+
+      .sr-qv__meta-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #999;
+        padding-top: 8px;
+        border-top: 1px solid #f0ece5;
+      }
+
+      .sr-qv__view-page {
+        color: #B8913A;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 12px;
+      }
+
+      .sr-qv__view-page:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .sr-rail {
+          padding: 14px 20px 44px;
+        }
+
+        .sr-item {
+          width: 95px;
+        }
+
+        .sr-item__img {
+          width: 82px;
+          height: 124px;
+        }
+
+        .sr-bottom {
+          padding: 16px 20px 0;
+        }
+
+        .sr-qv {
+          grid-template-columns: 1fr;
+        }
+
+        .sr-qv__img-panel {
+          display: none;
+        }
+
+        .sr-cursor-guide {
+          display: none;
+        }
+      }
+    </style>
+
+    <section class="rg-section sr-craft-section" id="shop-by-craft-section"
+      aria-label="Shop by craft — Interactive Clothing Rail">
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Eight traditions of cloth, from everyday caps to wedding wear.</span>
+            <h2>Shop by craft</h2>
+          </div>
+          <a href="shop.html" class="rg-btn rg-btn--outline rg-btn--sm">View All 27 Pieces →</a>
+        </div>
+      </div>
+
+      <!-- Scene Rail Stage -->
+      <div class="sr-stage" id="sr-stage">
+
+        <!-- Visual guidance badge -->
+        <div class="sr-cursor-guide" id="sr-cursor-guide">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 16l-4-4m0 0l4-4m-4 4h18m-4 4l4-4m0 0l-4-4" />
+          </svg>
+          <span>Move cursor left or right to explore all 20 pieces</span>
+        </div>
+
+        <!-- Curved overhead rod drawn via SVG -->
+        <svg class="sr-rod" id="sr-rod-svg" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+          <path id="sr-rod-path" d="M-20,60 Q720,-10 1460,60" stroke="#B8913A" stroke-width="3.5" fill="none"
+            stroke-linecap="round" />
+        </svg>
+
+        <!-- Scrollable Rail of craft pieces (20 items) -->
+        <div class="sr-rail" id="sr-rail" role="list" aria-label="Handcrafted pieces hanging on rail">
+          <!-- Items injected by JS -->
+        </div>
+
+        <!-- Bottom info bar -->
+        <div class="sr-bottom">
+          <div>
+            <div class="sr-bottom__info">
+              <div class="sr-bottom__name" id="sr-active-name">Hover a craft piece</div>
+              <div class="sr-bottom__price" id="sr-active-price">PKR 2,500</div>
+            </div>
+            <div class="sr-bottom__hint" id="sr-hint">Hover to lift · click for quick view</div>
+          </div>
+
+          <!-- Progress dots for all 20 pieces -->
+          <div class="sr-dots" id="sr-dots" aria-hidden="true"></div>
+
+          <div class="sr-bottom__right">
+            <div class="sr-bottom__tagline">Hand-crafted in Gilgit-Baltistan.<br>Made to last generations.</div>
+            <a href="shop.html" class="sr-bottom__cta">Shop all crafts →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Quick-View Modal (Scene Rail) -->
+    <div class="sr-qv-overlay" id="sr-qv-overlay" role="dialog" aria-modal="true" aria-label="Product Quick View">
+      <div class="sr-qv" id="sr-qv">
+        <button class="sr-qv__close" id="sr-qv-close" aria-label="Close quick view">✕</button>
+
+        <!-- Left: image panel -->
+        <div class="sr-qv__img-panel">
+          <span class="sr-qv__counter" id="sr-qv-counter">01 / 20</span>
+          <img src="" alt="" class="sr-qv__main-img" id="sr-qv-img">
+          <div class="sr-qv__view-tabs">
+            <button class="sr-qv__view-tab is-active" data-qv-view="front">Front</button>
+            <button class="sr-qv__view-tab" data-qv-view="back">Back</button>
+          </div>
+        </div>
+
+        <!-- Right: info panel -->
+        <div class="sr-qv__info-panel">
+          <div class="sr-qv__craft-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span id="sr-qv-region">Hunza Valley</span>
+          </div>
+          <h2 class="sr-qv__name" id="sr-qv-name">Traditional Gilgiti Cap</h2>
+          <div class="sr-qv__price" id="sr-qv-price">PKR 2,500</div>
+          <div class="sr-qv__desc" id="sr-qv-desc">Rolled wool Gilgiti caps, embroidered caps and headwear, sized by
+            head circumference.</div>
+          <div>
+            <div class="sr-qv__size-label">Size / Fit</div>
+            <div class="sr-qv__sizes" id="sr-qv-sizes">
+              <button class="sr-qv__size-btn" data-size="S">S</button>
+              <button class="sr-qv__size-btn is-selected" data-size="M">M</button>
+              <button class="sr-qv__size-btn" data-size="L">L</button>
+              <button class="sr-qv__size-btn" data-size="XL">XL</button>
+            </div>
+          </div>
+          <button class="sr-qv__atc" id="sr-qv-atc">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            Add to Cart
+          </button>
+          <div class="sr-qv__meta-row">
+            <span id="sr-qv-product-label">Caps &amp; Headwear</span>
+            <a href="category.html?cat=Caps+%26+Headwear" class="sr-qv__view-page" id="sr-qv-product-link">Browse
+              Category →</a>
+          </div>
         </div>
       </div>
     </div>
-  </footer>
 
-  <!-- Application Modules (Clean Separation, Zero Inline Handlers) -->
-  <script src="js/data.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/ui.js"></script>
+    <!-- Scene Rail JS (20 Products + Smooth Cursor Motion) -->
+    <script>
+      (function () {
+        // ── 20 Products: 6 Left, 8 Main Crafts (Center), 6 Right ────────
+        const SR_PRODUCTS = [
+          // ── LEFT WING (Items 1–6) ──────────────────────────────────
+          {
+            id: 'highland-mittens',
+            name: 'Highland Wool Mittens',
+            craft: 'Winter Accessories',
+            isMain: false,
+            desc: 'Dense hand-knitted sheep wool mittens for bitter high-altitude cold, lined with soft brushed wool.',
+            region: 'Skardu, Baltistan',
+            price: 'PKR 1,800',
+            img: 'assets/img/products/highland-woven-wool-mittens/highland-woven-wool-mittens-hero.webp',
+            href: 'shop.html?category=Accessories',
+            sizes: ['S/M', 'L/XL'],
+            defaultSize: 'S/M',
+          },
+          {
+            id: 'wool-jacket',
+            name: 'Hand-Woven Wool Jacket',
+            craft: 'Outerwear',
+            isMain: false,
+            desc: 'Dense mountain wool jacket with tailored structured shoulders and genuine bone buttons.',
+            region: 'Hunza Valley',
+            price: 'PKR 12,500',
+            img: 'assets/img/products/hand-woven-wool-jacket/hand-woven-wool-jacket-hero-oatmeal.webp',
+            href: 'shop.html?category=Outerwear',
+            sizes: ['S', 'M', 'L', 'XL'],
+            defaultSize: 'M',
+          },
+          {
+            id: 'balti-cap',
+            name: 'Balti Woollen Cap',
+            craft: 'Caps & Headwear',
+            isMain: false,
+            desc: 'Traditional round Balti wool cap woven from unbleached natural oatmeal fleece in Skardu.',
+            region: 'Baltistan',
+            price: 'PKR 2,200',
+            img: 'assets/img/products/balti-woollen-cap/balti-woollen-cap-hero-oatmeal.webp',
+            href: 'category.html?cat=Caps+%26+Headwear',
+            sizes: ['54 cm', '56 cm', '58 cm', '60 cm'],
+            defaultSize: '56 cm',
+          },
+          {
+            id: 'coin-purse',
+            name: 'Embroidered Coin Purse',
+            craft: 'Textile Accessories',
+            isMain: false,
+            desc: 'Miniature geometric silk-stitch coin pouch crafted by women artisan cooperatives in Gojal.',
+            region: 'Gojal Valley',
+            price: 'PKR 1,400',
+            img: 'assets/img/products/embroidered-coin-purse/embroidered-coin-purse-hero-assorted.webp',
+            href: 'category.html?cat=Textile+Accessories',
+            sizes: ['Standard'],
+            defaultSize: 'Standard',
+          },
+          {
+            id: 'wool-muffler',
+            name: 'Hand-Woven Wool Muffler',
+            craft: 'Shawls & Scarves',
+            isMain: false,
+            desc: 'Soft brushed sheep-wool scarf with twisted fringe ends, naturally charcoal-dyed.',
+            region: 'Nagar Valley',
+            price: 'PKR 3,200',
+            img: 'assets/img/products/hand-woven-wool-muffler/hand-woven-wool-muffler-hero-charcoal.webp',
+            href: 'category.html?cat=Shawls+%26+Scarves',
+            sizes: ['Free Size'],
+            defaultSize: 'Free Size',
+          },
+          {
+            id: 'womens-waistcoat',
+            name: 'Embroidered Women\'s Waistcoat',
+            craft: 'Waistcoats & Outerwear',
+            isMain: false,
+            desc: 'Fitted black wool vest detailed with vibrant cross-stitch mountain floral borders.',
+            region: 'Hunza Valley',
+            price: 'PKR 7,500',
+            img: 'assets/img/products/embroidered-womens-waistcoat/embroidered-womens-waistcoat-hero-black.webp',
+            href: 'category.html?cat=Waistcoats+%26+Outerwear',
+            sizes: ['S', 'M', 'L'],
+            defaultSize: 'S',
+          },
+
+          // ── 8 MAIN CRAFTS (Items 7–14: Centered by default) ─────────
+          {
+            id: 'traditional-dresses',
+            name: 'Karimabad Silk Kameez',
+            craft: 'Traditional Dresses',
+            isMain: true,
+            desc: 'Embroidered dresses and regional outfits, made in limited runs and often to order.',
+            region: 'Hunza Valley',
+            price: 'PKR 14,000',
+            img: 'assets/img/products/karimabad-silk-embroidered-kameez-1.webp',
+            href: 'category.html?cat=Traditional+Dresses',
+            sizes: ['XS', 'S', 'M', 'L'],
+            defaultSize: 'S',
+          },
+          {
+            id: 'gilgiti-cap',
+            name: 'Traditional Gilgiti Cap',
+            craft: 'Caps & Headwear',
+            isMain: true,
+            desc: 'Rolled wool Gilgiti caps, embroidered caps and headwear, sized by head circumference.',
+            region: 'Gilgit District',
+            price: 'PKR 2,500',
+            img: 'assets/img/products/traditional-gilgiti-cap-1.webp',
+            href: 'category.html?cat=Caps+%26+Headwear',
+            sizes: ['54 cm (S)', '56 cm (M)', '58 cm (L)', '60 cm (XL)'],
+            defaultSize: '56 cm (M)',
+          },
+          {
+            id: 'embroidered-shawl',
+            name: 'Embroidered Wool Shawl',
+            craft: 'Shawls & Scarves',
+            isMain: true,
+            desc: 'Hand-woven wool shawls and embroidered stoles for warmth, ceremony and everyday wear.',
+            region: 'Nagar Valley',
+            price: 'PKR 8,500',
+            img: 'assets/img/products/embroidered-shawl-1.webp',
+            href: 'category.html?cat=Shawls+%26+Scarves',
+            sizes: ['Standard', 'Oversized'],
+            defaultSize: 'Standard',
+          },
+          {
+            id: 'traditional-waistcoat',
+            name: 'Traditional Pattu Waistcoat',
+            craft: 'Waistcoats & Outerwear',
+            isMain: true,
+            desc: 'Tailored waistcoats, wool jackets and long coats, cut for layering over shalwar kameez.',
+            region: 'Skardu, Baltistan',
+            price: 'PKR 6,200',
+            img: 'assets/img/products/traditional-waistcoat-1.webp',
+            href: 'category.html?cat=Waistcoats+%26+Outerwear',
+            sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+            defaultSize: 'L',
+          },
+          {
+            id: 'textile-accessories',
+            name: 'Embroidered Mountain Bag',
+            craft: 'Textile Accessories',
+            isMain: true,
+            desc: 'Embroidered bags, purses, belts and fabric jewellery, perfect as gifts or for daily use.',
+            region: 'Gojal Valley',
+            price: 'PKR 4,800',
+            img: 'assets/img/products/embroidered-handbag-1.webp',
+            href: 'category.html?cat=Textile+Accessories',
+            sizes: ['Standard'],
+            defaultSize: 'Standard',
+          },
+          {
+            id: 'home-textiles',
+            name: 'Shigar Cushion Cover',
+            craft: 'Home Textiles',
+            isMain: true,
+            desc: 'Cushion covers, runners and wall pieces that bring mountain craft into the home.',
+            region: 'Shigar Valley',
+            price: 'PKR 3,600',
+            img: 'assets/img/products/shigar-lattice-embroidered-cushion-cover-1.webp',
+            href: 'category.html?cat=Home+Textiles',
+            sizes: ['16×16"', '18×18"', '20×20"'],
+            defaultSize: '16×16"',
+          },
+          {
+            id: 'heritage-gifts',
+            name: 'Heritage Gift Set',
+            craft: 'Heritage Gifts',
+            isMain: true,
+            desc: 'Ready-to-give sets with gift wrap and an authenticity card.',
+            region: 'Gilgit-Baltistan',
+            price: 'PKR 9,500',
+            img: 'assets/img/products/heritage-gift-set-1.webp',
+            href: 'gift-sets.html',
+            sizes: ['Curated Box'],
+            defaultSize: 'Curated Box',
+          },
+          {
+            id: 'custom-festive',
+            name: 'Custom Festive Chugha',
+            craft: 'Custom & Festive Wear',
+            isMain: true,
+            desc: 'Made-to-measure pieces for weddings, Eid and cultural events. Book 3–5 weeks ahead.',
+            region: 'Hunza Valley',
+            price: 'PKR 22,000',
+            img: 'assets/img/products/hunza-embroidered-festive-chugha-1.webp',
+            href: 'custom-orders.html',
+            sizes: ['Made to Measure', 'Bespoke'],
+            defaultSize: 'Made to Measure',
+          },
+
+          // ── RIGHT WING (Items 15–20) ─────────────────────────────────
+          {
+            id: 'lightweight-stole',
+            name: 'Lightweight Stole',
+            craft: 'Shawls & Scarves',
+            isMain: false,
+            desc: 'Feather-light fine merino stole with delicate needlepoint vine motif in dusty rose.',
+            region: 'Hunza Valley',
+            price: 'PKR 5,400',
+            img: 'assets/img/products/embroidered-lightweight-stole/embroidered-lightweight-stole-hero-dusty-rose.webp',
+            href: 'category.html?cat=Shawls+%26+Scarves',
+            sizes: ['Free Size'],
+            defaultSize: 'Free Size',
+          },
+          {
+            id: 'grooms-cap',
+            name: 'Groom\'s Cap with Plume',
+            craft: 'Caps & Headwear',
+            isMain: false,
+            desc: 'Ceremonial charcoal Gilgiti cap with an ornate silver-plated pin and traditional white plume.',
+            region: 'Gilgit District',
+            price: 'PKR 3,800',
+            img: 'assets/img/products/grooms-gilgiti-cap-plume/grooms-gilgiti-cap-plume-hero-charcoal.webp',
+            href: 'category.html?cat=Caps+%26+Headwear',
+            sizes: ['56 cm (M)', '58 cm (L)', '60 cm (XL)'],
+            defaultSize: '58 cm (L)',
+          },
+          {
+            id: 'wool-belt',
+            name: 'Hand-Woven Wool Belt',
+            craft: 'Textile Accessories',
+            isMain: false,
+            desc: 'Tablet-woven wool waistband with braided tassels, traditionally worn with chughas and waistcoats.',
+            region: 'Gojal Valley',
+            price: 'PKR 2,400',
+            img: 'assets/img/products/hand-woven-wool-belt/hand-woven-wool-belt-hero-brown.webp',
+            href: 'category.html?cat=Textile+Accessories',
+            sizes: ['110 cm', '130 cm'],
+            defaultSize: '110 cm',
+          },
+          {
+            id: 'table-runner',
+            name: 'Loomed Table Runner',
+            craft: 'Home Textiles',
+            isMain: false,
+            desc: 'Natural unbleached sheep wool table runner with traditional mountain geometric border bands.',
+            region: 'Shigar Valley',
+            price: 'PKR 4,200',
+            img: 'assets/img/products/hand-woven-wool-table-runner/hand-woven-wool-table-runner-hero-natural.webp',
+            href: 'category.html?cat=Home+Textiles',
+            sizes: ['14×54"', '14×72"'],
+            defaultSize: '14×54"',
+          },
+          {
+            id: 'keepsake-box',
+            name: 'Mountain Keepsake Box',
+            craft: 'Heritage Gifts',
+            isMain: false,
+            desc: 'Hand-carved walnut wood keepsake box wrapped with an embroidered wool ribbon and seal.',
+            region: 'Gilgit-Baltistan',
+            price: 'PKR 4,500',
+            img: 'assets/img/products/mountain-keepsake-box/mountain-keepsake-box-hero-blue-silver-edition.webp',
+            href: 'gift-sets.html',
+            sizes: ['Small (6×4")', 'Medium (8×6")'],
+            defaultSize: 'Medium (8×6")',
+          },
+          {
+            id: 'bridal-ensemble',
+            name: 'Bridal Ceremonial Ensemble',
+            craft: 'Custom & Festive Wear',
+            isMain: false,
+            desc: 'Opulent heirloom bridal kurta, dupatta and pattu coat with heavy gold tilla wirework.',
+            region: 'Hunza Valley',
+            price: 'PKR 35,000',
+            img: 'assets/img/products/bridal-ceremonial-ensemble/bridal-ceremonial-ensemble-hero-ivory-red.webp',
+            href: 'custom-orders.html',
+            sizes: ['Bespoke Order'],
+            defaultSize: 'Bespoke Order',
+          },
+        ];
+
+        const stage = document.getElementById('sr-stage');
+        const rail = document.getElementById('sr-rail');
+        const activeName = document.getElementById('sr-active-name');
+        const activePrice = document.getElementById('sr-active-price');
+        const hint = document.getElementById('sr-hint');
+        const dotsContainer = document.getElementById('sr-dots');
+
+        // Render progress dots (20 total, distinct style for the 8 main)
+        SR_PRODUCTS.forEach((p, i) => {
+          const dot = document.createElement('div');
+          dot.className = 'sr-dot' + (p.isMain ? ' is-main' : '') + (i === 6 ? ' is-active' : '');
+          dot.title = p.craft + ': ' + p.name;
+          dot.addEventListener('click', () => {
+            const items = rail.querySelectorAll('.sr-item');
+            if (items[i]) {
+              const maxScroll = rail.scrollWidth - rail.clientWidth;
+              const target = items[i].offsetLeft - (rail.clientWidth / 2) + (items[i].offsetWidth / 2);
+              targetScroll = Math.max(0, Math.min(maxScroll, target));
+              setActiveProduct(p, i);
+            }
+          });
+          dotsContainer.appendChild(dot);
+        });
+
+        function setActiveDot(index) {
+          const dots = dotsContainer.querySelectorAll('.sr-dot');
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+        }
+
+        function setActiveProduct(p, index) {
+          activeName.textContent = p.craft + ' — ' + p.name;
+          activePrice.textContent = p.price;
+          hint.textContent = p.region + ' · Piece ' + (index + 1) + ' of ' + SR_PRODUCTS.length + ' · Click to inspect';
+          setActiveDot(index);
+        }
+
+        // Render hanging garments on the rail
+        SR_PRODUCTS.forEach((p, idx) => {
+          const item = document.createElement('div');
+          item.className = 'sr-item' + (p.isMain ? ' is-main-craft' : '');
+          item.setAttribute('role', 'listitem');
+          item.setAttribute('tabindex', '0');
+          item.setAttribute('aria-label', p.craft + ': ' + p.name + ', ' + p.price);
+
+          // SVG hanger hook & wire
+          item.innerHTML = `
+            <svg class="sr-item__hanger" viewBox="0 0 52 38" fill="none" aria-hidden="true">
+              <!-- Hook around rod -->
+              <path d="M26,14 C26,5 29,1 32,1 C35,1 36,4 35,7 C33.5,11 26,15 26,19" stroke="#B8913A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+              <!-- Triangular hanger body -->
+              <path d="M26,19 L3,36 L49,36 Z" stroke="#8a7350" stroke-width="2.2" stroke-linejoin="round" fill="rgba(184,145,58,0.12)"/>
+              <!-- Swivel collar -->
+              <circle cx="26" cy="19" r="2.5" fill="#B8913A"/>
+            </svg>
+            <div class="sr-item__card">
+              <div class="sr-item__img-wrap">
+                <img src="${p.img}" alt="${p.name}" class="sr-item__img" loading="lazy" width="110" height="156">
+              </div>
+              <div class="sr-item__craft-tag" title="${p.craft}">${p.craft}</div>
+            </div>
+          `;
+
+          // Hover interaction
+          item.addEventListener('mouseenter', () => setActiveProduct(p, idx));
+          item.addEventListener('focus', () => setActiveProduct(p, idx));
+
+          // Click to open quick-view modal
+          item.addEventListener('click', () => {
+            if (isDragging) return;
+            openQuickView(p, idx);
+          });
+
+          item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openQuickView(p, idx);
+            }
+          });
+
+          rail.appendChild(item);
+        });
+
+        // ── Physics & Cursor Smooth Motion Engine ────────────────────────
+        let currentScroll = 0;
+        let targetScroll = 0;
+        let mainCenterScroll = 0;
+        let isDragging = false;
+        let hasInitialized = false;
+
+        function calcMainCenterScroll() {
+          const items = rail.querySelectorAll('.sr-item');
+          if (items.length >= 14) {
+            // Center around the 8 main craft items (indices 6 to 13)
+            const itemFirst = items[6];
+            const itemLast = items[13];
+            const mainMiddle = (itemFirst.offsetLeft + itemLast.offsetLeft + itemLast.offsetWidth) / 2;
+            const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+            mainCenterScroll = Math.max(0, Math.min(maxScroll, mainMiddle - (rail.clientWidth / 2)));
+          } else {
+            mainCenterScroll = Math.max(0, (rail.scrollWidth - rail.clientWidth) / 2);
+          }
+          return mainCenterScroll;
+        }
+
+        // Initialize position on load
+        function initPosition() {
+          calcMainCenterScroll();
+          currentScroll = mainCenterScroll;
+          targetScroll = mainCenterScroll;
+          rail.scrollLeft = mainCenterScroll;
+          hasInitialized = true;
+          // Set initial active product to the first main piece (index 6, Traditional Dresses)
+          if (SR_PRODUCTS[6]) {
+            setActiveProduct(SR_PRODUCTS[6], 6);
+          }
+        }
+
+        window.addEventListener('load', initPosition);
+        window.addEventListener('resize', () => {
+          calcMainCenterScroll();
+          targetScroll = mainCenterScroll;
+        });
+
+        // Fallback init if load fired early
+        setTimeout(() => {
+          if (!hasInitialized || rail.scrollLeft === 0) {
+            initPosition();
+          }
+        }, 300);
+
+        // 60FPS Buttery Physics Animation Loop
+        function animateRail() {
+          if (!isDragging) {
+            const diff = targetScroll - currentScroll;
+            if (Math.abs(diff) > 0.25) {
+              // Smooth, luxurious momentum (damping factor 0.075)
+              currentScroll += diff * 0.075;
+              rail.scrollLeft = currentScroll;
+            }
+          } else {
+            currentScroll = rail.scrollLeft;
+            targetScroll = rail.scrollLeft;
+          }
+          requestAnimationFrame(animateRail);
+        }
+        requestAnimationFrame(animateRail);
+
+        // Cursor tracking on the stage
+        stage.addEventListener('mousemove', (e) => {
+          if (isDragging) return;
+          // Disable cursor panning on touch devices
+          if (window.matchMedia('(hover: none)').matches) return;
+
+          const rect = stage.getBoundingClientRect();
+          const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+          const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+
+          // Center sweet spot between 0.38 and 0.62:
+          // In this range, the 8 main products stay stably centered for effortless inspection
+          if (ratio >= 0.38 && ratio <= 0.62) {
+            targetScroll = mainCenterScroll;
+          } else if (ratio < 0.38) {
+            // Moving cursor to the left side glides to reveal left products
+            const norm = ratio / 0.38; // 0 to 1
+            const eased = Math.pow(norm, 1.3);
+            targetScroll = mainCenterScroll * eased;
+          } else {
+            // Moving cursor to the right side glides to reveal right products
+            const norm = (ratio - 0.62) / 0.38; // 0 to 1
+            const eased = Math.pow(norm, 1.3);
+            targetScroll = mainCenterScroll + (maxScroll - mainCenterScroll) * eased;
+          }
+        });
+
+        // When cursor leaves stage, smoothly return to the 8 main center crafts
+        stage.addEventListener('mouseleave', () => {
+          if (!isDragging) {
+            targetScroll = mainCenterScroll;
+          }
+        });
+
+        // Drag to scroll
+        let isDown = false;
+        let startX, scrollLeftVal;
+
+        rail.addEventListener('mousedown', (e) => {
+          isDown = true;
+          isDragging = false;
+          rail.classList.add('is-dragging');
+          startX = e.pageX - rail.offsetLeft;
+          scrollLeftVal = rail.scrollLeft;
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (!isDown) return;
+          isDown = false;
+          rail.classList.remove('is-dragging');
+          setTimeout(() => { isDragging = false; }, 60);
+        });
+
+        rail.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - rail.offsetLeft;
+          const walk = (x - startX) * 1.5;
+          if (Math.abs(walk) > 4) isDragging = true;
+          rail.scrollLeft = scrollLeftVal - walk;
+          currentScroll = rail.scrollLeft;
+          targetScroll = rail.scrollLeft;
+        });
+
+        // Mouse wheel scroll
+        rail.addEventListener('wheel', (e) => {
+          if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+          e.preventDefault();
+          const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+          targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + e.deltaY * 0.9));
+        }, { passive: false });
+
+        // Quick View modal
+        const overlay = document.getElementById('sr-qv-overlay');
+        const qvImg = document.getElementById('sr-qv-img');
+        const qvName = document.getElementById('sr-qv-name');
+        const qvPrice = document.getElementById('sr-qv-price');
+        const qvDesc = document.getElementById('sr-qv-desc');
+        const qvRegion = document.getElementById('sr-qv-region');
+        const qvCounter = document.getElementById('sr-qv-counter');
+        const qvSizes = document.getElementById('sr-qv-sizes');
+        const qvProductLabel = document.getElementById('sr-qv-product-label');
+        const qvProductLink = document.getElementById('sr-qv-product-link');
+        const qvAtc = document.getElementById('sr-qv-atc');
+
+        function openQuickView(p, idx) {
+          qvImg.src = p.img;
+          qvImg.alt = p.name;
+          qvName.textContent = p.name;
+          qvPrice.textContent = p.price;
+          qvDesc.textContent = p.desc;
+          qvRegion.textContent = p.region + ' · ' + p.craft;
+          qvCounter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(SR_PRODUCTS.length).padStart(2, '0');
+          qvProductLabel.textContent = p.craft;
+          qvProductLink.href = p.href;
+          qvProductLink.textContent = 'Explore ' + p.craft + ' →';
+
+          // Sizes
+          qvSizes.innerHTML = '';
+          p.sizes.forEach(s => {
+            const btn = document.createElement('button');
+            btn.className = 'sr-qv__size-btn' + (s === p.defaultSize ? ' is-selected' : '');
+            btn.dataset.size = s;
+            btn.textContent = s;
+            btn.addEventListener('click', () => {
+              qvSizes.querySelectorAll('.sr-qv__size-btn').forEach(b => b.classList.remove('is-selected'));
+              btn.classList.add('is-selected');
+            });
+            qvSizes.appendChild(btn);
+          });
+
+          overlay.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeQuickView() {
+          overlay.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+
+        document.getElementById('sr-qv-close').addEventListener('click', closeQuickView);
+        overlay.addEventListener('click', e => { if (e.target === overlay) closeQuickView(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQuickView(); });
+
+        // View tab toggle
+        document.querySelectorAll('[data-qv-view]').forEach(tab => {
+          tab.addEventListener('click', () => {
+            document.querySelectorAll('[data-qv-view]').forEach(t => t.classList.remove('is-active'));
+            tab.classList.add('is-active');
+          });
+        });
+
+        // ATC button feedback
+        qvAtc.addEventListener('click', () => {
+          const sel = qvSizes.querySelector('.is-selected');
+          if (!sel) { qvAtc.textContent = 'Please select a size'; return; }
+          qvAtc.innerHTML = '✓ Added to Cart';
+          qvAtc.style.background = '#3a7c5a';
+          setTimeout(() => {
+            qvAtc.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> Add to Cart';
+            qvAtc.style.background = '';
+          }, 2000);
+        });
+      })();
+    </script>
+
+    <!-- 3. "NEW FROM THE MOUNTAINS" Horizontal Scroll Product Rail -->
+    <section class="rg-section rg-section--alt">
+      <div class="rg-container" data-rg-rail-wrap>
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">The latest pieces from our workshops, photographed and measured before
+              they reach the shop.</span>
+            <h2>New from the mountains</h2>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rail-prev
+              aria-label="Scroll rail left">← Prev</button>
+            <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rail-next
+              aria-label="Scroll rail right">Next →</button>
+          </div>
+        </div>
+        <div class="rg-rail" id="rg-home-new-rail"></div>
+      </div>
+    </section>
+
+    <!-- 4. THE ORIGIN PROMISE (4-Column Explainer + Impact Counters) -->
+    <section class="rg-section">
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Who made it. Where it's from. What it's made of. What it means.</span>
+            <h2>Four answers on every product</h2>
+          </div>
+          <a href="authenticity.html" class="rg-btn rg-btn--outline rg-btn--sm">How We Verify Origin →</a>
+        </div>
+        <div class="rg-grid rg-grid--4">
+          <div
+            style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <span class="rg-badge rg-badge--handmade" style="margin-block-end:12px;">01 · Maker</span>
+            <h3 style="font-size:var(--text-lg);margin-block-end:8px;">Who Made It</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Each piece links to its maker or
+              workshop, shared with their permission.</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <span class="rg-badge rg-badge--new" style="margin-block-end:12px;">02 · Place</span>
+            <h3 style="font-size:var(--text-lg);margin-block-end:8px;">Where It Came From</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">We name the district, not just the
+              region.</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <span class="rg-badge rg-badge--hand-finished" style="margin-block-end:12px;">03 · Material</span>
+            <h3 style="font-size:var(--text-lg);margin-block-end:8px;">What It Is Made Of</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Material, weave and weight,
+              written plainly.</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <span class="rg-badge rg-badge--verified" style="margin-block-end:12px;">04 · Tradition</span>
+            <h3 style="font-size:var(--text-lg);margin-block-end:8px;">What It Represents</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">A short cultural note, checked by
+              a regional reviewer before it's published.</p>
+          </div>
+        </div>
+
+        <!-- Animated Impact Counters -->
+        <div
+          style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-block-start:32px;padding:24px;background:var(--bg-secondary);border-radius:var(--radius-card);text-align:center;">
+          <div><strong style="font-family:var(--font-display);font-size:var(--text-2xl);color:var(--brand-primary);"
+              data-rg-counter="10">10</strong>
+            <div style="font-size:var(--text-xs);color:var(--text-secondary);">Districts of Gilgit-Baltistan</div>
+          </div>
+          <div><strong style="font-family:var(--font-display);font-size:var(--text-2xl);color:var(--brand-secondary);"
+              data-rg-counter="6" data-rg-suffix="+">6+</strong>
+            <div style="font-size:var(--text-xs);color:var(--text-secondary);">Partner Artisan Collectives
+            </div>
+          </div>
+          <div><strong style="font-family:var(--font-display);font-size:var(--text-2xl);color:var(--brand-primary);"
+              data-rg-counter="25">25</strong>
+            <div style="font-size:var(--text-xs);color:var(--text-secondary);">Documented Heritage Pieces</div>
+          </div>
+          <div><strong style="font-family:var(--font-display);font-size:var(--text-2xl);color:var(--rg-success);"
+              data-rg-counter="100" data-rg-suffix="%">100%</strong>
+            <div style="font-size:var(--text-xs);color:var(--text-secondary);">Pieces Shipped with Origin Card</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SHOP BY REGION (Interactive SVG Map + District Preview) -->
+    <section class="rg-section rg-section--alt" hidden>
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Explore pieces by the district they come from.</span>
+            <h2>Every valley has its own hand</h2>
+          </div>
+          <a href="region.html?region=hunza" class="rg-btn rg-btn--outline rg-btn--sm">Browse Regional Archive →</a>
+        </div>
+        <div class="rg-region-explorer">
+          <div
+            style="background:var(--bg-elevated);padding:20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" fill="none" class="rg-gb-map" role="img"
+              aria-label="Interactive stylised map of Gilgit-Baltistan districts">
+              <g class="rg-gb-map__districts" stroke="#F7F4EE" stroke-width="2" stroke-linejoin="round">
+                <path data-district="ghizer" d="M40 160 L140 95 L220 120 L210 205 L105 225 Z" fill="#1F3A5F"
+                  opacity="0.82" />
+                <path data-district="hunza" d="M220 120 L315 45 L425 90 L385 165 L285 160 Z" fill="#7A1F2B"
+                  opacity="0.9" />
+                <path data-district="nagar" d="M285 160 L385 165 L395 215 L295 210 Z" fill="#2B4C78" opacity="0.86" />
+                <path data-district="gilgit" d="M210 205 L285 160 L295 210 L270 265 L195 250 Z" fill="#B8913A"
+                  opacity="0.9" />
+                <path data-district="diamer" d="M85 235 L195 250 L235 320 L125 350 L65 295 Z" fill="#3B5B82"
+                  opacity="0.8" />
+                <path data-district="astore" d="M235 320 L270 265 L345 285 L335 375 L245 380 Z" fill="#466891"
+                  opacity="0.84" />
+                <path data-district="shigar" d="M385 165 L425 90 L535 125 L515 225 L395 215 Z" fill="#28476E"
+                  opacity="0.88" />
+                <path data-district="skardu" d="M295 210 L395 215 L515 225 L485 305 L345 285 L270 265 Z" fill="#1F3A5F"
+                  opacity="0.92" />
+                <path data-district="ghanche" d="M515 225 L535 125 L635 165 L620 285 L535 285 Z" fill="#54232C"
+                  opacity="0.85" />
+                <path data-district="kharmang" d="M485 305 L515 225 L535 285 L605 315 L545 385 L445 355 Z"
+                  fill="#34537A" opacity="0.82" />
+              </g>
+              <g class="rg-gb-map__labels" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600"
+                fill="#F7F4EE" text-anchor="middle" pointer-events="none">
+                <text x="135" y="168">Ghizer</text>
+                <text x="325" y="118">Hunza</text>
+                <text x="342" y="192">Nagar</text>
+                <text x="245" y="222">Gilgit</text>
+                <text x="150" y="302">Diamer</text>
+                <text x="288" y="335">Astore</text>
+                <text x="462" y="172">Shigar</text>
+                <text x="405" y="258">Skardu</text>
+                <text x="578" y="228">Ghanche</text>
+                <text x="525" y="342">Kharmang</text>
+              </g>
+            </svg>
+          </div>
+          <div style="display:grid;gap:16px;">
+            <div
+              style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border-strong);"
+              data-rg-map-preview>
+              <span class="rg-badge rg-badge--handmade">Gilgit Division · 2,438m</span>
+              <h3 style="margin-block:8px;">Hunza District (6 pieces)</h3>
+              <p style="font-size:var(--text-sm);color:var(--text-secondary);">Known for intricate geometric
+                cross-stitch embroidery counted thread by thread on hand-loomed fabrics.</p>
+              <a href="region.html?region=hunza" class="rg-btn rg-btn--primary rg-btn--sm">Explore Hunza Pieces →</a>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <a href="region.html?region=gilgit" class="rg-chip">Gilgit (4)</a>
+              <a href="region.html?region=hunza" class="rg-chip">Hunza (6)</a>
+              <a href="region.html?region=nagar" class="rg-chip">Nagar (3)</a>
+              <a href="region.html?region=ghizer" class="rg-chip">Ghizer (2)</a>
+              <a href="region.html?region=skardu" class="rg-chip">Skardu (3)</a>
+              <a href="region.html?region=shigar" class="rg-chip">Shigar (2)</a>
+              <a href="region.html?region=ghanche" class="rg-chip">Ghanche (1)</a>
+              <a href="region.html?region=kharmang" class="rg-chip">Kharmang (1)</a>
+              <a href="region.html?region=astore" class="rg-chip">Astore (1)</a>
+              <a href="region.html?region=diamer" class="rg-chip">Diamer (1)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SCROLL STORY: "From Wool to Wear" (4-Step Process) -->
+    <section class="rg-section" hidden>
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Artisan Craft Process</span>
+            <h2>From Wool to Wear</h2>
+          </div>
+          <img src="assets/img/craft-weaving.webp" alt="Handloom weaving process" id="rg-craft-story-preview-img"
+            width="220" height="120"
+            style="width:180px;height:96px;object-fit:cover;border-radius:var(--radius-card);border:2px solid var(--brand-accent);">
+        </div>
+        <div class="rg-craft-steps">
+          <article class="rg-craft-step" data-rg-craft-step="1" data-rg-craft-img="assets/img/hero-mountains.webp">
+            <div class="rg-craft-step__num">01</div>
+            <h3 style="font-size:var(--text-lg);margin-block-end:6px;">Shearing &amp; Spinning</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Hand-washed highland wool spun on wooden drop-spindles, preserving natural lanolin for water and chill resistance.</p>
+          </article>
+          <article class="rg-craft-step" data-rg-craft-step="2" data-rg-craft-img="assets/img/craft-weaving.webp">
+            <div class="rg-craft-step__num">02</div>
+            <h3 style="font-size:var(--text-lg);margin-block-end:6px;">Loom Weaving</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Woven on traditional pit looms into dense, wind-defying wool patti and herringbone twills with uniform hand-tension.</p>
+          </article>
+          <article class="rg-craft-step" data-rg-craft-step="3"
+            data-rg-craft-img="assets/img/products/embroidered-shawl-1.webp">
+            <div class="rg-craft-step__num">03</div>
+            <h3 style="font-size:var(--text-lg);margin-block-end:6px;">Silk Needlework</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Counted-thread geometric mountain motifs hand-stitched in pure silk floss without printed stencils or tracings.</p>
+          </article>
+          <article class="rg-craft-step" data-rg-craft-step="4" data-rg-craft-img="assets/img/heritage-flatlay.webp">
+            <div class="rg-craft-step__num">04</div>
+            <h3 style="font-size:var(--text-lg);margin-block-end:6px;">Origin Certification</h3>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:0;">Measured in exact centimetres, quality-checked, and paired with a physical, wax-sealed artisan Origin Card.</p>
+          </article>
+        </div>
+
+        <!-- Interactive Wool-to-Wear Transformation Slider -->
+        <div class="rg-wool-comparison-card" style="margin-block-start:36px;background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border-strong);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-block-end:16px;flex-wrap:wrap;gap:12px;">
+            <div>
+              <span class="rg-badge rg-badge--verified" style="margin-block-end:6px;">Interactive Craft Comparison</span>
+              <h3 style="font-size:var(--text-md);margin:0;">From Raw Mountain Loom to Tailored Heritage</h3>
+            </div>
+            <span style="font-size:var(--text-xs);color:var(--text-secondary);font-weight:600;">Drag handle left / right to compare ↔</span>
+          </div>
+          <div class="rg-compare-slider" id="rg-wool-compare-slider" style="aspect-ratio:21/9;max-height:360px;position:relative;">
+            <div class="rg-compare-slider__after">
+              <img src="assets/img/products/embroidered-shawl-1.webp" alt="Finished Hand-Woven Embroidered Shawl" width="960" height="420" loading="lazy">
+              <span class="rg-badge rg-badge--handmade" style="position:absolute;inset-block-end:16px;inset-inline-end:16px;z-index:2;background:rgba(19,36,59,0.85);color:#F7F4EE;">Finished Silk-Embroidered Shawl</span>
+            </div>
+            <div class="rg-compare-slider__before" style="width:50%;">
+              <img src="assets/img/craft-weaving.webp" alt="Raw Handloom Weaving Process" width="960" height="420" loading="lazy">
+              <span class="rg-badge rg-badge--new" style="position:absolute;inset-block-end:16px;inset-inline-start:16px;z-index:2;background:rgba(122,31,43,0.85);color:#F7F4EE;">Traditional Pit Loom Weave</span>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="rg-compare-range" aria-label="Compare raw loom weave to finished silk embroidery" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:10;margin:0;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. THEMED PRODUCT RAILS (Wedding Season, Winter Warmers, Gifts under PKR 3,000) -->
+    <section class="rg-section rg-section--alt" hidden>
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div><span class="rg-section__eyebrow">Caps, waistcoats and embroidered pieces for mehndi, nikah and
+              walima.</span>
+            <h2>For the wedding season</h2>
+          </div>
+          <a href="shop.html?occasion=Wedding" class="rg-btn rg-btn--outline rg-btn--sm">All Wedding Wear →</a>
+        </div>
+        <ul class="products" id="rg-home-wedding-grid"></ul>
+
+        <hr class="rg-stitch-line">
+
+        <div class="rg-section__header">
+          <div><span class="rg-section__eyebrow">Dense sheep wool and hand-woven shawls for cold mornings.</span>
+            <h2>Winter warmers</h2>
+          </div>
+          <a href="category.html?cat=Shawls+%26+Scarves" class="rg-btn rg-btn--outline rg-btn--sm">All Winter Shawls
+            →</a>
+        </div>
+        <ul class="products" id="rg-home-winter-grid"></ul>
+
+        <hr class="rg-stitch-line">
+
+        <div class="rg-section__header">
+          <div><span class="rg-section__eyebrow">Small pieces with a big story.</span>
+            <h2>Gifts under PKR 3,000</h2>
+          </div>
+          <a href="shop.html?maxPrice=3000" class="rg-btn rg-btn--outline rg-btn--sm">Shop Under PKR 3,000 →</a>
+        </div>
+        <ul class="products" id="rg-home-under3k-grid"></ul>
+      </div>
+    </section>
+
+
+    <!-- INTERACTIVE SHOP-THE-LOOK HOTSPOT BANNER + GIFT FINDER QUIZ CTA -->
+    <section class="rg-section" hidden>
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Interactive Lookbook · Tap Any Pin</span>
+            <h2>Shop the Mountain Heritage Ensemble</h2>
+          </div>
+          <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" data-rg-open-quiz="1">
+            ✨ Take the 4-Step Gift Finder Quiz
+          </button>
+        </div>
+        <div class="rg-hotspot-banner">
+          <img src="assets/img/banners/rg-banner-cap-2026.webp"
+            alt="Artisan shaping Gilgiti wool cap and ceremonial ensemble" width="1200" height="675" loading="lazy">
+          <div class="rg-hotspot" style="top:28%;left:36%;" data-rg-hotspot="1" tabindex="0" role="button"
+            aria-label="Inspect Traditional Gilgiti Cap">
+            1
+            <div class="rg-hotspot__card">
+              <span class="rg-badge rg-badge--handmade">Gilgit Origin</span>
+              <h4 style="font-size:var(--text-sm);margin-block:4px;">Traditional Gilgiti Cap</h4>
+              <p style="font-size:12px;color:var(--text-secondary);margin-block-end:8px;">100% hand-woven sheep wool —
+                PKR 1,800</p>
+              <div style="display:flex;gap:6px;">
+                <a href="product.html?id=1" class="rg-btn rg-btn--outline rg-btn--sm"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Details</a>
+                <button type="button" class="rg-btn rg-btn--primary rg-btn--sm" data-rg-add-hotspot="1"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Add to cart</button>
+              </div>
+            </div>
+          </div>
+          <div class="rg-hotspot" style="top:56%;left:54%;" data-rg-hotspot="2" tabindex="0" role="button"
+            aria-label="Inspect Traditional Waistcoat">
+            2
+            <div class="rg-hotspot__card">
+              <span class="rg-badge rg-badge--hand-finished">Gilgit Guild</span>
+              <h4 style="font-size:var(--text-sm);margin-block:4px;">Traditional Men's Waistcoat</h4>
+              <p style="font-size:12px;color:var(--text-secondary);margin-block-end:8px;">Hand-woven wool, satin lining
+                — PKR 6,500</p>
+              <div style="display:flex;gap:6px;">
+                <a href="product.html?id=10" class="rg-btn rg-btn--outline rg-btn--sm"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Details</a>
+                <button type="button" class="rg-btn rg-btn--primary rg-btn--sm" data-rg-add-hotspot="10"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Add to cart</button>
+              </div>
+            </div>
+          </div>
+          <div class="rg-hotspot" style="top:44%;left:74%;" data-rg-hotspot="3" tabindex="0" role="button"
+            aria-label="Inspect Embroidered Shawl">
+            3
+            <div class="rg-hotspot__card">
+              <span class="rg-badge rg-badge--handmade">Hunza Origin</span>
+              <h4 style="font-size:var(--text-sm);margin-block:4px;">Embroidered Wool Shawl</h4>
+              <p style="font-size:12px;color:var(--text-secondary);margin-block-end:8px;">Wool, silk-thread border — PKR
+                5,000</p>
+              <div style="display:flex;gap:6px;">
+                <a href="product.html?id=6" class="rg-btn rg-btn--outline rg-btn--sm"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Details</a>
+                <button type="button" class="rg-btn rg-btn--primary rg-btn--sm" data-rg-add-hotspot="6"
+                  style="flex:1;padding:4px 8px;min-height:30px;">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FEATURED ARTISAN + 9. HERITAGE GIFT SETS & INSTITUTIONAL BANNER -->
+    <section class="rg-section">
+      <div class="rg-container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:32px;">
+          <!-- Featured Artisan Spotlight -->
+          <div class="rg-featured-artisan"
+            style="background:var(--bg-elevated);padding:32px;border-radius:var(--radius-card);border:1px solid var(--rg-border-strong);display:flex;flex-direction:column;gap:16px;">
+            <div class="rg-featured-artisan__eyebrow">
+              <span class="rg-featured-artisan__label">Featured artisan</span>
+              <span class="rg-badge rg-badge--verified">Verified artisan</span>
+            </div>
+            <div class="rg-featured-artisan__profile" style="display:flex;align-items:center;gap:16px;">
+              <img src="assets/img/artisans/artisan-1.webp" alt="Gulshan Bibi Collective" width="88"
+                height="88"
+                style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--brand-accent);">
+              <div class="rg-featured-artisan__identity">
+                <h3 style="margin:0;">Gulshan Bibi Collective</h3>
+                <p style="font-size:var(--text-xs);color:var(--text-secondary);margin:4px 0 0;">Karimabad Cluster, Hunza
+                  · 18 Years Experience</p>
+              </div>
+            </div>
+            <blockquote
+              style="font-style:italic;border-inline-start:3px solid var(--brand-secondary);padding-inline-start:14px;color:var(--text-primary);">
+              "Every lozenge stitch has to sit flat and even. When a customer in Islamabad wears our work, they are
+              wearing weeks of quiet focus from our valley."
+            </blockquote>
+            <div class="rg-featured-artisan__actions" style="margin-block-start:auto;display:flex;gap:12px;">
+              <a href="artisan.html?id=artisan-1" class="rg-btn rg-btn--primary rg-btn--sm">See Their Pieces</a>
+              <a href="artisans.html" class="rg-btn rg-btn--outline rg-btn--sm">All 6 Artisans</a>
+            </div>
+          </div>
+
+          <!-- Heritage Gift Sets + Institutional Gifting CTA -->
+          <div
+            style="background:linear-gradient(145deg,#1F3A5F,#13243B);color:#F7F4EE;padding:32px;border-radius:var(--radius-card);display:flex;flex-direction:column;gap:16px;">
+            <span class="rg-badge rg-badge--new"
+              style="align-self:flex-start;background:var(--rg-antique-gold);color:#1A1A1A;">Curated Heritage
+              Sets</span>
+            <h3 style="color:#F7F4EE;font-size:var(--text-xl);margin:0;">Give something with a place behind it</h3>
+            <p style="color:rgba(247,244,238,0.85);font-size:var(--text-sm);margin:0;">
+              Curated heritage gift sets, gift-wrapped, with an authenticity card explaining where each piece comes
+              from.
+            </p>
+            <div style="margin-block-start:auto;display:flex;flex-wrap:wrap;gap:12px;">
+              <a href="gift-sets.html" class="rg-btn rg-btn--primary">Build a Gift Set</a>
+              <a href="gift-sets.html#institutional-quote" class="rg-btn rg-btn--outline"
+                style="color:#F7F4EE;border-color:#F7F4EE;">Request Institutional Quote</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. FOUNDER'S PICK (Mushtaq Ahmad) -->
+    <section class="rg-section rg-section--alt" hidden>
+      <div class="rg-container">
+        <div
+          style="background:var(--bg-elevated);border:1px solid var(--rg-border-strong);border-inline-start:5px solid var(--rg-antique-gold);border-radius:var(--radius-card);padding:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;align-items:center;">
+          <div>
+            <span class="rg-section__eyebrow">Founder's Recommendation</span>
+            <h2 style="margin-block-end:12px;">The Founder's Pick</h2>
+            <blockquote style="font-size:var(--text-md);font-style:italic;margin-block-end:14px;">
+              "Every time a student or traveller wears a hand-spun Gilgiti cap, they carry the patience of a mountain
+              household. We built ReGongches so you never have to guess where a piece was woven or how it will fit."
+            </blockquote>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-block-end:16px;">
+              — <strong>Mushtaq Ahmad</strong>, Founder, ReGongches
+            </p>
+            <a href="product.html?id=1" class="rg-btn rg-btn--secondary rg-btn--sm">Inspect Traditional Gilgiti Cap (PKR
+              1,800) →</a>
+          </div>
+          <div style="text-align:center;">
+            <img src="assets/img/heritage-flatlay.webp" alt="Founder's Pick — Traditional Gilgiti Cap and Ensemble"
+              width="460" height="340" loading="lazy"
+              style="border-radius:var(--radius-card);margin-inline:auto;border:1px solid var(--rg-border);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. DATED CUSTOMER REVIEWS + 12. CULTURAL JOURNAL -->
+    <section class="rg-section">
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">4.9 ★ Aggregate Rating</span>
+            <h2>What our customers say</h2>
+          </div>
+          <a href="shop.html" class="rg-btn rg-btn--outline rg-btn--sm">Explore Reviewed Pieces</a>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-block-end:14px;">
+          <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-marquee-toggle-btn"
+            aria-label="Pause testimonial reviews">⏸ Pause Reviews</button>
+        </div>
+        <div class="rg-marquee" id="rg-home-reviews-marquee">
+          <div class="rg-marquee__track" id="rg-home-reviews-grid"></div>
+        </div>
+
+        <hr class="rg-stitch-line">
+
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Care guides, styling notes and the stories behind the stitches.</span>
+            <h2>The Cultural Journal</h2>
+          </div>
+          <a href="journal.html" class="rg-btn rg-btn--outline rg-btn--sm">All 6 Articles →</a>
+        </div>
+        <div class="rg-grid rg-grid--3" id="rg-home-journal-grid"></div>
+      </div>
+    </section>
+
+    <!-- 13. "THREADS OF THE NORTH" 30-Day Launch Campaign Strip + 14. #ReGongches UGC Grid -->
+    <section class="rg-section rg-section--alt" hidden>
+      <div class="rg-container">
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">30-Day Digital Launch Campaign</span>
+            <h2>Threads of the North: 30 Days of Valley Craft</h2>
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:4px 0 0;" id="rg-campaign-day-detail">
+              Click any unlocked day below to preview our daily product story, weaving demonstration, or styling note.
+            </p>
+          </div>
+          <span class="rg-badge rg-badge--verified">Days 1–15 Revealed · Promo: THREADS10</span>
+        </div>
+        <div class="rg-campaign-grid" id="rg-campaign-calendar-grid"></div>
+
+        <hr class="rg-stitch-line">
+
+        <div class="rg-section__header">
+          <div>
+            <span class="rg-section__eyebrow">Community &amp; Cultural Events</span>
+            <h2>Worn Across Pakistan · #ReGongches</h2>
+          </div>
+          <span style="font-size:var(--text-xs);color:var(--text-secondary);">Tag @ReGongches on Instagram or TikTok to
+            be featured</span>
+        </div>
+        <div class="rg-grid rg-grid--4">
+          <div
+            style="background:var(--bg-elevated);padding:12px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <img src="assets/img/heritage-flatlay.webp" alt="University Cultural Day Flatlay" width="320" height="320"
+              loading="lazy" style="aspect-ratio:1;object-fit:cover;border-radius:6px;margin-block-end:8px;">
+            <p style="font-size:12px;margin:0;"><strong>@areeba.isb</strong> · University Cultural Week in Islamabad</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:12px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <img src="assets/img/craft-weaving.webp" alt="Hunza Lozenge Shawl" width="320" height="320" loading="lazy"
+              style="aspect-ratio:1;object-fit:cover;border-radius:6px;margin-block-end:8px;">
+            <p style="font-size:12px;margin:0;"><strong>@saira.karachi</strong> · Detail of the Hunza Lozenge Border
+              Shawl</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:12px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <img src="assets/img/products/traditional-waistcoat-1.webp" alt="Pattu Waistcoat at Nikkah" width="320"
+              height="320" loading="lazy"
+              style="aspect-ratio:1;object-fit:cover;border-radius:6px;margin-block-end:8px;">
+            <p style="font-size:12px;margin:0;"><strong>@zain.rwp</strong> · Hand-loomed Pattu Waistcoat for winter
+              Nikkah</p>
+          </div>
+          <div
+            style="background:var(--bg-elevated);padding:12px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
+            <img src="assets/img/products/heritage-gift-set-1.webp" alt="Heritage Gift Box" width="320" height="320"
+              loading="lazy" style="aspect-ratio:1;object-fit:cover;border-radius:6px;margin-block-end:8px;">
+            <p style="font-size:12px;margin:0;"><strong>@farhan.lhr</strong> · Gifted the Heritage Set to visiting
+              faculty</p>
+          </div>
+        </div>
+      </div>
+    <!-- 15. NEWSLETTER: LETTERS FROM THE NORTH -->
+    <section class="rg-section rg-newsletter-section" id="rg-newsletter-block" style="background:var(--brand-primary);color:#F7F4EE;padding-block:clamp(48px, 6vw, 72px);border-block-start:1px solid rgba(184,145,58,0.3);">
+      <div class="rg-container">
+        <div style="max-width:680px;margin-inline:auto;text-align:center;">
+          <span class="rg-badge rg-badge--handmade" style="background:rgba(184,145,58,0.2);color:var(--rg-antique-gold);border-color:rgba(184,145,58,0.4);margin-block-end:14px;">Dispatch From The Valleys</span>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.8rem, 3.2vw, 2.4rem);color:#F7F4EE;margin-block-end:10px;">Letters from the North</h2>
+          <p style="font-size:var(--text-sm);color:rgba(247,244,238,0.85);margin-block-end:24px;line-height:1.6;">
+            New collections, maker stories, and care tips—delivered twice a month. No spam, unsubscribe anytime.
+          </p>
+          <form class="rg-newsletter-form" id="rg-home-newsletter-form" onsubmit="event.preventDefault();if(window.RG&&window.RG.ui){window.RG.ui.toast('You\'re in. Your first letter arrives with our next collection.');this.reset();}" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;margin-inline:auto;">
+            <input type="email" required placeholder="Enter your email address" aria-label="Email for Letters from the North" style="flex:1;min-width:240px;padding:12px 18px;border-radius:var(--radius-editorial);border:1px solid rgba(247,244,238,0.3);background:rgba(255,255,255,0.08);color:#F7F4EE;font-size:var(--text-sm);">
+            <button type="submit" class="rg-btn rg-btn--secondary" style="background:var(--brand-secondary);color:#FFFFFF;padding:12px 24px;font-weight:600;">Subscribe</button>
+          </form>
+          <div style="display:flex;align-items:center;justify-content:center;gap:18px;margin-block-start:18px;font-size:12px;color:rgba(247,244,238,0.7);">
+            <span>✓ No spam guarantee</span>
+            <span>·</span>
+            <span>✓ Easy 1-click unsubscribe</span>
+            <span>·</span>
+            <span>✓ Early collection access</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RG:FOOTER START -->
+  <!-- Mobile Sticky Bottom Bar -->
+  <nav class="rg-mobile-bottom-bar" aria-label="Mobile Quick Bar">
+    <a href="index.html">
+      <svg width="18" height="18" aria-hidden="true">
+        <use href="#icon-sparkles"></use>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="shop.html">
+      <svg width="18" height="18" aria-hidden="true">
+        <use href="#icon-filter"></use>
+      </svg>
+      <span>Shop</span>
+    </a>
+    <button type="button" data-rg-open-search>
+      <svg width="18" height="18" aria-hidden="true">
+        <use href="#icon-search"></use>
+      </svg>
+      <span>Search</span>
+    </button>
+    <a href="wishlist.html">
+      <svg width="18" height="18" aria-hidden="true">
+        <use href="#icon-heart"></use>
+      </svg>
+      <span>Wishlist (<span data-rg-wishlist-count>0</span>)</span>
+    </a>
+    <button type="button" data-rg-open-drawer="rg-minicart-drawer">
+      <svg width="18" height="18" aria-hidden="true">
+        <use href="#icon-bag"></use>
+      </svg>
+      <span>Bag (<span data-rg-cart-count>0</span>)</span>
+    </button>
+  </nav>
+
+  <!-- Floating WhatsApp Inquiry Button -->
+  <a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection"
+    target="_blank" rel="noopener" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
+    <svg width="18" height="18" aria-hidden="true">
+      <use href="#icon-whatsapp"></use>
+    </svg>
+    <span>Ask on WhatsApp</span>
+  </a>
+
+  <!-- Back to Top Button -->
+  <button type="button" class="rg-back-to-top" id="rg-back-to-top" aria-label="Back to top">
+    <svg width="20" height="20" aria-hidden="true">
+      <use href="#icon-arrow-up"></use>
+    </svg>
+  </button>
+
+  <!-- Floating Style Preset Switcher -->
+  <aside class="rg-style-switcher" id="rg-style-switcher" hidden aria-label="Visual Theme Preset Switcher">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <strong>Theme Preset</strong>
+      <button type="button" data-rg-toggle-styles aria-label="Hide style switcher">✕</button>
+    </div>
+    <div class="rg-style-switcher__btns">
+      <button type="button" class="rg-style-switcher__btn is-active" data-rg-theme-set="heritage">1. Heritage</button>
+      <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="mountain-night">2. Mountain Night</button>
+      <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="minimal-gallery">3. Minimal
+        Gallery</button>
+      <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="festive">4. Festive</button>
+      <button type="button" class="rg-style-switcher__btn" data-rg-theme-set="walnut-ochre">5. Walnut &amp;
+        Ochre</button>
+    </div>
+  </aside>  <!-- Illustrative Dark-Blue Site Footer (.site-footer) -->
+  <footer class="site-footer" id="colophon">
+    <!-- Layered Mountain Silhouette SVG -->
+    <div class="site-footer__mountains" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" fill="none">
+        <path d="M0 120 L0 72 L210 24 L420 82 L690 12 L960 76 L1210 18 L1440 68 L1440 120 Z" fill="#1F3A5F" opacity="0.45" />
+        <path d="M0 120 L160 48 L390 92 L620 28 L890 88 L1140 34 L1440 84 L1440 120 Z" fill="#13243B" />
+      </svg>
+    </div>
+
+    <div class="rg-container">
+      <!-- Minimal Essential Footer Grid -->
+      <div class="site-footer__grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="site-footer__col">
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="shop.html">All Mountain Catalogue</a></li>
+            <li><a href="category.html?cat=Traditional+Dresses">Traditional Dresses</a></li>
+            <li><a href="category.html?cat=Caps+%26+Headwear">Gilgiti &amp; Hunza Caps</a></li>
+            <li><a href="category.html?cat=Shawls+%26+Scarves">Hand-Woven Wool Shawls</a></li>
+            <li><a href="category.html?cat=Waistcoats+%26+Outerwear">Pattu Waistcoats &amp; Jackets</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3>Help &amp; Policies</h3>
+          <ul>
+            <li><a href="size-guide.html">Size Guide</a></li>
+            <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+            <li><a href="returns-exchange.html">Returns &amp; Exchanges</a></li>
+            <li><a href="account.html">Track Your Order</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3>About</h3>
+          <ul>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="artisans.html">Meet the Artisans</a></li>
+            <li><a href="authenticity.html">How We Verify Origin</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener">WhatsApp: +92 340 8500976</a></li>
+            <li><a href="tel:03408500976">Call: 0340-8500976</a></li>
+            <li><a href="mailto:care@regongches.store">Email: care@regongches.store</a></li>
+          </ul>
+          <p class="urdu-text" style="font-size:var(--text-sm);color:var(--rg-antique-gold);margin-block-start:12px;margin-block-end:0;">
+            پہاڑی ورثے کے دھاگے — گلگت بلتستان کی مستند دستکاری
+          </p>
+        </div>
+      </div>
+
+      <!-- Payment & Copyright Row -->
+      <div class="site-footer__badges">
+        <div class="rg-pay-badges" aria-label="Supported Payment Options">
+          <span class="rg-pay-badge">Cash on Delivery (COD)</span>
+          <span class="rg-pay-badge">Bank Transfer (IBFT)</span>
+          <span class="rg-pay-badge">Easypaisa</span>
+          <span class="rg-pay-badge">JazzCash</span>
+        </div>
+        <div style="font-size:var(--text-xs);color:rgba(247,244,238,0.78);">
+          © 2026 ReGongches · <a href="privacy.html" style="text-decoration:underline;">Privacy</a> · <a href="terms.html" style="text-decoration:underline;">Terms</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giant Wordmark -->
+    <div class="site-footer__wordmark" aria-hidden="true">ReGongches</div>
+  </footer>
+  <!-- RG:FOOTER END -->
+
+  <!-- Local Data Layer (No fetch() — works directly on file:// and static servers) -->
+  <script src="assets/js/data/site-config.js" defer></script>
+  <script src="assets/js/data/regions.js" defer></script>
+  <script src="assets/js/data/artisans.js" defer></script>
+  <script src="assets/js/data/products.js" defer></script>
+  <script src="assets/js/data/reviews.js" defer></script>
+  <script src="assets/js/data/journal.js" defer></script>
+  <script src="assets/js/data-source.js" defer></script>
+  <!-- Application Modules -->
+  <script src="assets/vendor/motion-vendor.js" defer></script>
+  <script src="assets/js/cart.js" defer></script>
+  <script src="assets/js/wishlist.js" defer></script>
+  <script src="assets/js/search.js" defer></script>
+  <script src="assets/js/ui.js" defer></script>
+  <script src="assets/js/motion.js" defer></script>
+  <script src="assets/js/filters.js" defer></script>
+  <script src="assets/js/product.js" defer></script>
+  <script src="assets/js/checkout.js" defer></script>
+  <script src="assets/js/account.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
+
 </html>
