@@ -903,22 +903,22 @@ ul.products:not([data-columns]) {
   width: 100%;
 }
 
-/* Card-stack transformation on small screens */
+/* Card-stack transformation on small screens — scoped strictly to checkout/cart forms */
 @media (max-width: 639px) {
-  /* Hide the thead — we'll use data-label pseudo-elements instead */
-  table.shop_table.cart thead {
+  /* Hide the thead in cart form only — we'll use data-label pseudo-elements */
+  .woocommerce-cart-form table.shop_table.cart thead {
     display: none;
   }
 
-  /* Make each row a card */
-  table.shop_table.cart,
-  table.shop_table.cart tbody,
-  table.shop_table.cart tr {
+  /* Make each cart item row a card */
+  .woocommerce-cart-form table.shop_table.cart,
+  .woocommerce-cart-form table.shop_table.cart tbody,
+  .woocommerce-cart-form table.shop_table.cart tr {
     display: block;
     width: 100%;
   }
 
-  table.shop_table.cart tr {
+  .woocommerce-cart-form table.shop_table.cart tr {
     border: 1px solid var(--rg-border);
     border-radius: var(--radius-card);
     margin-block-end: var(--space-4);
@@ -927,8 +927,8 @@ ul.products:not([data-columns]) {
     box-shadow: var(--shadow-xs);
   }
 
-  /* Each cell becomes a flex row: label → value */
-  table.shop_table.cart td {
+  /* Each cart cell becomes a flex row: label -> value */
+  .woocommerce-cart-form table.shop_table.cart td {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -938,12 +938,12 @@ ul.products:not([data-columns]) {
     text-align: start;
   }
 
-  table.shop_table.cart td:last-child {
+  .woocommerce-cart-form table.shop_table.cart td:last-child {
     border-block-end: none;
   }
 
-  /* Add data-label content via attribute — JS sets these in cart.js */
-  table.shop_table.cart td[data-label]::before {
+  /* Add data-label content via attribute in cart */
+  .woocommerce-cart-form table.shop_table.cart td[data-label]::before {
     content: attr(data-label);
     font-size: var(--text-xs);
     font-weight: 700;
@@ -955,21 +955,38 @@ ul.products:not([data-columns]) {
   }
 
   /* Product cell: stack image + name vertically */
-  table.shop_table.cart td.product-name {
+  .woocommerce-cart-form table.shop_table.cart td.product-name {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-2);
   }
 
   /* Remove button: full-width at bottom of card */
-  table.shop_table.cart td.product-remove {
+  .woocommerce-cart-form table.shop_table.cart td.product-remove {
     justify-content: center;
     padding-block-start: var(--space-3);
   }
 
   /* Quantity stepper adapts */
-  table.shop_table.cart .quantity {
+  .woocommerce-cart-form table.shop_table.cart .quantity {
     margin: 0;
+  }
+
+  /* Responsive Research & Measurement Tables: preserve thead and allow smooth horizontal swipe */
+  .rg-table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin-block: var(--space-3);
+    border: 1px solid var(--rg-border);
+    border-radius: var(--radius-card);
+  }
+
+  .rg-table-scroll table.shop_table:not(.woocommerce-cart-form table),
+  .rg-table-scroll .rg-table {
+    min-width: 460px;
+    margin-block: 0;
+    border: none;
   }
 }
 

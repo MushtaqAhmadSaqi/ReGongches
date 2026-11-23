@@ -25,6 +25,18 @@
   text-align: center;
 }
 
+.rg-btn svg,
+.button svg {
+  flex-shrink: 0;
+}
+
+.rg-icon-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  vertical-align: middle;
+}
+
 .rg-btn--primary,
 .button.alt,
 .single_add_to_cart_button {
@@ -84,6 +96,10 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  line-height: 1.2;
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 .rg-badge--new { background: var(--rg-mountain-blue); color: #FFFFFF; }
@@ -93,6 +109,130 @@
 .rg-badge--mto { background: var(--rg-warning-bg); color: var(--rg-warning); border: 1px solid rgba(140, 95, 14, 0.3); }
 .rg-badge--sale, span.onsale { background: var(--rg-error); color: #FFFFFF; }
 .rg-badge--verified { background: var(--rg-success-bg); color: var(--rg-success); border: 1px solid rgba(47, 107, 79, 0.3); }
+
+/* ==========================================================================
+   Data, Measurement & Research Tables (.rg-table, table.shop_table)
+   ========================================================================== */
+.rg-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  margin-block: var(--space-4);
+  border-radius: var(--radius-card);
+}
+
+.rg-table,
+table.shop_table:not(.woocommerce-cart-form table) {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  margin-block: var(--space-4);
+  font-size: var(--text-sm);
+  text-align: start;
+}
+
+.rg-table th,
+table.shop_table:not(.woocommerce-cart-form table) th {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 2px solid var(--rg-border-strong);
+  white-space: nowrap;
+}
+
+.rg-table td,
+table.shop_table:not(.woocommerce-cart-form table) td {
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--rg-border);
+  color: var(--text-primary);
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+
+.rg-table tbody tr:last-child td,
+table.shop_table:not(.woocommerce-cart-form table) tbody tr:last-child td {
+  border-block-end: none;
+}
+
+.rg-table tbody tr:nth-child(even),
+table.shop_table:not(.woocommerce-cart-form table) tbody tr:nth-child(even) {
+  background-color: rgba(26, 26, 26, 0.018);
+}
+
+.rg-table tbody tr:hover,
+table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
+  background-color: rgba(31, 58, 95, 0.035);
+}
+
+/* Standardized Research & Academic Notice Callouts */
+.rg-callout {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-card);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--rg-border);
+  margin-block: var(--space-4);
+}
+
+.rg-callout--notice {
+  background-color: var(--bg-secondary);
+  border-inline-start: 4px solid var(--rg-antique-gold);
+}
+
+.rg-callout--primary {
+  background-color: var(--bg-secondary);
+  border-inline-start: 4px solid var(--brand-primary);
+}
+
+.rg-callout--maroon {
+  background-color: var(--bg-secondary);
+  border-inline-start: 4px solid var(--brand-secondary);
+}
+
+.rg-callout--success {
+  background-color: var(--rg-success-bg);
+  border-inline-start: 4px solid var(--rg-success);
+}
+
+.rg-callout__title {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-block-end: var(--space-1);
+  color: var(--text-primary);
+}
+
+.rg-callout p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Interactive Research & Monograph Cards */
+.rg-research-card,
+.rg-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--rg-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.rg-research-card:hover,
+.rg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
 
 /* THE ORIGIN CARD (Signature Feature on Product Page) */
 .rg-origin-card {

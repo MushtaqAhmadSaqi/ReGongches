@@ -37,6 +37,19 @@
   margin-block-end: var(--space-8);
 }
 
+.rg-section__header--center {
+  text-align: center;
+  justify-content: center;
+  max-width: var(--measure-prose, 68ch);
+  margin-inline: auto;
+}
+
+.rg-section__header p {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  max-width: var(--measure-prose, 68ch);
+}
+
 .rg-section__eyebrow {
   display: inline-flex;
   align-items: center;

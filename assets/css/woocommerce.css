@@ -602,18 +602,42 @@ form.cart {
 
 .wc-tabs li button,
 .wc-tabs li a {
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-3) var(--space-5);
   font-weight: 600;
   font-size: var(--text-sm);
   color: var(--text-secondary);
   border-block-end: 3px solid transparent;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
+  border-radius: var(--radius-editorial) var(--radius-editorial) 0 0;
+  cursor: pointer;
+}
+
+.wc-tabs li button:hover,
+.wc-tabs li a:hover {
+  color: var(--brand-primary);
+  background-color: rgba(31, 58, 95, 0.04);
 }
 
 .wc-tabs li.active button,
 .wc-tabs li.active a {
   color: var(--brand-secondary);
   border-block-end-color: var(--brand-secondary);
+  background-color: transparent;
+}
+
+.wc-tabs li button:focus-visible,
+.wc-tabs li a:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: -2px;
+}
+
+.woocommerce-Tabs-panel {
+  animation: rgFadeIn 250ms var(--ease-out);
 }
 
 /* Cart Table (table.shop_table.cart) */

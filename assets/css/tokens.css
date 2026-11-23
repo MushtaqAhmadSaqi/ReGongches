@@ -65,6 +65,12 @@
   --font-display: 'Fraunces', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-sans: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Line Measures (Reading Comfort & Scannability) */
+  --measure-prose: 68ch;   /* Ideal 60–75 characters per line for long text */
+  --measure-compact: 52ch; /* Excerpts, lead paragraphs, captions */
+  --measure-wide: 85ch;    /* Dense research documentation and tables */
 
   /* Fluid Type Scale (360px -> 1920px) */
   --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.825rem);
@@ -109,6 +115,7 @@
   --shadow-md: 0 10px 28px rgba(26, 26, 26, 0.09);
   --shadow-lg: 0 20px 48px rgba(26, 26, 26, 0.14);
   --shadow-focus: 0 0 0 3px rgba(31, 58, 95, 0.35);
+  --shadow-focus-inverse: 0 0 0 3px rgba(184, 145, 58, 0.75), 0 0 0 1px #FFFFFF;
 
   /* Motion & Transitions */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
