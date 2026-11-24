@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="heritage">
 <head>
   <meta charset="UTF-8">
@@ -632,10 +632,10 @@
       <div class="rg-grid rg-grid--2">
         <form data-rg-demo-form="Thank you! Your message has been received by ReGongches support." style="background:var(--bg-elevated);padding:28px;border-radius:var(--radius-card);border:1px solid var(--rg-border);display:grid;gap:14px;">
           <h3>Send an Inquiry</h3>
-          <div class="rg-form-row"><label>Your Name *</label><input type="text" required placeholder="Full Name"></div>
-          <div class="rg-form-row"><label>Email or WhatsApp Number *</label><input type="text" required placeholder="0300-1234567 or email"></div>
-          <div class="rg-form-row"><label>Topic</label><select><option>Size &amp; Measurement Advice</option><option>Order Tracking</option><option>Custom / Wedding Order</option><option>Artisan Onboarding</option></select></div>
-          <div class="rg-form-row"><label>Message *</label><textarea rows="4" required placeholder="How can we help you?"></textarea></div>
+          <div class="rg-form-row"><label for="contact_name">Your Name *</label><input id="contact_name" name="contact_name" type="text" required placeholder="Full Name"></div>
+          <div class="rg-form-row"><label for="contact_channel">Email or WhatsApp Number *</label><input id="contact_channel" name="contact_channel" type="text" required placeholder="0300-1234567 or email"></div>
+          <div class="rg-form-row"><label for="contact_topic">Topic</label><select id="contact_topic" name="contact_topic"><option>Size &amp; Measurement Advice</option><option>Order Tracking</option><option>Custom / Wedding Order</option><option>Artisan Onboarding</option></select></div>
+          <div class="rg-form-row"><label for="contact_message">Message *</label><textarea id="contact_message" name="contact_message" rows="4" required placeholder="How can we help you?"></textarea></div>
           <button type="submit" class="rg-btn rg-btn--primary">Send Message</button>
         </form>
 
@@ -661,8 +661,9 @@
           <span class="rg-section__eyebrow">Instant Courier Status</span>
           <h2 style="font-size:var(--text-xl);margin-block-end:8px;">Track Your Order</h2>
           <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-block-end:16px;">Enter your order number to view the latest delivery update.</p>
-          <form id="rg-contact-track-form" style="display:flex;gap:10px;margin-block-end:16px;">
-            <input type="text" name="track_id" value="RG-2026-0104" placeholder="RG-2026-0104" required style="flex:1;padding:10px 12px;border:1px solid var(--rg-border-strong);">
+          <form id="rg-contact-track-form" style="margin-block-end:16px;">
+            <label for="rg-contact-track-id" class="screen-reader-text">Order ID</label>
+            <input type="text" id="rg-contact-track-id" name="track_id" value="RG-2026-0104" placeholder="RG-2026-0104" required style="padding:10px 12px;border:1px solid var(--rg-border-strong);background:var(--bg-primary);color:var(--text-primary);">
             <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm">Lookup</button>
           </form>
           <div id="rg-contact-track-output" hidden></div>
@@ -670,7 +671,8 @@
         <div style="background:var(--bg-elevated);padding:28px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
           <span class="rg-section__eyebrow">Quick Answers</span>
           <h2 style="font-size:var(--text-xl);margin-block-end:8px;">Search Common Questions</h2>
-          <input type="search" id="rg-faq-search-input" placeholder="Filter by sizing, COD, exchange, wool care..." style="width:100%;padding:10px 12px;border:1px solid var(--rg-border-strong);margin-block-end:12px;">
+          <label for="rg-faq-search-input" class="screen-reader-text">Filter common questions</label>
+          <input type="search" id="rg-faq-search-input" placeholder="Filter by sizing, COD, exchange, wool care..." style="width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-primary);color:var(--text-primary);margin-block-end:12px;">
           <div style="display:grid;gap:8px;">
             <details data-rg-faq-item style="padding:10px;background:var(--bg-secondary);border-radius:6px;">
               <summary style="font-weight:600;cursor:pointer;font-size:var(--text-sm);">How do I measure my head for a Gilgiti cap?</summary>

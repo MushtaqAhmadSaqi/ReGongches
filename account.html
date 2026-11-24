@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="heritage">
 <head>
   <meta charset="UTF-8">
@@ -653,20 +653,24 @@
           <!-- Orders Panel -->
           <div data-rg-acc-panel="orders" hidden>
             <h2 style="margin-block-end:16px;">Your Orders</h2>
-            <table class="shop_table cart">
-              <thead><tr><th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Action</th></tr></thead>
-              <tbody id="rg-account-orders-tbody"></tbody>
-            </table>
+            <div class="rg-table-scroll">
+              <table class="shop_table cart">
+                <thead><tr><th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Action</th></tr></thead>
+                <tbody id="rg-account-orders-tbody"></tbody>
+              </table>
+            </div>
           </div>
 
           <!-- Order Tracking Timeline Panel -->
           <div data-rg-acc-panel="tracking" hidden>
             <h2 style="margin-block-end:12px;">Track Your Mountain Dispatch</h2>
-            <div style="display:flex;gap:10px;margin-block-end:24px;">
-              <input type="text" value="RG-202647" placeholder="Enter Order ID (e.g. RG-202647)" style="padding:10px 14px;border:1px solid var(--rg-border-strong);flex:1;">
+            <div class="rg-track-form-row" style="margin-block-end:16px;">
+              <label for="rg-track-order-input" class="screen-reader-text">Order ID</label>
+              <input type="text" id="rg-track-order-input" value="RG-202647" placeholder="Enter Order ID (e.g. RG-202647)" style="padding:10px 14px;border:1px solid var(--rg-border-strong);background:var(--bg-elevated);color:var(--text-primary);">
               <button type="button" class="rg-btn rg-btn--primary rg-btn--sm" id="rg-track-order-btn">Track Status</button>
             </div>
-            <div id="rg-track-order-result" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;">
+            <p id="rg-track-order-status" style="font-size:var(--text-sm);color:var(--text-secondary);margin-block-end:14px;" aria-live="polite"></p>
+            <div id="rg-track-order-result" hidden style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;">
               <div style="padding:16px;background:var(--rg-success-bg);border:1px solid var(--rg-success);border-radius:var(--radius-card);">
                 <strong style="color:var(--rg-success);display:block;">1. Confirmed ✓</strong>
                 <span style="font-size:12px;">Order verified &amp; assigned to guild</span>

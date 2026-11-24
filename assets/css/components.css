@@ -17,12 +17,19 @@
   font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: 0.03em;
+  text-decoration: none;
   transition: transform var(--duration-fast) var(--ease-out),
               background-color var(--duration-fast) var(--ease-out),
               color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
               box-shadow var(--duration-fast) var(--ease-out);
   cursor: pointer;
   text-align: center;
+}
+
+.rg-btn:active,
+.button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .rg-btn svg,
@@ -40,27 +47,29 @@
 .rg-btn--primary,
 .button.alt,
 .single_add_to_cart_button {
-  background-color: var(--brand-secondary);
-  color: #FFFFFF;
-  border: 1px solid var(--brand-secondary);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-ink);
+  border: 1px solid var(--btn-primary-bg);
 }
 
 .rg-btn--primary:hover,
 .button.alt:hover,
 .single_add_to_cart_button:hover {
-  background-color: var(--rg-heritage-maroon-dark);
+  background-color: var(--btn-primary-bg-hover);
+  border-color: var(--btn-primary-bg-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
 .rg-btn--secondary {
-  background-color: var(--brand-primary);
-  color: #FFFFFF;
-  border: 1px solid var(--brand-primary);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-ink);
+  border: 1px solid var(--btn-secondary-bg);
 }
 
 .rg-btn--secondary:hover {
-  background-color: var(--rg-mountain-blue-dark);
+  background-color: var(--btn-secondary-bg-hover);
+  border-color: var(--btn-secondary-bg-hover);
   transform: translateY(-2px);
 }
 
@@ -102,12 +111,12 @@
   flex-shrink: 0;
 }
 
-.rg-badge--new { background: var(--rg-mountain-blue); color: #FFFFFF; }
-.rg-badge--handmade { background: var(--rg-heritage-maroon); color: #FFFFFF; }
+.rg-badge--new { background: var(--rg-badge-new-bg); color: var(--rg-badge-new-ink); }
+.rg-badge--handmade { background: var(--rg-badge-handmade-bg); color: var(--rg-badge-handmade-ink); }
 .rg-badge--hand-finished { background: var(--rg-wool); color: var(--rg-ink); border: 1px solid var(--rg-border-strong); }
 .rg-badge--machine-made { background: var(--rg-glacier); color: var(--rg-mountain-blue-dark); }
 .rg-badge--mto { background: var(--rg-warning-bg); color: var(--rg-warning); border: 1px solid rgba(140, 95, 14, 0.3); }
-.rg-badge--sale, span.onsale { background: var(--rg-error); color: #FFFFFF; }
+.rg-badge--sale, span.onsale { background: var(--rg-badge-sale-bg); color: var(--rg-badge-sale-ink); }
 .rg-badge--verified { background: var(--rg-success-bg); color: var(--rg-success); border: 1px solid rgba(47, 107, 79, 0.3); }
 
 /* ==========================================================================
@@ -163,12 +172,12 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:last-child td {
 
 .rg-table tbody tr:nth-child(even),
 table.shop_table:not(.woocommerce-cart-form table) tbody tr:nth-child(even) {
-  background-color: rgba(26, 26, 26, 0.018);
+  background-color: var(--rg-surface-stripe);
 }
 
 .rg-table tbody tr:hover,
 table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
-  background-color: rgba(31, 58, 95, 0.035);
+  background-color: var(--rg-surface-hover);
 }
 
 /* Standardized Research & Academic Notice Callouts */
@@ -487,6 +496,12 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
   border: 1px solid var(--rg-border-strong);
   padding: var(--space-6);
   position: relative;
+  transform: translateY(10px) scale(0.98);
+  transition: transform var(--duration-ui, 200ms) var(--ease-out);
+}
+
+.rg-modal.is-open .rg-modal__dialog {
+  transform: translateY(0) scale(1);
 }
 
 /* Floating WhatsApp Button */
@@ -551,10 +566,10 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
   }
 }
 
-/* Toast Notification Stack */
+/* Toast Notification Stack (positioned above Back to Top button) */
 .rg-toast-stack {
   position: fixed;
-  inset-block-end: 24px;
+  inset-block-end: 82px;
   inset-inline-end: 24px;
   z-index: 1080;
   display: flex;
@@ -566,16 +581,33 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
 .rg-toast {
   background: var(--rg-ink);
   color: #F7F4EE;
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-card);
   border-inline-start: 4px solid var(--rg-antique-gold);
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-3);
   font-size: var(--text-sm);
-  animation: rgToastIn var(--duration-base) var(--ease-out);
+  animation: rgToastIn var(--duration-ui, 200ms) var(--ease-out);
+}
+
+.rg-toast__close {
+  color: rgba(247, 244, 238, 0.75);
+  min-width: 28px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  transition: color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+}
+
+.rg-toast__close:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.14);
 }
 
 @keyframes rgToastIn {
@@ -642,11 +674,7 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
 /* ==========================================================================
    Phase 2 Interactive Features & Micro-Interactions
    ========================================================================== */
-:focus-visible {
-  outline: 2px solid var(--rg-antique-gold) !important;
-  outline-offset: 3px;
-  box-shadow: 0 0 0 3px rgba(184, 145, 58, 0.35) !important;
-}
+/* Focus rings are managed centrally in base.css for light/dark contrast */
 
 /* Stitched link underline */
 .rg-stitched-link {
@@ -706,12 +734,46 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
   visibility: visible;
 }
 
-/* Shop the Look Hotspot Pin */
-.rg-hotspot {
+/* Shop the Look Hotspot Pin & Banner */
+.rg-hotspot-banner {
   position: relative;
   border-radius: var(--radius-card);
   overflow: hidden;
+  border: 1px solid var(--rg-border);
 }
+
+.rg-hotspot-banner > img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.rg-hotspot-banner .rg-hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--rg-heritage-maroon);
+  color: #FFFFFF;
+  border: 2px solid var(--rg-antique-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  z-index: 5;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.rg-hotspot-banner .rg-hotspot:hover,
+.rg-hotspot-banner .rg-hotspot.is-open {
+  transform: translate(-50%, -50%) scale(1.12);
+  z-index: 12;
+}
+
 .rg-hotspot__pin {
   position: absolute;
   width: 34px;
@@ -728,22 +790,40 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
   box-shadow: var(--shadow-md);
   cursor: pointer;
   z-index: 5;
-  transition: transform var(--duration-fast);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
+
 .rg-hotspot__pin:hover,
 .rg-hotspot__pin:focus-visible {
   transform: scale(1.18);
 }
+
 .rg-hotspot__card {
   position: absolute;
-  z-index: 10;
+  inset-block-start: calc(100% + 10px);
+  inset-inline-start: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 15;
   width: 230px;
   background: var(--bg-elevated);
   color: var(--text-primary);
   border: 1px solid var(--rg-border-strong);
   border-radius: var(--radius-card);
-  padding: 10px;
+  padding: 12px;
   box-shadow: var(--shadow-lg);
+  text-align: start;
+  font-weight: 400;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), visibility var(--duration-fast);
+}
+
+.rg-hotspot.is-open .rg-hotspot__card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Before / After Comparison Slider */
@@ -847,20 +927,9 @@ table.shop_table:not(.woocommerce-cart-form table) tbody tr:hover {
 }
 
 
-/* Accessibility Focus Rings in Antique Gold */
-:focus-visible {
-  outline: 2px solid var(--rg-antique-gold) !important;
-  outline-offset: 3px !important;
-}
-
 /* Pause marquee on keyboard focus */
 .rg-marquee:focus-within .rg-marquee__track {
   animation-play-state: paused;
-}
-
-/* Stitched underline effect on link hover */
-a:hover {
-  text-decoration-style: dashed;
 }
 
 /* Stitch Burst Wishlist Animation */

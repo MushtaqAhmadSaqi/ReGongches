@@ -8,6 +8,12 @@
   const RECENT_KEY = 'rg_recent_searches_v1';
   const POPULAR_CHIPS = ['Gilgiti cap', 'Pakol', 'woollen shawl', 'waistcoat', 'gift set'];
 
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   function getRecent() {
     try {
       return JSON.parse(window.localStorage.getItem(RECENT_KEY) || '[]');
@@ -39,16 +45,17 @@
     },
 
     highlight(text, query) {
+      const escaped = escHtml(text);
       const q = String(query || '').trim();
-      if (!q) return text;
+      if (!q) return escaped;
       const safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return String(text || '').replace(new RegExp(`(${safe})`, 'gi'), '<mark style="background:var(--rg-antique-gold-soft);color:inherit;padding:0 2px;border-radius:2px;">$1</mark>');
+      return escaped.replace(new RegExp(`(${safe})`, 'gi'), '<mark class="rg-highlight">$1</mark>');
     },
 
     query(rawTerm) {
       const q = String(rawTerm || '').trim().toLowerCase();
       if (!q) {
-        return { products: [], categories: [], regions: [], journal: [] };
+        return { products: [], categories: [], regions: [], artisans: [], journal: [] };
       }
 
       const products = window.RG.data.getProducts().filter((p) => {
@@ -67,11 +74,15 @@
         `${r.name} ${r.shortDescription} ${r.signatureCrafts.join(' ')}`.toLowerCase().includes(q)
       );
 
+      const artisans = (window.RG.data.getArtisans ? window.RG.data.getArtisans() : []).filter((a) =>
+        `${a.name} ${a.region} ${a.district || ''} ${a.craft} ${a.shortBio || ''}`.toLowerCase().includes(q)
+      );
+
       const journal = window.RG.data.getJournalPosts().filter((j) =>
         `${j.title} ${j.category} ${j.excerpt}`.toLowerCase().includes(q)
       );
 
-      return { products, categories, regions, journal };
+      return { products, categories, regions, artisans, journal };
     }
   };
 

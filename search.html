@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="heritage">
 <head>
   <meta charset="UTF-8">
@@ -632,6 +632,12 @@
           <span class="rg-section__eyebrow">Catalogue Search Results</span>
           <h1 id="rg-archive-title">Search Our Gilgit-Baltistan Collection</h1>
         </div>
+
+        <form class="rg-search-page-bar" id="rg-search-page-form" role="search" onsubmit="return false;">
+          <label for="rg-page-search-input" class="screen-reader-text">Search products by craft, valley, or material</label>
+          <input type="search" id="rg-page-search-input" placeholder="Search caps, shawls, Hunza, wool, coat..." autocomplete="off">
+          <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm">Filter Results</button>
+        </form>
         
 
         <div class="rg-shop-layout">
@@ -696,9 +702,9 @@
               <div class="rg-filter-group">
                 <label class="rg-filter-group__title" for="f-price">
                   <span>Max Price</span>
-                  <span id="rg-price-range-label">PKR 25,000</span>
+                  <span id="rg-price-range-label" class="rg-tabular">PKR 40,000</span>
                 </label>
-                <input type="range" name="maxPrice" id="f-price" min="1200" max="25000" step="200" value="25000" style="width:100%;">
+                <input type="range" name="maxPrice" id="f-price" min="1200" max="40000" step="200" value="40000" style="width:100%;">
               </div>
 
               <div class="rg-filter-group">

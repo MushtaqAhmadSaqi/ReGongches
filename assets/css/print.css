@@ -4,6 +4,7 @@
    ========================================================================== */
 
 @media print {
+  body::before,
   .rg-announcement,
   .site-header,
   .site-footer,
@@ -11,6 +12,15 @@
   .rg-whatsapp-float,
   .rg-back-to-top,
   .rg-style-switcher,
+  .rg-reading-progress,
+  .rg-sticky-pdp-bar,
+  .rg-compare-bar,
+  .rg-toast-stack,
+  .rg-hero__video-controls,
+  .rg-newsletter-section,
+  .rg-modal,
+  .rg-drawer,
+  .rg-backdrop,
   .no-print {
     display: none !important;
   }
@@ -31,5 +41,10 @@
   table.shop_table {
     border: 1px solid #333333 !important;
     box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  table.shop_table tr {
+    break-inside: avoid;
   }
 }

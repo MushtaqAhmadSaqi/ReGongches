@@ -11,7 +11,7 @@
     <path data-district="ghanche" d="M515 225 L535 125 L635 165 L620 285 L535 285 Z" fill="#54232C" opacity="0.85"/>
     <path data-district="kharmang" d="M485 305 L515 225 L535 285 L605 315 L545 385 L445 355 Z" fill="#34537A" opacity="0.82"/>
   </g>
-  <g class="rg-gb-map__labels" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600" fill="#F7F4EE" text-anchor="middle" pointer-events="none">
+  <g class="rg-gb-map__labels" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600" fill="#F7F4EE" stroke="#13243B" stroke-width="3" stroke-linejoin="round" paint-order="stroke" text-anchor="middle" pointer-events="none">
     <text x="135" y="168">Ghizer</text>
     <text x="325" y="118">Hunza</text>
     <text x="342" y="192">Nagar</text>

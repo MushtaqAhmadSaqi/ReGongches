@@ -7,26 +7,90 @@
 
   const USER_KEY = 'rg_demo_user_v1';
 
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   const RGAccount = {
     init() {
       const container = document.getElementById('rg-account-container');
       if (!container) return;
 
-      container.querySelectorAll('[data-rg-acc-tab]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-rg-acc-tab');
-          container.querySelectorAll('[data-rg-acc-li]').forEach((li) => {
-            li.classList.toggle('is-active', li.getAttribute('data-rg-acc-li') === target);
-          });
-          container.querySelectorAll('[data-rg-acc-panel]').forEach((p) => {
-            p.hidden = p.getAttribute('data-rg-acc-panel') !== target;
-          });
+      const tabList = container.querySelector('.woocommerce-MyAccount-navigation ul');
+      if (tabList) tabList.setAttribute('role', 'tablist');
+
+      const tabBtns = Array.from(container.querySelectorAll('[data-rg-acc-tab]'));
+      const activateTab = (target, focusBtn) => {
+        container.querySelectorAll('[data-rg-acc-li]').forEach((li) => {
+          const isMatch = li.getAttribute('data-rg-acc-li') === target;
+          li.classList.toggle('is-active', isMatch);
+        });
+        tabBtns.forEach((b) => {
+          const isMatch = b.getAttribute('data-rg-acc-tab') === target;
+          b.setAttribute('aria-selected', String(isMatch));
+          b.setAttribute('tabindex', isMatch ? '0' : '-1');
+          if (isMatch && focusBtn) b.focus();
+        });
+        container.querySelectorAll('[data-rg-acc-panel]').forEach((p) => {
+          p.hidden = p.getAttribute('data-rg-acc-panel') !== target;
+        });
+      };
+
+      tabBtns.forEach((btn, idx) => {
+        const key = btn.getAttribute('data-rg-acc-tab');
+        const li = btn.closest('[data-rg-acc-li]');
+        const isActive = li ? li.classList.contains('is-active') : idx === 0;
+        const tabId = `rg-acc-tab-${key}`;
+        const panelId = `rg-acc-panel-${key}`;
+        btn.id = tabId;
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.setAttribute('aria-controls', panelId);
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+
+        const panel = container.querySelector(`[data-rg-acc-panel="${key}"]`);
+        if (panel) {
+          panel.id = panelId;
+          panel.setAttribute('role', 'tabpanel');
+          panel.setAttribute('aria-labelledby', tabId);
+        }
+
+        btn.addEventListener('click', () => activateTab(key, false));
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            const next = tabBtns[(idx + 1) % tabBtns.length];
+            activateTab(next.getAttribute('data-rg-acc-tab'), true);
+          } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const prev = tabBtns[(idx - 1 + tabBtns.length) % tabBtns.length];
+            activateTab(prev.getAttribute('data-rg-acc-tab'), true);
+          }
         });
       });
 
+      this.restoreSession();
       this.renderOrders();
       this.bindAuthDemo();
       this.bindOrderTracker();
+    },
+
+    restoreSession() {
+      try {
+        const raw = window.localStorage.getItem(USER_KEY);
+        if (!raw) return;
+        const user = JSON.parse(raw);
+        if (user && user.name) {
+          const greeting = document.getElementById('rg-account-greeting');
+          if (greeting) greeting.textContent = `Welcome back, ${user.name}. Ready to track your orders and rewards.`;
+          const nameInput = document.getElementById('demo_name');
+          const emailInput = document.getElementById('demo_email');
+          if (nameInput && !nameInput.value) nameInput.value = user.name;
+          if (emailInput && user.email && !emailInput.value) emailInput.value = user.email;
+        }
+      } catch (e) {}
     },
 
     renderOrders() {
@@ -64,12 +128,13 @@
       if (!form) return;
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = form.elements.demo_name ? form.elements.demo_name.value : 'Areeba Khan';
+        const name = form.elements.demo_name ? form.elements.demo_name.value.trim() : 'Areeba Khan';
+        const email = form.elements.demo_email ? form.elements.demo_email.value.trim() : '';
         try {
-          window.localStorage.setItem(USER_KEY, JSON.stringify({ name }));
+          window.localStorage.setItem(USER_KEY, JSON.stringify({ name, email }));
         } catch (err) {}
         const greeting = document.getElementById('rg-account-greeting');
-        if (greeting) greeting.textContent = `Welcome back, ${name}.`;
+        if (greeting) greeting.textContent = `Welcome back, ${name}. Ready to track your orders and rewards.`;
         window.RG.ui.toast(`Signed in as ${name}.`);
       });
     },
@@ -77,10 +142,25 @@
     bindOrderTracker() {
       const trackBtn = document.getElementById('rg-track-order-btn');
       const resultBox = document.getElementById('rg-track-order-result');
+      const inputEl = document.getElementById('rg-track-order-input');
+      const statusMsg = document.getElementById('rg-track-order-status');
       if (!trackBtn || !resultBox) return;
       trackBtn.addEventListener('click', () => {
+        const ordId = inputEl ? String(inputEl.value || '').trim().toUpperCase() : 'RG-202647';
+        if (!ordId) {
+          window.RG.ui.toast('Please enter an Order ID (for example RG-202647).');
+          if (inputEl) inputEl.focus();
+          return;
+        }
+        const saved = (window.RG.checkout && window.RG.checkout.getSavedOrders()) || [];
+        const match = saved.find((o) => String(o.orderNumber || '').toUpperCase() === ordId);
+        if (statusMsg) {
+          statusMsg.innerHTML = match
+            ? `Showing live batch timeline for <strong>${escHtml(match.orderNumber)}</strong> (${escHtml(match.customer && match.customer.city ? match.customer.city : 'Pakistan')} · Placed ${escHtml(match.date)}).`
+            : `Showing benchmark dispatch timeline for sample order <strong>${escHtml(ordId)}</strong>.`;
+        }
         resultBox.hidden = false;
-        window.RG.ui.toast('Order tracking timeline updated.');
+        window.RG.ui.toast(`Updated timeline for ${ordId}.`);
       });
     }
   };

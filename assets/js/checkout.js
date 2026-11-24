@@ -7,6 +7,12 @@
 
   const ORDERS_KEY = 'rg_demo_orders_v1';
 
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   function getOrders() {
     try {
       return JSON.parse(window.localStorage.getItem(ORDERS_KEY) || '[]');
@@ -43,8 +49,8 @@
       if (summary.items.length === 0) {
         wrap.innerHTML = `
           <div style="text-align:center;padding:var(--space-12);background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);">
-            <h2>Your cart is empty, for now. Start with our most-loved pieces from Gilgit and Hunza, or explore by valley.</h2>
-            <p style="margin-inline:auto;color:var(--text-secondary);">Explore authentic caps, hand-loomed shawls, and heritage gifts from Gilgit-Baltistan.</p>
+            <h2>Your bag is currently empty</h2>
+            <p style="margin-inline:auto;color:var(--text-secondary);margin-block-end:var(--space-6);">Start with our most-loved pieces from Gilgit and Hunza, or explore authentic caps, hand-loomed shawls, and heritage gifts by valley.</p>
             <a href="shop.html" class="rg-btn rg-btn--primary">Explore the Collection</a>
           </div>
         `;
@@ -81,30 +87,29 @@
                     <!-- FIX: data-label attributes added for mobile card-stack CSS transform -->
                     <td class="product-name" data-label="Product">
                       <div style="display:flex;align-items:center;gap:14px;">
-                        <img src="${item.image}" alt="${item.name}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
+                        <img src="${escHtml(item.image)}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
                         <div>
-                          <a href="product.html?id=${item.productId}" style="font-weight:700;">${item.name}</a>
-                          <div style="font-size:12px;color:var(--text-secondary);">Origin: ${item.region} · ${item.craft_type}</div>
-                          ${item.customNote ? `<div style="font-size:11px;color:var(--rg-warning);">Custom Note: ${item.customNote}</div>` : ''}
+                          <a href="product.html?id=${encodeURIComponent(item.productId)}" style="font-weight:700;">${escHtml(item.name)}</a>
+                          <div style="font-size:12px;color:var(--text-secondary);">Origin: ${escHtml(item.region)} · ${escHtml(item.craft_type)}</div>
+                          ${item.customNote ? `<div style="font-size:11px;color:var(--rg-warning);">Custom Note: ${escHtml(item.customNote)}</div>` : ''}
                         </div>
                       </div>
                     </td>
                     <td class="product-variant" data-label="Variant" style="font-size:var(--text-xs);">
-                      <div>Size: <strong>${item.size}</strong></div>
-                      <div>Colour: <strong>${item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}</strong></div>
+                      <div>Size: <strong>${escHtml(item.size)}</strong></div>
+                      <div>Colour: <strong>${escHtml(item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, ''))}</strong></div>
                     </td>
                     <td class="product-price" data-label="Price">${fmt(item.price)}</td>
                     <td class="product-quantity" data-label="Qty">
                       <div class="quantity" style="height:44px;">
-                        <!-- FIX: increased tap targets to 44px for mobile -->
-                        <button type="button" style="width:44px;height:44px;" data-rg-cart-dec="${item.key}" aria-label="Decrease quantity">−</button>
-                        <input type="number" class="qty" value="${item.qty}" readonly style="width:44px;height:44px;text-align:center;">
-                        <button type="button" style="width:44px;height:44px;" data-rg-cart-inc="${item.key}" aria-label="Increase quantity">+</button>
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-dec="${escHtml(item.key)}" aria-label="Decrease quantity for ${escHtml(item.name)}">−</button>
+                        <input type="number" class="qty" value="${item.qty}" readonly aria-label="Quantity for ${escHtml(item.name)}" style="width:44px;height:44px;text-align:center;">
+                        <button type="button" style="width:44px;height:44px;" data-rg-cart-inc="${escHtml(item.key)}" aria-label="Increase quantity for ${escHtml(item.name)}">+</button>
                       </div>
                     </td>
                     <td class="product-subtotal" data-label="Subtotal"><strong>${fmt(item.price * item.qty)}</strong></td>
                     <td class="product-remove" data-label="Remove">
-                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${item.key}" aria-label="Remove ${item.name} from cart">Remove</button>
+                      <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-cart-remove="${escHtml(item.key)}" aria-label="Remove ${escHtml(item.name)} from cart">Remove</button>
                     </td>
                   </tr>
                 `).join('')}
@@ -117,17 +122,21 @@
                   <input type="checkbox" data-rg-giftwrap-toggle ${summary.giftWrap ? 'checked' : ''}>
                   Add Heritage Gift Wrap & Printed Origin Card (+PKR 300)
                 </label>
-                <textarea id="rg-cart-order-note" rows="2" placeholder="Optional gift message or delivery instructions..." style="width:100%;margin-block-start:10px;padding:8px;border:1px solid var(--rg-border-strong);">${summary.orderNote}</textarea>
+                <label for="rg-cart-order-note" class="screen-reader-text">Optional gift message or delivery instructions</label>
+                <textarea id="rg-cart-order-note" class="rg-cart-note-input" rows="2" placeholder="Optional gift message or delivery instructions..." style="margin-block-start:10px;">${escHtml(summary.orderNote)}</textarea>
               </div>
 
               <div style="background:var(--bg-elevated);padding:16px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
                 <label for="rg-coupon-input" style="font-weight:600;font-size:var(--text-sm);display:block;margin-block-end:8px;">
                   Promo / Launch Code (Try <code>THREADS10</code> or <code>WELCOME</code>)
                 </label>
-                <div style="display:flex;gap:8px;">
-                  <input type="text" id="rg-coupon-input" value="${summary.couponCode}" placeholder="Enter coupon code" style="flex:1;padding:8px 12px;border:1px solid var(--rg-border-strong);">
+                <div class="rg-cart-coupon-row">
+                  <input type="text" id="rg-coupon-input" class="rg-cart-coupon-input" value="${escHtml(summary.couponCode)}" placeholder="Enter coupon code">
                   <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" id="rg-apply-coupon-btn">Apply</button>
                 </div>
+                <p id="rg-coupon-feedback" aria-live="polite" style="font-size:var(--text-xs);margin:8px 0 0;color:${summary.couponCode ? 'var(--rg-success)' : 'var(--text-secondary)'};">
+                  ${summary.couponCode ? `Applied code: ${escHtml(summary.couponCode)}` : ''}
+                </p>
               </div>
             </div>
           </form>
@@ -155,10 +164,22 @@
 
       const couponBtn = document.getElementById('rg-apply-coupon-btn');
       const couponInp = document.getElementById('rg-coupon-input');
+      const couponFeedback = document.getElementById('rg-coupon-feedback');
       if (couponBtn && couponInp) {
-        couponBtn.addEventListener('click', () => {
+        const applyCouponAction = () => {
           const res = window.RG.cart.applyCoupon(couponInp.value);
+          if (couponFeedback) {
+            couponFeedback.textContent = res.message || '';
+            couponFeedback.style.color = res.ok ? 'var(--rg-success)' : 'var(--rg-error)';
+          }
           window.RG.ui.toast(res.message);
+        };
+        couponBtn.addEventListener('click', applyCouponAction);
+        couponInp.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            applyCouponAction();
+          }
         });
       }
       const noteEl = document.getElementById('rg-cart-order-note');
@@ -221,31 +242,67 @@
       }
       this.renderCheckoutSummary();
 
+      form.querySelectorAll('input, select').forEach((field) => {
+        field.addEventListener('input', () => {
+          field.classList.remove('is-invalid');
+          field.removeAttribute('aria-invalid');
+        });
+        field.addEventListener('change', () => {
+          field.classList.remove('is-invalid');
+          field.removeAttribute('aria-invalid');
+        });
+      });
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         let valid = true;
+        let firstInvalid = null;
 
         const phoneInput = form.elements.billing_phone;
+        const emailInput = form.elements.billing_email;
         const phoneErr = document.getElementById('rg-phone-error');
         const pkPhoneRegex = /^03\d{2}-?\d{7}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         form.querySelectorAll('[required]').forEach((field) => {
           field.classList.remove('is-invalid');
+          field.removeAttribute('aria-invalid');
           if (!String(field.value || '').trim()) {
             field.classList.add('is-invalid');
+            field.setAttribute('aria-invalid', 'true');
+            if (!firstInvalid) firstInvalid = field;
             valid = false;
           }
         });
 
         if (phoneInput && !pkPhoneRegex.test(String(phoneInput.value || '').trim())) {
           phoneInput.classList.add('is-invalid');
+          phoneInput.setAttribute('aria-invalid', 'true');
+          phoneInput.setAttribute('aria-describedby', 'rg-phone-error');
           if (phoneErr) phoneErr.textContent = 'Enter a Pakistani mobile number like 0312-3456789.';
+          if (!firstInvalid) firstInvalid = phoneInput;
           valid = false;
         } else if (phoneErr) {
           phoneErr.textContent = '';
+          if (phoneInput) phoneInput.removeAttribute('aria-describedby');
+        }
+
+        const emailVal = emailInput ? String(emailInput.value || '').trim() : '';
+        if (emailVal && !emailRegex.test(emailVal)) {
+          emailInput.classList.add('is-invalid');
+          emailInput.setAttribute('aria-invalid', 'true');
+          if (!firstInvalid) firstInvalid = emailInput;
+          valid = false;
+        } else if (emailInput) {
+          emailInput.classList.remove('is-invalid');
+          emailInput.removeAttribute('aria-invalid');
         }
 
         if (!valid) {
+          if (firstInvalid && typeof firstInvalid.focus === 'function') {
+            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalid.focus({ preventScroll: true });
+          }
           window.RG.ui.toast('Please check the highlighted delivery fields.');
           return;
         }
@@ -296,30 +353,30 @@
 
       const fmt = window.RG.data.formatPKR;
       const cfg = window.RG.data.getConfig();
-      const firstName = String(order.customer.name || '').split(' ')[0] || 'Valued Customer';
+      const firstName = escHtml(String(order.customer.name || '').split(' ')[0] || 'Valued Customer');
       const waMsg = encodeURIComponent(`Assalam-o-Alaikum ReGongches! Please confirm my order ${order.orderNumber} (${fmt(order.summary.total)}) for ${order.customer.name} in ${order.customer.city}.`);
 
       box.innerHTML = `
         <div class="woocommerce-message">
-          <span><strong>Thank you, ${firstName}. Order ${order.orderNumber} is confirmed.</strong> We'll message you on WhatsApp when it's quality-checked and dispatched.</span>
+          <span><strong>Thank you, ${firstName}. Order ${escHtml(order.orderNumber)} is confirmed.</strong> We'll message you on WhatsApp when it's quality-checked and dispatched.</span>
           <button type="button" class="rg-btn rg-btn--outline rg-btn--sm no-print" data-rg-print-receipt="1">Print Receipt</button>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;background:var(--bg-elevated);padding:20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);margin-block-end:24px;">
-          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Order Number</span><strong>${order.orderNumber}</strong></div>
-          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Date</span><strong>${order.date}</strong></div>
-          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Destination</span><strong>${order.customer.city}, ${order.customer.province}</strong></div>
-          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Payment Method</span><strong style="text-transform:uppercase;">${order.paymentMethod}</strong></div>
-          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Total</span><strong>${fmt(order.summary.total)}</strong></div>
+          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Order Number</span><strong class="rg-tabular">${escHtml(order.orderNumber)}</strong></div>
+          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Date</span><strong class="rg-tabular">${escHtml(order.date)}</strong></div>
+          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Destination</span><strong>${escHtml(order.customer.city)}, ${escHtml(order.customer.province)}</strong></div>
+          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Payment Method</span><strong style="text-transform:uppercase;">${escHtml(order.paymentMethod)}</strong></div>
+          <div><span style="font-size:12px;color:var(--text-secondary);display:block;">Total</span><strong class="rg-tabular">${fmt(order.summary.total)}</strong></div>
         </div>
 
         <div style="background:var(--bg-elevated);padding:24px;border-radius:var(--radius-card);border:1px solid var(--rg-border);margin-block-end:24px;">
           <h3 style="margin-block-end:12px;">Items & Origin Summary</h3>
           <div style="display:grid;gap:10px;">
             ${order.summary.items.map((i) => `
-              <div style="display:flex;justify-content:space-between;padding-block:8px;border-block-end:1px solid var(--rg-border);">
-                <span><strong>${i.qty} × ${i.name}</strong> (${i.size}) — Origin: ${i.region || 'Gilgit-Baltistan'}</span>
-                <strong>${fmt(i.price * i.qty)}</strong>
+              <div style="display:flex;justify-content:space-between;gap:12px;padding-block:8px;border-block-end:1px solid var(--rg-border);">
+                <span><strong>${i.qty} × ${escHtml(i.name)}</strong> (${escHtml(i.size)}) — Origin: ${escHtml(i.region || 'Gilgit-Baltistan')}</span>
+                <strong class="rg-tabular">${fmt(i.price * i.qty)}</strong>
               </div>
             `).join('')}
           </div>

@@ -22,6 +22,12 @@
     compareIds = JSON.parse(window.localStorage.getItem('rg_compare_v1') || '[]');
   } catch (e) { compareIds = []; }
 
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   const RGUI = {
     /* <!-- WP PARTIAL: template-parts/content-product-card.php --> */
     renderProductCard(product) {
@@ -75,7 +81,7 @@
         <li class="product type-product status-publish instock" data-product-id="${product.id}">
           <div class="rg-product-card__media">
             <div class="rg-product-card__badges">${badges.join('')}</div>
-            <button type="button" class="rg-product-card__wishlist ${inWishlist ? 'is-active' : ''}" data-rg-wishlist-toggle="${product.id}" aria-label="Save ${product.name} to wishlist">
+            <button type="button" class="rg-product-card__wishlist ${inWishlist ? 'is-active' : ''}" data-rg-wishlist-toggle="${product.id}" aria-label="Save ${escHtml(product.name)} to wishlist" aria-pressed="${inWishlist ? 'true' : 'false'}">
               <svg width="18" height="18" aria-hidden="true"><use href="#icon-heart"></use></svg>
             </button>
             <a href="product.html?id=${product.id}" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
@@ -218,24 +224,34 @@
       }
       const el = document.createElement('div');
       el.className = 'rg-toast';
+      el.setAttribute('role', 'status');
       el.innerHTML = `
-        <span>${message}</span>
+        <span>${escHtml(message)}</span>
         ${options.viewCart ? '<a href="cart.html" class="rg-btn rg-btn--sm" style="background:var(--rg-antique-gold);color:#1A1A1A;min-height:30px;padding:4px 10px;">View cart</a>' : ''}
         ${options.undo ? '<button type="button" class="rg-btn rg-btn--sm" style="background:var(--rg-antique-gold);color:#1A1A1A;min-height:30px;padding:4px 10px;" data-rg-toast-undo>Undo</button>' : ''}
+        <button type="button" class="rg-toast__close" aria-label="Dismiss notification">✕</button>
       `;
       stack.appendChild(el);
+      let dismissTimer = setTimeout(() => {
+        if (el.parentNode) el.remove();
+      }, 4400);
+      const closeBtn = el.querySelector('.rg-toast__close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          clearTimeout(dismissTimer);
+          el.remove();
+        });
+      }
       if (options.undo) {
         const undoBtn = el.querySelector('[data-rg-toast-undo]');
         if (undoBtn) {
           undoBtn.addEventListener('click', () => {
+            clearTimeout(dismissTimer);
             options.undo();
             el.remove();
           });
         }
       }
-      setTimeout(() => {
-        if (el.parentNode) el.remove();
-      }, 4400);
     },
 
     animateFlyToCart(sourceEl) {
@@ -260,6 +276,12 @@
       setTimeout(() => dot.remove(), 550);
     },
 
+    _syncCompareCheckboxes() {
+      document.querySelectorAll('[data-rg-compare-toggle]').forEach((chk) => {
+        chk.checked = compareIds.includes(Number(chk.getAttribute('data-rg-compare-toggle')));
+      });
+    },
+
     toggleCompare(productId) {
       const id = Number(productId);
       if (compareIds.includes(id)) {
@@ -267,13 +289,23 @@
       } else {
         if (compareIds.length >= 3) {
           this.toast('You can compare up to 3 pieces at a time.');
+          this._syncCompareCheckboxes();
           return false;
         }
         compareIds.push(id);
       }
       try { window.localStorage.setItem('rg_compare_v1', JSON.stringify(compareIds)); } catch (e) {}
+      this._syncCompareCheckboxes();
       this.renderCompareTray();
       return compareIds.includes(id);
+    },
+
+    clearCompare() {
+      compareIds = [];
+      try { window.localStorage.setItem('rg_compare_v1', '[]'); } catch (e) {}
+      this._syncCompareCheckboxes();
+      this.renderCompareTray();
+      this.toast('Cleared comparison list.');
     },
 
     renderCompareTray() {
@@ -418,22 +450,37 @@
         form.addEventListener('submit', (e) => {
           e.preventDefault();
           if (progressBar) progressBar.style.width = '100%';
-          const maxB = Number(form.elements.budget.value) || 25000;
-          const occ = form.elements.occasion.value;
-          const rec = form.elements.recipient.value;
+          const maxB = Number(form.elements.budget.value) || 40000;
+          const occ = String(form.elements.occasion.value || '').toLowerCase();
+          const rec = String(form.elements.recipient.value || '').toLowerCase();
+          const stylePref = String(form.elements.style.value || '').toLowerCase();
 
-          let matches = window.RG.data.getProducts().filter((p) => {
-            if (p.price > maxB) return false;
-            if (occ && p.occasions && p.occasions.includes(occ)) return true;
-            return true;
-          });
+          const scored = window.RG.data.getProducts()
+            .filter((p) => p.price <= maxB)
+            .map((p) => {
+              let score = 0;
+              const hay = `${p.name} ${p.categories.join(' ')} ${(p.tags || []).join(' ')} ${p.short_description} ${(p.occasions || []).join(' ')} ${p.craft_type}`.toLowerCase();
+              if (occ) {
+                if ((p.occasions || []).some((o) => o.toLowerCase().includes(occ))) score += 4;
+                else if (occ === 'winter' && (hay.includes('winter') || hay.includes('shawl') || hay.includes('muffler') || hay.includes('wool'))) score += 3;
+                else if (occ === 'gift' && (hay.includes('gift') || hay.includes('eid') || hay.includes('cap'))) score += 2;
+              }
+              if (stylePref === 'traditional' && (p.craft_type === 'handmade' || hay.includes('wool') || hay.includes('pattu'))) score += 2;
+              if (stylePref === 'embroidered' && (hay.includes('silk') || hay.includes('embroider') || hay.includes('cross-stitch'))) score += 2;
+              if (stylePref === 'everyday' && (hay.includes('cap') || hay.includes('pouch') || hay.includes('muffler') || hay.includes('everyday'))) score += 2;
+              if (rec === 'him' && (hay.includes('cap') || hay.includes('pakol') || hay.includes('waistcoat') || hay.includes('groom'))) score += 2;
+              if (rec === 'her' && (hay.includes('shawl') || hay.includes('kameez') || hay.includes('women') || hay.includes('pouch'))) score += 2;
+              if (rec === 'guest' && (hay.includes('gift') || hay.includes('shawl') || hay.includes('cap') || hay.includes('box'))) score += 2;
+              if (p.featured) score += 0.5;
+              return { p, score };
+            })
+            .sort((a, b) => b.score - a.score || b.p.rating - a.p.rating)
+            .map((entry) => entry.p);
 
+          let matches = scored;
           if (matches.length < 3) {
-            matches = [
-              window.RG.data.getProductById(1),
-              window.RG.data.getProductById(8),
-              window.RG.data.getProductById(24)
-            ].filter(Boolean);
+            const fallback = window.RG.data.getProducts().slice().sort((a, b) => a.price - b.price);
+            matches = [...new Set([...matches, ...fallback])];
           }
 
           const topThree = matches.slice(0, 3);
@@ -461,11 +508,15 @@
       const panels = modal.querySelectorAll('[data-size-panel]');
       const activeType = (type === 'none' || !type) ? 'cap' : type;
       tabs.forEach((t) => {
-        const match = t.getAttribute('data-size-tab') === activeType;
+        const key = t.getAttribute('data-size-tab');
+        const match = key === activeType;
+        t.setAttribute('role', 'tab');
+        t.setAttribute('aria-selected', String(match));
         t.classList.toggle('rg-btn--primary', match);
         t.classList.toggle('rg-btn--outline', !match);
       });
       panels.forEach((p) => {
+        p.setAttribute('role', 'tabpanel');
         p.hidden = p.getAttribute('data-size-panel') !== activeType;
       });
       this.openModal('rg-size-guide-modal');
@@ -514,7 +565,7 @@
             <div style="margin-block-end:16px;">
               <strong style="font-size:var(--text-xs);text-transform:uppercase;display:block;margin-block-end:6px;">Colour: <span data-qv-colour-label>${colours[0]}</span></strong>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                ${colours.map((c, idx) => `<button type="button" class="rg-btn rg-btn--sm ${idx === 0 ? 'rg-btn--secondary' : 'rg-btn--outline'}" data-qv-colour="${c}">${c.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}</button>`).join('')}
+                ${colours.map((c, idx) => `<button type="button" class="rg-btn rg-btn--sm ${idx === 0 ? 'rg-btn--secondary' : 'rg-btn--outline'}" data-qv-colour="${escHtml(c)}" data-qv-colour-idx="${idx}">${escHtml(c.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, ''))}</button>`).join('')}
               </div>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -569,6 +620,19 @@
           btn.classList.remove('rg-btn--outline');
           const lbl = body.querySelector('[data-qv-colour-label]');
           if (lbl) lbl.textContent = btn.getAttribute('data-qv-colour');
+          const idx = Number(btn.getAttribute('data-qv-colour-idx')) || 0;
+          const img = body.querySelector('#rg-qv-main-img');
+          const targetImg = product.images[idx % product.images.length];
+          if (img && targetImg) {
+            const existingVideo = qvMedia && qvMedia.querySelector('video');
+            if (existingVideo) {
+              existingVideo.remove();
+              img.style.display = 'block';
+              if (qvVidBtn) qvVidBtn.textContent = '▶ Play Craft Demonstration Video';
+            }
+            img.src = targetImg.src;
+            img.alt = targetImg.alt || product.name;
+          }
         });
       });
 
@@ -589,30 +653,96 @@
       this.openModal('rg-quickview-modal');
     },
 
+    _lastFocusEl: null,
+
+    _restoreFocus() {
+      const target = this._lastFocusEl;
+      this._lastFocusEl = null;
+      if (target && document.contains(target) && typeof target.focus === 'function') {
+        target.focus({ preventScroll: true });
+      }
+    },
+
+    _focusFirstControl(container) {
+      if (!container) return;
+      const focusable = container.querySelector(
+        'input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable && typeof focusable.focus === 'function') {
+        setTimeout(() => focusable.focus({ preventScroll: true }), 40);
+      }
+    },
+
     openModal(id) {
+      if (!document.querySelector('.rg-modal.is-open, .rg-drawer.is-open, .rg-search-overlay.is-open')) {
+        this._lastFocusEl = document.activeElement;
+      }
       const m = document.getElementById(id);
       const backdrop = document.getElementById('rg-global-backdrop');
-      if (m) m.classList.add('is-open');
+      if (m) {
+        m.classList.add('is-open');
+        m.setAttribute('aria-hidden', 'false');
+        this._focusFirstControl(m);
+      }
       if (backdrop) backdrop.classList.add('is-open');
     },
 
     closeModal(id) {
       const m = document.getElementById(id);
       const backdrop = document.getElementById('rg-global-backdrop');
-      if (m) m.classList.remove('is-open');
-      if (backdrop) backdrop.classList.remove('is-open');
+      if (m) {
+        m.querySelectorAll('video').forEach((v) => {
+          if (!v.paused) v.pause();
+        });
+        if (m.contains(document.activeElement)) {
+          this._restoreFocus();
+        }
+        m.classList.remove('is-open');
+        m.setAttribute('aria-hidden', 'true');
+      }
+      if (backdrop && !document.querySelector('.rg-modal.is-open, .rg-drawer.is-open, .rg-search-overlay.is-open, .rg-filter-sidebar.is-open')) {
+        backdrop.classList.remove('is-open');
+      }
     },
 
     openDrawer(id) {
+      if (!document.querySelector('.rg-modal.is-open, .rg-drawer.is-open, .rg-search-overlay.is-open')) {
+        this._lastFocusEl = document.activeElement;
+      }
+      document.querySelectorAll('.rg-drawer.is-open').forEach((other) => {
+        if (other.id !== id) {
+          other.classList.remove('is-open');
+          other.setAttribute('aria-hidden', 'true');
+        }
+      });
       const d = document.getElementById(id);
       const backdrop = document.getElementById('rg-global-backdrop');
-      if (d) d.classList.add('is-open');
+      if (d) {
+        d.classList.add('is-open');
+        d.setAttribute('aria-hidden', 'false');
+        this._focusFirstControl(d);
+      }
       if (backdrop) backdrop.classList.add('is-open');
     },
 
     closeAllOverlays() {
+      const hadActiveFocusInsideOverlay = Boolean(
+        document.activeElement &&
+        document.activeElement.closest('.rg-drawer.is-open, .rg-modal.is-open, .rg-search-overlay.is-open, .rg-filter-sidebar.is-open')
+      );
+      if (hadActiveFocusInsideOverlay) {
+        this._restoreFocus();
+      } else {
+        this._lastFocusEl = null;
+      }
       document.querySelectorAll('.rg-drawer.is-open, .rg-modal.is-open, .rg-search-overlay.is-open, .rg-filter-sidebar.is-open').forEach((el) => {
+        el.querySelectorAll('video').forEach((v) => {
+          if (!v.paused) v.pause();
+        });
         el.classList.remove('is-open');
+        if (el.classList.contains('rg-drawer') || el.classList.contains('rg-modal') || el.classList.contains('rg-search-overlay')) {
+          el.setAttribute('aria-hidden', 'true');
+        }
       });
       const backdrop = document.getElementById('rg-global-backdrop');
       if (backdrop) backdrop.classList.remove('is-open');
@@ -685,12 +815,12 @@
                   ${item.size} · ${item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;">
-                  <div class="quantity" style="height:32px;">
-                    <button type="button" style="width:28px;height:30px;" data-rg-cart-dec="${item.key}" aria-label="Decrease quantity">−</button>
-                    <input type="number" class="qty" value="${item.qty}" min="1" max="99" style="width:34px;height:30px;font-size:12px;" readonly aria-label="Quantity">
-                    <button type="button" style="width:28px;height:30px;" data-rg-cart-inc="${item.key}" aria-label="Increase quantity">+</button>
+                  <div class="quantity" style="height:36px;">
+                    <button type="button" style="width:36px;height:36px;" data-rg-cart-dec="${escHtml(item.key)}" aria-label="Decrease quantity for ${escHtml(item.name)}">−</button>
+                    <input type="number" class="qty" value="${item.qty}" min="1" max="99" style="width:36px;height:36px;font-size:12px;" readonly aria-label="Quantity for ${escHtml(item.name)}">
+                    <button type="button" style="width:36px;height:36px;" data-rg-cart-inc="${escHtml(item.key)}" aria-label="Increase quantity for ${escHtml(item.name)}">+</button>
                   </div>
-                  <strong style="font-size:var(--text-sm);">${fmt(item.price * item.qty)}</strong>
+                  <strong class="rg-tabular" style="font-size:var(--text-sm);">${fmt(item.price * item.qty)}</strong>
                 </div>
               </div>
             </div>

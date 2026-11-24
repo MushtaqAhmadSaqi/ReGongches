@@ -5,6 +5,14 @@
 (function (window, document) {
   'use strict';
 
+  const MAX_PRICE_CEILING = 40000;
+
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   const RGFilters = {
     state: {
       cat: '',
@@ -12,7 +20,7 @@
       size: '',
       colour: '',
       material: '',
-      maxPrice: 25000,
+      maxPrice: MAX_PRICE_CEILING,
       craft: '',
       availability: '',
       occasion: '',
@@ -22,6 +30,8 @@
       columns: '3',
       limit: 12
     },
+    _inputTimer: null,
+    _renderTimer: null,
 
     init() {
       const grid = document.getElementById('rg-shop-products-grid');
@@ -44,7 +54,7 @@
       this.state.size = params.get('size') || '';
       this.state.colour = params.get('colour') || '';
       this.state.material = params.get('material') || '';
-      this.state.maxPrice = Number(params.get('maxPrice')) || 25000;
+      this.state.maxPrice = Number(params.get('maxPrice')) || MAX_PRICE_CEILING;
       this.state.craft = params.get('craft') || '';
       this.state.availability = params.get('availability') || '';
       this.state.occasion = params.get('occasion') || '';
@@ -58,7 +68,7 @@
       ['cat', 'region', 'size', 'colour', 'material', 'craft', 'availability', 'occasion', 'dispatch', 'q'].forEach((k) => {
         if (this.state[k]) params.set(k, this.state[k]);
       });
-      if (this.state.maxPrice < 25000) params.set('maxPrice', String(this.state.maxPrice));
+      if (this.state.maxPrice < MAX_PRICE_CEILING) params.set('maxPrice', String(this.state.maxPrice));
       if (this.state.sort && this.state.sort !== 'featured') params.set('sort', this.state.sort);
 
       const qs = params.toString();
@@ -144,8 +154,12 @@
             this.state.maxPrice = Number(e.target.value);
             const lbl = document.getElementById('rg-price-range-label');
             if (lbl) lbl.textContent = window.RG.data.formatPKR(this.state.maxPrice);
-            this.syncToUrl();
-            this.render();
+            clearTimeout(this._inputTimer);
+            this._inputTimer = setTimeout(() => {
+              this.state.limit = 12;
+              this.syncToUrl();
+              this.render();
+            }, 90);
           }
         });
       }
@@ -183,12 +197,20 @@
         });
       });
 
+      let appliedSavedCols = false;
       try {
         const savedCols = localStorage.getItem('rg_grid_cols');
         if (savedCols && ['2', '3', '4'].includes(savedCols)) {
           setGridCols(savedCols);
+          appliedSavedCols = true;
         }
       } catch (e) {}
+      if (!appliedSavedCols) {
+        document.querySelectorAll('[data-rg-grid-cols]').forEach((b) => {
+          const isActive = b.getAttribute('data-rg-grid-cols') === String(this.state.columns);
+          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
 
       const loadMoreBtn = document.getElementById('rg-load-more-btn');
       if (loadMoreBtn) {
@@ -197,16 +219,45 @@
           this.render();
         });
       }
+
+      const pageSearchForm = document.getElementById('rg-search-page-form');
+      const pageSearchInput = document.getElementById('rg-page-search-input');
+      if (pageSearchInput) {
+        pageSearchInput.value = this.state.q || '';
+        let qTimer = null;
+        pageSearchInput.addEventListener('input', () => {
+          clearTimeout(qTimer);
+          qTimer = setTimeout(() => {
+            this.state.q = pageSearchInput.value.trim();
+            this.state.limit = 12;
+            this.syncToUrl();
+            this.render();
+          }, 120);
+        });
+      }
+      if (pageSearchForm && pageSearchInput) {
+        pageSearchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.state.q = pageSearchInput.value.trim();
+          this.state.limit = 12;
+          this.syncToUrl();
+          this.render();
+        });
+      }
     },
 
     clearAll() {
       this.state = {
         cat: '', region: '', size: '', colour: '', material: '',
-        maxPrice: 25000, craft: '', availability: '', occasion: '',
+        maxPrice: MAX_PRICE_CEILING, craft: '', availability: '', occasion: '',
         dispatch: '', q: '', sort: 'featured', columns: this.state.columns, limit: 12
       };
       const form = document.getElementById('rg-filter-form');
       if (form) form.reset();
+      const sortSel = document.getElementById('rg-sort-select');
+      if (sortSel) sortSel.value = 'featured';
+      const searchInp = document.getElementById('rg-page-search-input');
+      if (searchInp) searchInp.value = '';
       this.syncToUrl();
       this.render();
     },
@@ -237,32 +288,36 @@
         el.textContent = `Showing ${visible.length} of ${matched.length} authentic products`;
       });
 
+      const activeEntries = [];
+      const labels = {
+        cat: 'Category', region: 'Region', size: 'Size', colour: 'Colour',
+        material: 'Material', craft: 'Craft', availability: 'Availability',
+        occasion: 'Occasion', dispatch: 'Dispatch', q: 'Search'
+      };
+      Object.keys(labels).forEach((k) => {
+        if (this.state[k]) activeEntries.push({ key: k, label: `${labels[k]}: ${this.state[k]}` });
+      });
+      if (this.state.maxPrice < MAX_PRICE_CEILING) {
+        activeEntries.push({ key: 'maxPrice', label: `Max: ${window.RG.data.formatPKR(this.state.maxPrice)}` });
+      }
+
+      const activeSummaryBadges = activeEntries.map((item) =>
+        `<span class="rg-badge rg-badge--hand-finished">${escHtml(item.label)}</span>`
+      ).join('');
+
       const chipsWrap = document.getElementById('rg-active-filter-chips');
       if (chipsWrap) {
-        const activeEntries = [];
-        const labels = {
-          cat: 'Category', region: 'Region', size: 'Size', colour: 'Colour',
-          material: 'Material', craft: 'Craft', availability: 'Availability',
-          occasion: 'Occasion', dispatch: 'Dispatch', q: 'Search'
-        };
-        Object.keys(labels).forEach((k) => {
-          if (this.state[k]) activeEntries.push({ key: k, label: `${labels[k]}: ${this.state[k]}` });
-        });
-        if (this.state.maxPrice < 25000) {
-          activeEntries.push({ key: 'maxPrice', label: `Max: ${window.RG.data.formatPKR(this.state.maxPrice)}` });
-        }
-
         if (activeEntries.length) {
           chipsWrap.innerHTML = activeEntries.map((item) => `
-            <button type="button" class="rg-chip" data-rg-remove-filter="${item.key}">
-              ${item.label} <span aria-hidden="true">✕</span>
+            <button type="button" class="rg-chip" data-rg-remove-filter="${escHtml(item.key)}">
+              ${escHtml(item.label)} <span aria-hidden="true">✕</span>
             </button>
           `).join('') + `<button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-clear-all-filters">Clear all</button>`;
 
           chipsWrap.querySelectorAll('[data-rg-remove-filter]').forEach((btn) => {
             btn.addEventListener('click', () => {
               const key = btn.getAttribute('data-rg-remove-filter');
-              this.state[key] = key === 'maxPrice' ? 25000 : '';
+              this.state[key] = key === 'maxPrice' ? MAX_PRICE_CEILING : '';
               this.syncToUrl();
               this.render();
             });
@@ -274,11 +329,13 @@
         }
       }
 
+      clearTimeout(this._renderTimer);
       if (matched.length === 0) {
+        grid.style.opacity = '1';
         grid.innerHTML = `
           <li style="grid-column:1/-1;background:var(--bg-elevated);padding:var(--space-10);border-radius:var(--radius-card);text-align:center;border:1px solid var(--rg-border);">
             <h3 style="margin-block-end:8px;">No pieces match all these filters. Try removing one.</h3>
-            ${activeChipsHtml ? `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-block:12px 16px;">${activeChipsHtml}</div>` : ''}
+            ${activeSummaryBadges ? `<div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-block:12px 16px;">${activeSummaryBadges}</div>` : ''}
             <p style="color:var(--text-secondary);margin-inline:auto;margin-block-end:16px;">Try broadening your price range, clearing a region filter, or requesting a custom-measured custom piece.</p>
             <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
               <button type="button" class="rg-btn rg-btn--primary" id="rg-empty-reset-btn">Reset All Filters</button>
@@ -290,11 +347,11 @@
         if (resetBtn) resetBtn.addEventListener('click', () => this.clearAll());
       } else {
         grid.style.transition = 'opacity 0.15s ease';
-        grid.style.opacity = '0.4';
-        setTimeout(() => {
+        grid.style.opacity = '0.45';
+        this._renderTimer = setTimeout(() => {
           grid.innerHTML = visible.map((p) => window.RG.ui.renderProductCard(p)).join('');
           grid.style.opacity = '1';
-        }, 60);
+        }, 50);
       }
 
       const loadMoreBtn = document.getElementById('rg-load-more-btn');

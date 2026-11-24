@@ -7,21 +7,36 @@
 html[data-theme="heritage"], :root {
   --bg-primary: #F7F4EE;
   --bg-secondary: #EAE3D6;
+  --bg-tertiary: #E2DACB;
   --bg-elevated: #FCFBF8;
   --bg-accent: #DCE6EE;
   --bg-header: rgba(247, 244, 238, 0.95);
   --bg-footer: #13243B;
   --text-primary: #1A1A1A;
   --text-secondary: #575752;
+  --text-inverse: #F7F4EE;
   --brand-primary: #1F3A5F;
   --brand-secondary: #7A1F2B;
   --brand-accent: #B8913A;
+  --brand-accent-text: #7D5E18;
+  --btn-primary-bg: #7A1F2B;
+  --btn-primary-bg-hover: #58141D;
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: #1F3A5F;
+  --btn-secondary-bg-hover: #142742;
+  --btn-secondary-ink: #FFFFFF;
+  --rg-badge-nav-bg: #7D5E18;
+  --rg-badge-nav-ink: #FFFFFF;
+  --rg-surface-stripe: rgba(26, 26, 26, 0.024);
+  --rg-surface-hover: rgba(31, 58, 95, 0.045);
+  --rg-grain-dot: rgba(26, 26, 26, 0.6);
 }
 
 /* 2. Mountain Night (Dark Mode — Cinematic Alpine Night) */
 html[data-theme="mountain-night"] {
   --bg-primary: #0E1620;
   --bg-secondary: #152130;
+  --bg-tertiary: #1F3147;
   --bg-elevated: #1A283B;
   --bg-accent: #1E324A;
   --bg-header: rgba(14, 22, 32, 0.95);
@@ -32,10 +47,89 @@ html[data-theme="mountain-night"] {
   --brand-primary: #8AB4E8;
   --brand-secondary: #E06D7B;
   --brand-accent: #D6AF57;
+  --brand-accent-text: #D6AF57;
+  --btn-primary-bg: #9B2B3A;
+  --btn-primary-bg-hover: #7A1F2B;
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: #2D5182;
+  --btn-secondary-bg-hover: #1F3A5F;
+  --btn-secondary-ink: #FFFFFF;
+  --rg-badge-nav-bg: #D6AF57;
+  --rg-badge-nav-ink: #0E1620;
+  --rg-success: #7FD1A8;
+  --rg-success-bg: rgba(47, 107, 79, 0.28);
+  --rg-error: #F29B96;
+  --rg-error-bg: rgba(162, 49, 43, 0.28);
+  --rg-warning: #E9C46A;
+  --rg-warning-bg: rgba(184, 145, 58, 0.22);
   --rg-border: rgba(247, 244, 238, 0.14);
   --rg-border-strong: rgba(247, 244, 238, 0.28);
+  --rg-surface-stripe: rgba(247, 244, 238, 0.03);
+  --rg-surface-hover: rgba(138, 180, 232, 0.08);
+  --rg-grain-dot: rgba(247, 244, 238, 0.45);
   --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Mountain Night Accessible Component Contrast Guards */
+html[data-theme="mountain-night"] .rg-btn--primary,
+html[data-theme="mountain-night"] .button.alt,
+html[data-theme="mountain-night"] .single_add_to_cart_button {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: var(--btn-primary-ink);
+}
+
+html[data-theme="mountain-night"] .rg-btn--primary:hover,
+html[data-theme="mountain-night"] .button.alt:hover,
+html[data-theme="mountain-night"] .single_add_to_cart_button:hover {
+  background-color: var(--btn-primary-bg-hover);
+  border-color: var(--btn-primary-bg-hover);
+}
+
+html[data-theme="mountain-night"] .rg-btn--secondary,
+html[data-theme="mountain-night"] .rg-size-btn.is-selected,
+html[data-theme="mountain-night"] .rg-chip:hover,
+html[data-theme="mountain-night"] .rg-style-switcher__btn.is-active,
+html[data-theme="mountain-night"] a.button.add_to_cart_button:hover,
+html[data-theme="mountain-night"] .woocommerce-MyAccount-navigation .is-active a,
+html[data-theme="mountain-night"] .woocommerce-MyAccount-navigation .is-active button {
+  background-color: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-ink);
+}
+
+html[data-theme="mountain-night"] .rg-btn--secondary:hover {
+  background-color: var(--btn-secondary-bg-hover);
+  border-color: var(--btn-secondary-bg-hover);
+}
+
+html[data-theme="mountain-night"] .rg-badge-count,
+html[data-theme="mountain-night"] .rg-checkout-steps .is-current b {
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: var(--btn-primary-ink);
+}
+
+html[data-theme="mountain-night"] .rg-badge--hand-finished {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--rg-border-strong);
+}
+
+html[data-theme="mountain-night"] .rg-badge--machine-made {
+  background: #233B57;
+  color: #DCE6EE;
+}
+
+html[data-theme="mountain-night"] .rg-stock-urgency {
+  color: #F29B96;
+  background: rgba(162, 49, 43, 0.25);
+}
+
+html[data-theme="mountain-night"] .woocommerce-info {
+  color: #DCE6EE;
+  border-inline-start-color: var(--brand-primary);
 }
 
 /* Respect system dark mode if user hasn't forced another theme */
@@ -43,16 +137,39 @@ html[data-theme="mountain-night"] {
   html:not([data-theme]) {
     --bg-primary: #0E1620;
     --bg-secondary: #152130;
+    --bg-tertiary: #1F3147;
     --bg-elevated: #1A283B;
     --bg-accent: #1E324A;
     --bg-header: rgba(14, 22, 32, 0.95);
     --bg-footer: #090E15;
     --text-primary: #F7F4EE;
     --text-secondary: #C4BFB4;
+    --text-inverse: #0E1620;
     --brand-primary: #8AB4E8;
     --brand-secondary: #E06D7B;
     --brand-accent: #D6AF57;
+    --brand-accent-text: #D6AF57;
+    --btn-primary-bg: #9B2B3A;
+    --btn-primary-bg-hover: #7A1F2B;
+    --btn-primary-ink: #FFFFFF;
+    --btn-secondary-bg: #2D5182;
+    --btn-secondary-bg-hover: #1F3A5F;
+    --btn-secondary-ink: #FFFFFF;
+    --rg-badge-nav-bg: #D6AF57;
+    --rg-badge-nav-ink: #0E1620;
+    --rg-success: #7FD1A8;
+    --rg-success-bg: rgba(47, 107, 79, 0.28);
+    --rg-error: #F29B96;
+    --rg-error-bg: rgba(162, 49, 43, 0.28);
+    --rg-warning: #E9C46A;
+    --rg-warning-bg: rgba(184, 145, 58, 0.22);
     --rg-border: rgba(247, 244, 238, 0.14);
+    --rg-border-strong: rgba(247, 244, 238, 0.28);
+    --rg-surface-stripe: rgba(247, 244, 238, 0.03);
+    --rg-surface-hover: rgba(138, 180, 232, 0.08);
+    --rg-grain-dot: rgba(247, 244, 238, 0.45);
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -60,6 +177,7 @@ html[data-theme="mountain-night"] {
 html[data-theme="minimal-gallery"] {
   --bg-primary: #FFFFFF;
   --bg-secondary: #F5F5F3;
+  --bg-tertiary: #EAEAE6;
   --bg-elevated: #FFFFFF;
   --bg-accent: #F0EFEA;
   --bg-header: rgba(255, 255, 255, 0.96);
@@ -69,6 +187,15 @@ html[data-theme="minimal-gallery"] {
   --brand-primary: #111111;
   --brand-secondary: #7A1F2B;
   --brand-accent: #7A1F2B;
+  --brand-accent-text: #7A1F2B;
+  --btn-primary-bg: #7A1F2B;
+  --btn-primary-bg-hover: #58141D;
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: #111111;
+  --btn-secondary-bg-hover: #2B2B2B;
+  --btn-secondary-ink: #FFFFFF;
+  --rg-badge-nav-bg: #7A1F2B;
+  --rg-badge-nav-ink: #FFFFFF;
   --radius-card: 2px;
   --rg-border: rgba(17, 17, 17, 0.12);
 }
@@ -77,6 +204,7 @@ html[data-theme="minimal-gallery"] {
 html[data-theme="festive"] {
   --bg-primary: #FDF8F2;
   --bg-secondary: #F4E8DC;
+  --bg-tertiary: #EBD8C6;
   --bg-elevated: #FFFDFB;
   --bg-accent: #F7E4D0;
   --bg-header: rgba(253, 248, 242, 0.96);
@@ -86,6 +214,13 @@ html[data-theme="festive"] {
   --brand-primary: #7A1F2B;
   --brand-secondary: #1F3A5F;
   --brand-accent: #B8913A;
+  --brand-accent-text: #7D5E18;
+  --btn-primary-bg: #1F3A5F;
+  --btn-primary-bg-hover: #142742;
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: #7A1F2B;
+  --btn-secondary-bg-hover: #58141D;
+  --btn-secondary-ink: #FFFFFF;
   --rg-border: rgba(122, 31, 43, 0.16);
 }
 
@@ -97,6 +232,7 @@ html[data-theme="festive"] .rg-hero {
 html[data-theme="walnut-ochre"] {
   --bg-primary: #FAF6EF;
   --bg-secondary: #F3E8D7;
+  --bg-tertiary: #E8D9C2;
   --bg-elevated: #FFFDF9;
   --bg-accent: #F4D9A0;
   --bg-header: rgba(250, 246, 239, 0.95);
@@ -105,14 +241,23 @@ html[data-theme="walnut-ochre"] {
   --text-secondary: #654E3C;
   --text-inverse: #FAF6EF;
   --brand-primary: #5B4632;
-  --brand-secondary: #C8792C;
+  --brand-secondary: #A3561E;
   --brand-accent: #C8792C;
+  --brand-accent-text: #8C4716;
+  --btn-primary-bg: #A3561E;
+  --btn-primary-bg-hover: #874416;
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: #5B4632;
+  --btn-secondary-bg-hover: #3D2D1F;
+  --btn-secondary-ink: #FAF6EF;
+  --rg-badge-nav-bg: #A3561E;
+  --rg-badge-nav-ink: #FFFFFF;
   --rg-border: rgba(91, 70, 50, 0.16);
   --rg-border-strong: rgba(91, 70, 50, 0.30);
   --shadow-sm: 0 4px 14px rgba(61, 45, 31, 0.08);
   --shadow-md: 0 12px 30px rgba(61, 45, 31, 0.12);
   --shadow-lg: 0 20px 48px rgba(61, 45, 31, 0.18);
-  --shadow-focus: 0 0 0 3px rgba(200, 121, 44, 0.35);
+  --shadow-focus: 0 0 0 3px rgba(163, 86, 30, 0.35);
 }
 
 /* Walnut & Ochre Component Polish */
@@ -156,17 +301,17 @@ html[data-theme="walnut-ochre"] .site-footer__newsletter {
 html[data-theme="walnut-ochre"] .rg-btn--primary,
 html[data-theme="walnut-ochre"] .button.alt,
 html[data-theme="walnut-ochre"] .single_add_to_cart_button {
-  background-color: #C8792C;
+  background-color: #A3561E;
   color: #FFFFFF;
-  border-color: #C8792C;
+  border-color: #A3561E;
 }
 
 html[data-theme="walnut-ochre"] .rg-btn--primary:hover,
 html[data-theme="walnut-ochre"] .button.alt:hover,
 html[data-theme="walnut-ochre"] .single_add_to_cart_button:hover {
-  background-color: #A3561E;
-  border-color: #A3561E;
-  box-shadow: 0 6px 18px rgba(200, 121, 44, 0.35);
+  background-color: #874416;
+  border-color: #874416;
+  box-shadow: 0 6px 18px rgba(163, 86, 30, 0.35);
 }
 
 html[data-theme="walnut-ochre"] .rg-btn--secondary {
@@ -181,7 +326,7 @@ html[data-theme="walnut-ochre"] .rg-btn--secondary:hover {
 }
 
 html[data-theme="walnut-ochre"] .rg-badge--handmade {
-  background: #C8792C;
+  background: #A3561E;
   color: #FFFFFF;
 }
 

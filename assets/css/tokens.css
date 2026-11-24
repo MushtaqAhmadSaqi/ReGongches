@@ -50,6 +50,7 @@
   /* Active Theme Semantic Mappings (overridden by [data-theme] in themes.css) */
   --bg-primary: var(--rg-snow);
   --bg-secondary: var(--rg-wool);
+  --bg-tertiary: #E2DACB;
   --bg-elevated: var(--rg-card-bg);
   --bg-accent: var(--rg-glacier);
   --bg-header: rgba(247, 244, 238, 0.94);
@@ -60,6 +61,26 @@
   --brand-primary: var(--rg-mountain-blue);
   --brand-secondary: var(--rg-heritage-maroon);
   --brand-accent: var(--rg-antique-gold);
+  --brand-accent-text: var(--rg-antique-gold-accessible);
+
+  /* Accessible Component Surface / Ink Pairs (WCAG 2.2 AA >= 4.5:1) */
+  --btn-primary-bg: var(--rg-heritage-maroon);
+  --btn-primary-bg-hover: var(--rg-heritage-maroon-dark);
+  --btn-primary-ink: #FFFFFF;
+  --btn-secondary-bg: var(--rg-mountain-blue);
+  --btn-secondary-bg-hover: var(--rg-mountain-blue-dark);
+  --btn-secondary-ink: #FFFFFF;
+  --rg-badge-new-bg: var(--btn-secondary-bg);
+  --rg-badge-new-ink: var(--btn-secondary-ink);
+  --rg-badge-handmade-bg: var(--btn-primary-bg);
+  --rg-badge-handmade-ink: var(--btn-primary-ink);
+  --rg-badge-sale-bg: #A2312B;
+  --rg-badge-sale-ink: #FFFFFF;
+  --rg-badge-nav-bg: var(--rg-antique-gold-accessible);
+  --rg-badge-nav-ink: #FFFFFF;
+  --rg-surface-stripe: rgba(26, 26, 26, 0.024);
+  --rg-surface-hover: rgba(31, 58, 95, 0.045);
+  --rg-grain-dot: rgba(26, 26, 26, 0.6);
 
   /* Typography */
   --font-display: 'Fraunces', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
@@ -120,6 +141,7 @@
   /* Motion & Transitions */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 150ms;
-  --duration-base: 300ms;
+  --duration-ui: 200ms;
+  --duration-base: 240ms;
   --duration-slow: 600ms;
 }

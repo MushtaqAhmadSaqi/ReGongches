@@ -7,6 +7,12 @@
 (function (window, document) {
   'use strict';
 
+  function escHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, (ch) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
   function formatFutureDate(daysToAdd) {
     const d = new Date();
     d.setDate(d.getDate() + daysToAdd);
@@ -87,10 +93,10 @@
           <!-- Gallery Column (.woocommerce-product-gallery) -->
           <div class="woocommerce-product-gallery">
             <div class="woocommerce-product-gallery__main" id="rg-gallery-main" title="Hover to magnify · Click to open full lightbox">
-              <img src="${product.images[0].src}" alt="${product.images[0].alt}" id="rg-gallery-main-img" width="640" height="800">
+              <img src="${product.images[0].src}" alt="${escHtml(product.images[0].alt)}" id="rg-gallery-main-img" width="640" height="800">
               <div class="rg-magnifier-lens" id="rg-magnifier-lens"></div>
-              <span class="rg-badge rg-badge--hand-finished" style="position:absolute;inset-block-end:12px;inset-inline-start:12px;">Illustrative image</span>
-              <span class="rg-badge rg-badge--hand-finished" style="position:absolute;inset-block-end:12px;inset-inline-end:12px;">Hover / Click Zoom</span>
+              <span class="rg-badge rg-badge--hand-finished" id="rg-gallery-badge-illustrative" style="position:absolute;inset-block-end:12px;inset-inline-start:12px;">Illustrative image</span>
+              <span class="rg-badge rg-badge--hand-finished" id="rg-gallery-badge-zoom" style="position:absolute;inset-block-end:12px;inset-inline-end:12px;">Hover / Click Zoom</span>
             </div>
             <div class="woocommerce-product-gallery__thumbs">
               ${product.images.map((img, idx) => `
@@ -210,7 +216,7 @@
                 <button type="button" class="single_add_to_cart_button button alt" id="rg-main-add-to-cart" style="flex:1;min-height:48px;font-size:var(--text-sm);font-weight:700;">
                   Add to Cart — ${fmt(product.price)}
                 </button>
-                <button type="button" class="rg-btn rg-btn--outline" data-rg-wishlist-toggle="${product.id}" aria-label="Add to Wishlist" style="width:48px;height:48px;padding:0;display:inline-flex;align-items:center;justify-content:center;">
+                <button type="button" class="rg-btn rg-btn--outline ${window.RG.wishlist && window.RG.wishlist.has(product.id) ? 'is-active' : ''}" data-rg-wishlist-toggle="${product.id}" aria-label="Add to Wishlist" aria-pressed="${window.RG.wishlist && window.RG.wishlist.has(product.id) ? 'true' : 'false'}" style="width:48px;height:48px;padding:0;display:inline-flex;align-items:center;justify-content:center;">
                   <svg width="20" height="20" aria-hidden="true"><use href="#icon-heart"></use></svg>
                 </button>
               </div>
@@ -244,16 +250,70 @@
           </div>
         </div>
 
+        <!-- The Origin Card (.rg-origin-card) -->
+        <aside class="rg-origin-card" aria-label="Product Origin & Provenance Card">
+          <div class="rg-origin-card__header">
+            <div class="rg-origin-card__title">
+              <svg width="20" height="20" aria-hidden="true" style="color:var(--brand-secondary);"><use href="#icon-sparkles"></use></svg>
+              <span>The Origin Card — ${escHtml(product.region)}</span>
+              ${product.verified ? '<span class="rg-badge rg-badge--verified">✓ Verified Provenance</span>' : '<span class="rg-badge rg-badge--hand-finished">Regional Review in Progress</span>'}
+            </div>
+            <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-origin-flip-btn" aria-expanded="false">Flip to Valley Map ↻</button>
+          </div>
+
+          <div id="rg-origin-front">
+            <div class="rg-origin-card__grid">
+              <div class="rg-origin-card__item">
+                <span class="rg-origin-card__label">01 · Who Made It</span>
+                <span class="rg-origin-card__value">${artisan ? escHtml(artisan.name) : `${escHtml(product.region)} Partner Guild`}</span>
+              </div>
+              <div class="rg-origin-card__item">
+                <span class="rg-origin-card__label">02 · Where It's From</span>
+                <span class="rg-origin-card__value">${escHtml(product.district || product.region)}, Gilgit-Baltistan</span>
+              </div>
+              <div class="rg-origin-card__item">
+                <span class="rg-origin-card__label">03 · What It's Made Of</span>
+                <span class="rg-origin-card__value">${escHtml(materialText)}</span>
+              </div>
+              <div class="rg-origin-card__item">
+                <span class="rg-origin-card__label">04 · Estimated Dispatch</span>
+                <span class="rg-origin-card__value rg-tabular">${escHtml(estRange)}</span>
+              </div>
+            </div>
+            ${artisan ? `
+              <div class="rg-origin-card__artisan">
+                <img src="${artisan.avatar}" alt="${escHtml(artisan.name)}" width="56" height="56">
+                <div style="flex:1;min-width:0;">
+                  <strong style="display:block;font-size:var(--text-sm);">${escHtml(artisan.name)}</strong>
+                  <span style="font-size:var(--text-xs);color:var(--text-secondary);display:block;">${escHtml(artisan.craft)} · ${escHtml(artisan.valley || product.region)}</span>
+                </div>
+                <a href="artisan.html?id=${encodeURIComponent(artisan.id)}" class="rg-btn rg-btn--outline rg-btn--sm">Meet Maker →</a>
+              </div>
+            ` : ''}
+          </div>
+
+          <div id="rg-origin-back" hidden>
+            <div class="rg-origin-card__item" style="margin-block-end:var(--space-4);">
+              <span class="rg-origin-card__label">04 · What It Means (Cultural Context)</span>
+              <p style="margin:6px 0 0;font-size:var(--text-sm);color:var(--text-secondary);line-height:1.6;">${escHtml(product.cultural_story)}</p>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+              <span style="font-size:var(--text-xs);color:var(--text-secondary);">Craft Classification: <strong style="color:var(--text-primary);">${escHtml(product.craft_type)}</strong> · SKU <span class="rg-tabular">${escHtml(product.sku)}</span></span>
+              <a href="region.html?region=${encodeURIComponent(product.region.toLowerCase())}" class="rg-btn rg-btn--secondary rg-btn--sm">Explore ${escHtml(product.region)} Valley →</a>
+            </div>
+          </div>
+        </aside>
+
         <!-- Clean 3-Tab Section (.woocommerce-tabs.wc-tabs-wrapper) -->
         <div class="woocommerce-tabs wc-tabs-wrapper">
           <ul class="tabs wc-tabs" role="tablist">
-            <li class="active" data-rg-tab-li="specs"><button type="button" data-rg-tab-btn="specs">Product Details & Specs</button></li>
-            <li data-rg-tab-li="shipping"><button type="button" data-rg-tab-btn="shipping">Shipping & Returns</button></li>
-            <li data-rg-tab-li="maker"><button type="button" data-rg-tab-btn="maker">Artisan & Heritage</button></li>
+            <li class="active" data-rg-tab-li="specs" role="presentation"><button type="button" role="tab" id="rg-tab-btn-specs" aria-selected="true" aria-controls="rg-tab-panel-specs" tabindex="0" data-rg-tab-btn="specs">Product Details & Specs</button></li>
+            <li data-rg-tab-li="shipping" role="presentation"><button type="button" role="tab" id="rg-tab-btn-shipping" aria-selected="false" aria-controls="rg-tab-panel-shipping" tabindex="-1" data-rg-tab-btn="shipping">Shipping & Returns</button></li>
+            <li data-rg-tab-li="maker" role="presentation"><button type="button" role="tab" id="rg-tab-btn-maker" aria-selected="false" aria-controls="rg-tab-panel-maker" tabindex="-1" data-rg-tab-btn="maker">Artisan & Heritage</button></li>
           </ul>
 
           <!-- Tab 1: Specs -->
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="specs">
+          <div class="woocommerce-Tabs-panel" role="tabpanel" id="rg-tab-panel-specs" aria-labelledby="rg-tab-btn-specs" data-rg-tab-panel="specs">
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:start;">
               <div>
                 <h3 style="font-size:var(--text-md);margin-block-end:10px;">About This Piece</h3>
@@ -284,7 +344,7 @@
           </div>
 
           <!-- Tab 2: Shipping & Returns -->
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="shipping" hidden>
+          <div class="woocommerce-Tabs-panel" role="tabpanel" id="rg-tab-panel-shipping" aria-labelledby="rg-tab-btn-shipping" data-rg-tab-panel="shipping" hidden>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-block-end:24px;">
               <div style="background:var(--bg-secondary);padding:18px 20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);">
                 <div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-block-end:8px;color:var(--text-primary);">
@@ -330,7 +390,7 @@
           </div>
 
           <!-- Tab 3: Artisan & Heritage -->
-          <div class="woocommerce-Tabs-panel" data-rg-tab-panel="maker" hidden>
+          <div class="woocommerce-Tabs-panel" role="tabpanel" id="rg-tab-panel-maker" aria-labelledby="rg-tab-btn-maker" data-rg-tab-panel="maker" hidden>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:start;">
               ${artisan ? `
                 <div style="background:var(--bg-secondary);padding:20px;border-radius:var(--radius-card);border:1px solid var(--rg-border);display:flex;gap:16px;align-items:center;">
@@ -425,29 +485,30 @@
               <p style="font-size:var(--text-sm);color:var(--text-secondary);margin:4px 0 0;">Fit Meter Consensus: <strong>92% say True to Size</strong> (Runs small: 4% · Runs large: 4%)</p>
             </div>
             <div style="display:flex;gap:6px;flex-wrap:wrap;">
-              <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" data-rg-rev-filter="all">All Stars</button>
-              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rev-filter="5">5 ★ Only</button>
-              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rev-filter="4">4 ★ Only</button>
-              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-toggle-review-form">Write a Review</button>
+              <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" data-rg-rev-filter="all" aria-pressed="true">All Stars</button>
+              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rev-filter="5" aria-pressed="false">5 ★ Only</button>
+              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-rev-filter="4" aria-pressed="false">4 ★ Only</button>
+              <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" id="rg-toggle-review-form" aria-expanded="false">Write a Review</button>
             </div>
           </div>
 
           <form id="rg-demo-review-form" hidden style="background:var(--bg-secondary);padding:20px;border-radius:var(--radius-card);margin-block-end:24px;display:grid;gap:12px;">
             <h4>Submit a Customer Review</h4>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-              <input type="text" placeholder="Your Name & City" required style="padding:10px;border:1px solid var(--rg-border-strong);">
-              <select style="padding:10px;border:1px solid var(--rg-border-strong);">
+            <div class="rg-review-form-grid">
+              <input type="text" aria-label="Your Name and City" placeholder="Your Name & City" required style="padding:10px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-elevated);color:var(--text-primary);">
+              <select aria-label="Star rating" style="padding:10px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-elevated);color:var(--text-primary);">
                 <option value="5">★★★★★ (5/5)</option>
                 <option value="4">★★★★☆ (4/5)</option>
               </select>
             </div>
-            <textarea rows="3" placeholder="Share how the size fit and what you thought of the wool/embroidery quality..." required style="padding:10px;border:1px solid var(--rg-border-strong);"></textarea>
+            <textarea rows="3" aria-label="Review comment" placeholder="Share how the size fit and what you thought of the wool/embroidery quality..." required style="padding:10px;border:1px solid var(--rg-border-strong);border-radius:var(--radius-editorial);background:var(--bg-elevated);color:var(--text-primary);"></textarea>
             <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm" style="justify-self:start;">Submit Review</button>
           </form>
 
           <div class="rg-grid rg-grid--3" id="rg-pdp-reviews-list">
             ${reviews.map((r) => window.RG.ui.renderReviewCard(r)).join('')}
           </div>
+          <p id="rg-pdp-reviews-empty" hidden style="text-align:center;padding:24px;background:var(--bg-elevated);border:1px solid var(--rg-border);border-radius:var(--radius-card);color:var(--text-secondary);">No reviews match that star rating filter yet.</p>
         </section>
 
         <!-- Sticky Add-to-Cart Bar on Scroll -->
@@ -616,9 +677,16 @@
           const lbl = document.getElementById('rg-selected-colour-label');
           if (lbl) lbl.textContent = btn.getAttribute('data-rg-colour-btn');
           const idx = Number(btn.getAttribute('data-rg-colour-idx')) || 0;
-          const targetImg = product.images[idx % product.images.length];
+          const imgIdx = idx % product.images.length;
+          const targetImg = product.images[imgIdx];
+          restoreImageGallery();
+          const thumbs = container.querySelectorAll('.woocommerce-product-gallery__thumb[data-rg-thumb]');
+          thumbs.forEach((b, bIdx) => b.classList.toggle('is-active', bIdx === imgIdx));
+          const vThumb = document.getElementById('rg-video-thumb-btn');
+          if (vThumb) vThumb.classList.remove('is-active');
           if (targetImg && mainImg) {
             mainImg.src = targetImg.src;
+            mainImg.alt = targetImg.alt || product.name;
           }
         });
       });
@@ -632,6 +700,7 @@
           const showingFront = !front.hidden;
           front.hidden = showingFront;
           back.hidden = !showingFront;
+          flipBtn.setAttribute('aria-expanded', String(showingFront));
           flipBtn.textContent = showingFront ? 'Back to Origin Details ↺' : 'Flip to Valley Map ↻';
         });
       }
@@ -735,16 +804,39 @@
         }, { passive: true });
       }
 
-      // Tabs
-      container.querySelectorAll('[data-rg-tab-btn]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-rg-tab-btn');
-          container.querySelectorAll('[data-rg-tab-li]').forEach((li) => {
-            li.classList.toggle('active', li.getAttribute('data-rg-tab-li') === target);
-          });
-          container.querySelectorAll('[data-rg-tab-panel]').forEach((panel) => {
-            panel.hidden = panel.getAttribute('data-rg-tab-panel') !== target;
-          });
+      // Tabs (WAI-ARIA Keyboard + Click)
+      const tabBtns = Array.from(container.querySelectorAll('[data-rg-tab-btn]'));
+      const activatePdpTab = (target, focusTab) => {
+        container.querySelectorAll('[data-rg-tab-li]').forEach((li) => {
+          li.classList.toggle('active', li.getAttribute('data-rg-tab-li') === target);
+        });
+        tabBtns.forEach((b) => {
+          const isMatch = b.getAttribute('data-rg-tab-btn') === target;
+          b.setAttribute('aria-selected', String(isMatch));
+          b.setAttribute('tabindex', isMatch ? '0' : '-1');
+          if (isMatch && focusTab) b.focus();
+        });
+        container.querySelectorAll('[data-rg-tab-panel]').forEach((panel) => {
+          panel.hidden = panel.getAttribute('data-rg-tab-panel') !== target;
+        });
+      };
+
+      tabBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => activatePdpTab(btn.getAttribute('data-rg-tab-btn'), false));
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            activatePdpTab(tabBtns[(idx + 1) % tabBtns.length].getAttribute('data-rg-tab-btn'), true);
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            activatePdpTab(tabBtns[(idx - 1 + tabBtns.length) % tabBtns.length].getAttribute('data-rg-tab-btn'), true);
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            activatePdpTab(tabBtns[0].getAttribute('data-rg-tab-btn'), true);
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            activatePdpTab(tabBtns[tabBtns.length - 1].getAttribute('data-rg-tab-btn'), true);
+          }
         });
       });
 
@@ -755,10 +847,16 @@
           container.querySelectorAll('[data-rg-rev-filter]').forEach((b) => {
             b.classList.toggle('rg-btn--secondary', b === btn);
             b.classList.toggle('rg-btn--outline', b !== btn);
+            b.setAttribute('aria-pressed', String(b === btn));
           });
+          let shownCount = 0;
           container.querySelectorAll('[data-review-rating]').forEach((card) => {
-            card.hidden = rating !== 'all' && card.getAttribute('data-review-rating') !== rating;
+            const hidden = rating !== 'all' && card.getAttribute('data-review-rating') !== rating;
+            card.hidden = hidden;
+            if (!hidden) shownCount++;
           });
+          const emptyRev = document.getElementById('rg-pdp-reviews-empty');
+          if (emptyRev) emptyRev.hidden = shownCount > 0;
         });
       });
 
@@ -768,10 +866,12 @@
       if (revToggle && revForm) {
         revToggle.addEventListener('click', () => {
           revForm.hidden = !revForm.hidden;
+          revToggle.setAttribute('aria-expanded', String(!revForm.hidden));
         });
         revForm.addEventListener('submit', (e) => {
           e.preventDefault();
           revForm.hidden = true;
+          revToggle.setAttribute('aria-expanded', 'false');
           window.RG.ui.toast('Thank you! Your review was submitted for moderation.');
         });
       }
@@ -789,7 +889,11 @@
       const recentGrid = document.getElementById('rg-recently-viewed-grid');
       if (recentGrid) {
         const recents = window.RG.wishlist.getRecentlyViewed(product.id);
-        const list = recents.length ? recents.slice(0, 4) : window.RG.data.getProducts().slice(4, 8);
+        const headingWrap = recentGrid.closest('.upsells.products')?.querySelector('.rg-section__header p, .rg-section__header .rg-section__eyebrow');
+        if (!recents.length && headingWrap) {
+          headingWrap.textContent = 'Popular Picks While You Browse';
+        }
+        const list = recents.length ? recents.slice(0, 4) : window.RG.data.getProducts().filter((p) => p.id !== product.id).slice(4, 8);
         recentGrid.innerHTML = list.map((p) => window.RG.ui.renderProductCard(p)).join('');
       }
     },
