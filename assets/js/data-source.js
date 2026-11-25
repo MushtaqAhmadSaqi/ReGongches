@@ -6,16 +6,58 @@
 (function (window) {
   'use strict';
 
+  function sanitizeText(str, maxLen) {
+    const clean = String(str == null ? '' : str).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
+    return maxLen && clean.length > maxLen ? clean.slice(0, maxLen) : clean;
+  }
+
+  function sanitizeUrl(url) {
+    const s = String(url == null ? '' : url).trim();
+    if (!s || s.startsWith('//')) return '';
+    if (/^[a-z][a-z0-9+.-]*:/i.test(s)) {
+      if (/^https?:/i.test(s) || /^data:image\/(?:png|jpeg|jpg|webp|gif);/i.test(s)) return s;
+      return '';
+    }
+    return s;
+  }
+
+  function sanitizeUrlArray(arr) {
+    if (!Array.isArray(arr)) return arr;
+    return arr.map((entry) => {
+      if (typeof entry === 'string') return sanitizeUrl(entry);
+      if (entry && typeof entry === 'object' && typeof entry.src === 'string') {
+        return Object.assign({}, entry, { src: sanitizeUrl(entry.src) });
+      }
+      return entry;
+    });
+  }
+
+  function sanitizeRecord(item) {
+    if (!item || typeof item !== 'object') return item;
+    const copy = Object.assign({}, item);
+    ['image', 'img', 'heroImage', 'thumbnail', 'avatar', 'coverImage', 'portrait', 'photo'].forEach((k) => {
+      if (typeof copy[k] === 'string') copy[k] = sanitizeUrl(copy[k]);
+    });
+    if (Array.isArray(copy.gallery)) copy.gallery = sanitizeUrlArray(copy.gallery);
+    if (Array.isArray(copy.images)) copy.images = sanitizeUrlArray(copy.images);
+    if (typeof copy.url === 'string') copy.url = sanitizeUrl(copy.url);
+    return copy;
+  }
+
   const RGDataSource = {
     mode: 'static', // Change to 'wc-store-api' in WordPress theme
     wcEndpoint: '/wp-json/wc/store/v1/products',
+    sanitizeText,
+    sanitizeUrl,
+    sanitizeRecord,
 
     getConfig() {
       return (window.RG_DATA && window.RG_DATA.config) || {};
     },
 
     getProducts() {
-      return (window.RG_DATA && window.RG_DATA.products) || [];
+      const list = (window.RG_DATA && window.RG_DATA.products) || [];
+      return Array.isArray(list) ? list.map(sanitizeRecord) : [];
     },
 
     getProductById(idOrSlug) {
@@ -27,7 +69,8 @@
     },
 
     getArtisans() {
-      return (window.RG_DATA && window.RG_DATA.artisans) || [];
+      const list = (window.RG_DATA && window.RG_DATA.artisans) || [];
+      return Array.isArray(list) ? list.map(sanitizeRecord) : [];
     },
 
     getArtisanById(id) {
@@ -37,7 +80,8 @@
     },
 
     getRegions() {
-      return (window.RG_DATA && window.RG_DATA.regions) || [];
+      const list = (window.RG_DATA && window.RG_DATA.regions) || [];
+      return Array.isArray(list) ? list.map(sanitizeRecord) : [];
     },
 
     getRegionById(id) {
@@ -54,7 +98,8 @@
     },
 
     getJournalPosts() {
-      return (window.RG_DATA && window.RG_DATA.journal) || [];
+      const list = (window.RG_DATA && window.RG_DATA.journal) || [];
+      return Array.isArray(list) ? list.map(sanitizeRecord) : [];
     },
 
     getJournalPostById(id) {

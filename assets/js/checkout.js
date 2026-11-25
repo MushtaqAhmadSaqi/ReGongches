@@ -15,7 +15,10 @@
 
   function getOrders() {
     try {
-      return JSON.parse(window.localStorage.getItem(ORDERS_KEY) || '[]');
+      // Purge any legacy localStorage unredacted order history on shared devices
+      window.localStorage.removeItem(ORDERS_KEY);
+      const parsed = JSON.parse(window.sessionStorage.getItem(ORDERS_KEY) || '[]');
+      return Array.isArray(parsed) ? parsed : [];
     } catch (e) {
       return [];
     }
@@ -23,8 +26,9 @@
 
   function saveOrder(order) {
     try {
-      const list = [order, ...getOrders()];
-      window.localStorage.setItem(ORDERS_KEY, JSON.stringify(list));
+      window.localStorage.removeItem(ORDERS_KEY);
+      const list = [order, ...getOrders()].slice(0, 20);
+      window.sessionStorage.setItem(ORDERS_KEY, JSON.stringify(list));
     } catch (e) {}
   }
 
@@ -69,7 +73,7 @@
 
         <!-- FIX: Use rg-cart-layout class for responsive 2-column on desktop, stacked on mobile -->
         <div class="rg-cart-layout">
-          <form class="woocommerce-cart-form" onsubmit="return false;">
+          <form class="woocommerce-cart-form">
             <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents">
               <thead>
                 <tr>
@@ -214,15 +218,15 @@
         <div style="display:grid;gap:10px;margin-block-end:16px;">
           ${summary.items.map((i) => `
             <div style="display:flex;justify-content:space-between;font-size:var(--text-sm);">
-              <span>${i.qty} × ${i.name} <small style="color:var(--text-secondary);">(${i.size})</small></span>
-              <strong>${fmt(i.price * i.qty)}</strong>
+              <span>${Number(i.qty) || 1} × ${escHtml(i.name)} <small style="color:var(--text-secondary);">(${escHtml(i.size)})</small></span>
+              <strong>${fmt((Number(i.price) || 0) * (Number(i.qty) || 1))}</strong>
             </div>
           `).join('')}
         </div>
         <hr class="rg-stitch-line" style="margin-block:12px;">
         <div style="display:grid;gap:8px;font-size:var(--text-sm);">
           <div style="display:flex;justify-content:space-between;"><span>Subtotal</span><span>${fmt(summary.subtotal)}</span></div>
-          ${summary.discount > 0 ? `<div style="display:flex;justify-content:space-between;color:var(--rg-success);"><span>Promo (${summary.couponCode})</span><span>− ${fmt(summary.discount)}</span></div>` : ''}
+          ${summary.discount > 0 ? `<div style="display:flex;justify-content:space-between;color:var(--rg-success);"><span>Promo (${escHtml(summary.couponCode)})</span><span>− ${fmt(summary.discount)}</span></div>` : ''}
           ${summary.giftWrapCost > 0 ? `<div style="display:flex;justify-content:space-between;"><span>Heritage Gift Wrap</span><span>${fmt(summary.giftWrapCost)}</span></div>` : ''}
           <div style="display:flex;justify-content:space-between;"><span>Tracked Courier</span><span>${summary.delivery === 0 ? 'FREE' : fmt(summary.delivery)}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:var(--text-lg);font-weight:700;padding-block-start:10px;border-block-start:1px solid var(--rg-border);">
@@ -314,13 +318,9 @@
           date: new Date().toISOString().slice(0, 10),
           status: 'Confirmed',
           customer: {
-            name: form.elements.billing_full_name.value.trim(),
-            phone: form.elements.billing_phone.value.trim(),
-            email: form.elements.billing_email.value.trim(),
-            province: form.elements.billing_state.value,
-            city: form.elements.billing_city.value.trim(),
-            address: form.elements.billing_address_1.value.trim(),
-            landmark: form.elements.billing_landmark ? form.elements.billing_landmark.value.trim() : ''
+            name: String(form.elements.billing_full_name.value || '').trim().slice(0, 80),
+            province: String(form.elements.billing_state.value || '').slice(0, 60),
+            city: String(form.elements.billing_city.value || '').trim().slice(0, 60)
           },
           paymentMethod: form.elements.payment_method.value,
           summary
@@ -383,7 +383,7 @@
         </div>
 
         <div class="no-print" style="display:flex;flex-wrap:wrap;gap:12px;">
-          <a href="https://wa.me/${cfg.whatsappNumber}?text=${waMsg}" target="_blank" rel="noopener" class="rg-btn rg-btn--primary" style="background:#1E7E48;border-color:#1E7E48;">
+          <a href="https://wa.me/${cfg.whatsappNumber}?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="rg-btn rg-btn--primary" style="background:#1E7E48;border-color:#1E7E48;">
             Confirm Order on WhatsApp
           </a>
           <a href="account.html" class="rg-btn rg-btn--secondary">Track Order in My Account</a>

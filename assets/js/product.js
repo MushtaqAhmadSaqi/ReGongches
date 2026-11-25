@@ -158,7 +158,7 @@
               </ul>
             ` : ''}
 
-            <form class="cart" id="rg-single-product-form" onsubmit="return false;">
+            <form class="cart" id="rg-single-product-form">
               <div class="variations">
                 <!-- Size Selector -->
                 <div class="rg-size-selector" style="margin-block:0 16px;">
@@ -242,7 +242,7 @@
                 <label style="font-size:var(--text-xs);display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-secondary);">
                   <input type="checkbox" id="rg-product-giftwrap"> Add heritage gift wrap (+PKR 300)
                 </label>
-                <a href="https://wa.me/${cfg.whatsappNumber}?text=${waText}" target="_blank" rel="noopener" style="font-size:var(--text-xs);font-weight:600;color:#1E7E48;display:inline-flex;align-items:center;gap:4px;">
+                <a href="https://wa.me/${cfg.whatsappNumber}?text=${waText}" target="_blank" rel="noopener noreferrer" style="font-size:var(--text-xs);font-weight:600;color:#1E7E48;display:inline-flex;align-items:center;gap:4px;">
                   <svg width="15" height="15" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Need size help? WhatsApp Us
                 </a>
               </div>
@@ -759,7 +759,9 @@
         const colEl = container.querySelector('[data-rg-colour-btn].rg-btn--secondary');
         const customEl = document.getElementById('rg-custom-note-input');
         const wrapEl = document.getElementById('rg-product-giftwrap');
-        const qty = qtyInput ? Number(qtyInput.value) : 1;
+        const rawQty = qtyInput ? Math.trunc(Number(qtyInput.value)) : 1;
+        const qty = Number.isFinite(rawQty) ? Math.max(1, Math.min(20, rawQty)) : 1;
+        if (qtyInput && Number(qtyInput.value) !== qty) qtyInput.value = String(qty);
 
         const availableSizes = (product.attributes && product.attributes.size) || ['Standard'];
         if (availableSizes.length > 1 && !sizeEl) {

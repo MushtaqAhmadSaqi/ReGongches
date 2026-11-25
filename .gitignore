@@ -1,0 +1,23 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local Dev & Maintenance Scripts / Artifacts
+scratch/
+Cursor.com/
+__pycache__/
+*.py[cod]
+*.log
+
+# Dependencies & Build Caches
+node_modules/
+.cache/
+
+# OS & Editor Junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp

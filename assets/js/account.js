@@ -79,16 +79,17 @@
 
     restoreSession() {
       try {
-        const raw = window.localStorage.getItem(USER_KEY);
+        // Purge any legacy localStorage demo user data on shared devices
+        window.localStorage.removeItem(USER_KEY);
+        const raw = window.sessionStorage.getItem(USER_KEY);
         if (!raw) return;
         const user = JSON.parse(raw);
-        if (user && user.name) {
+        if (user && typeof user.name === 'string' && user.name.trim()) {
+          const safeName = user.name.trim().slice(0, 80);
           const greeting = document.getElementById('rg-account-greeting');
-          if (greeting) greeting.textContent = `Welcome back, ${user.name}. Ready to track your orders and rewards.`;
+          if (greeting) greeting.textContent = `Welcome back, ${safeName}. Ready to track your orders and rewards.`;
           const nameInput = document.getElementById('demo_name');
-          const emailInput = document.getElementById('demo_email');
-          if (nameInput && !nameInput.value) nameInput.value = user.name;
-          if (emailInput && user.email && !emailInput.value) emailInput.value = user.email;
+          if (nameInput && !nameInput.value) nameInput.value = safeName;
         }
       } catch (e) {}
     },
@@ -114,11 +115,11 @@
 
       tbody.innerHTML = orders.map((o) => `
         <tr>
-          <td><strong>${o.orderNumber}</strong></td>
-          <td>${o.date}</td>
-          <td><span class="rg-badge rg-badge--verified">${o.status}</span></td>
-          <td>${fmt(o.summary.total)}</td>
-          <td><a href="order-confirmation.html?order=${o.orderNumber}" class="rg-btn rg-btn--outline rg-btn--sm">View Receipt</a></td>
+          <td><strong>${escHtml(o.orderNumber)}</strong></td>
+          <td>${escHtml(o.date)}</td>
+          <td><span class="rg-badge rg-badge--verified">${escHtml(o.status)}</span></td>
+          <td>${fmt(o && o.summary ? o.summary.total : 0)}</td>
+          <td><a href="order-confirmation.html?order=${encodeURIComponent(o.orderNumber || '')}" class="rg-btn rg-btn--outline rg-btn--sm">View Receipt</a></td>
         </tr>
       `).join('');
     },
@@ -128,10 +129,11 @@
       if (!form) return;
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = form.elements.demo_name ? form.elements.demo_name.value.trim() : 'Areeba Khan';
-        const email = form.elements.demo_email ? form.elements.demo_email.value.trim() : '';
+        const rawName = form.elements.demo_name ? form.elements.demo_name.value.trim() : 'Areeba Khan';
+        const name = (rawName || 'Areeba Khan').slice(0, 80);
         try {
-          window.localStorage.setItem(USER_KEY, JSON.stringify({ name, email }));
+          window.localStorage.removeItem(USER_KEY);
+          window.sessionStorage.setItem(USER_KEY, JSON.stringify({ name }));
         } catch (err) {}
         const greeting = document.getElementById('rg-account-greeting');
         if (greeting) greeting.textContent = `Welcome back, ${name}. Ready to track your orders and rewards.`;

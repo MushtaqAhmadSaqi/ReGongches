@@ -19,11 +19,14 @@
  }
 
  function initThemePresets() {
+ const ALLOWED_THEMES = new Set(['heritage', 'mountain-night', 'minimal-gallery', 'festive', 'walnut-ochre']);
  const params = new URLSearchParams(window.location.search);
- const urlTheme = params.get('theme');
+ const rawUrlTheme = params.get('theme');
+ const urlTheme = ALLOWED_THEMES.has(rawUrlTheme) ? rawUrlTheme : null;
  let saved = null;
  try {
- saved = window.localStorage.getItem(THEME_KEY);
+ const rawSaved = window.localStorage.getItem(THEME_KEY);
+ if (ALLOWED_THEMES.has(rawSaved)) saved = rawSaved;
  } catch (e) {}
 
  const active = urlTheme || saved || 'heritage';
@@ -38,6 +41,7 @@
  btn.classList.toggle('is-active', btn.getAttribute('data-rg-theme-set') === active);
  btn.addEventListener('click', () => {
  const next = btn.getAttribute('data-rg-theme-set');
+ if (!ALLOWED_THEMES.has(next)) return;
  document.documentElement.setAttribute('data-theme', next);
  try { window.localStorage.setItem(THEME_KEY, next); } catch (e) {}
  switcher.querySelectorAll('[data-rg-theme-set]').forEach((b) => b.classList.toggle('is-active', b === btn));
@@ -260,12 +264,12 @@
  <div style="padding-block-start:14px;display:grid;gap:12px;">
  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
  <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Popular searches:</span>
- ${popularChips.map((c) => `<button type="button" class="rg-chip" data-rg-search-chip="${c}">${c}</button>`).join('')}
+ ${popularChips.map((c) => `<button type="button" class="rg-chip" data-rg-search-chip="${escHtml(c)}">${escHtml(c)}</button>`).join('')}
  </div>
  ${recentList.length ? `
  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
  <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Recent:</span>
- ${recentList.map((r) => `<button type="button" class="rg-chip" data-rg-search-chip="${r}">${r}</button>`).join('')}
+ ${recentList.map((r) => `<button type="button" class="rg-chip" data-rg-search-chip="${escHtml(r)}">${escHtml(r)}</button>`).join('')}
  </div>
  ` : ''}
  </div>
@@ -278,15 +282,15 @@
  return;
  }
 
- const hi = (txt) => (window.RG.search.highlight ? window.RG.search.highlight(txt, term) : txt);
+ const hi = (txt) => (window.RG.search.highlight ? window.RG.search.highlight(txt, term) : escHtml(txt));
  resultsBox.innerHTML = `
  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;padding-block-start:20px;">
  <div>
  <h4 style="font-size:var(--text-xs);text-transform:uppercase;margin-block-end:10px;">Matching Products (${res.products.length})</h4>
  <div style="display:grid;gap:10px;" id="rg-search-product-list">
  ${res.products.slice(0, 5).map((p, idx) => `
- <a href="product.html?id=${p.id}" class="rg-search-item" data-search-idx="${idx}" style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg-secondary);border-radius:4px;text-decoration:none;transition:background 120ms;">
- <img src="${p.images[0].src}" alt="${p.name}" width="44" height="54" style="width:44px;height:54px;object-fit:cover;border-radius:2px;">
+ <a href="product.html?id=${encodeURIComponent(p.id)}" class="rg-search-item" data-search-idx="${idx}" style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg-secondary);border-radius:4px;text-decoration:none;transition:background 120ms;">
+ <img src="${escHtml(p.images && p.images[0] && p.images[0].src)}" alt="${escHtml(p.name)}" width="44" height="54" style="width:44px;height:54px;object-fit:cover;border-radius:2px;">
  <div>
  <strong style="font-size:var(--text-xs);display:block;color:var(--text-primary);">${hi(p.name)}</strong>
  <span style="font-size:11px;color:var(--text-secondary);">${hi(p.region)} · ${fmt(p.price)}</span>
@@ -298,9 +302,9 @@
  <div>
  <h4 style="font-size:var(--text-xs);text-transform:uppercase;margin-block-end:10px;">Regions, Artisans &amp; Journal</h4>
  <div style="display:grid;gap:8px;">
- ${res.regions.slice(0, 3).map((r) => `<a href="region.html?region=${r.id}" class="rg-chip">Region: ${hi(r.name)} (${r.productCount})</a>`).join('')}
- ${(res.artisans || []).slice(0, 2).map((a) => `<a href="artisan.html?id=${a.id}" class="rg-chip">Artisan: ${hi(a.name)}</a>`).join('')}
- ${res.journal.slice(0, 3).map((j) => `<a href="journal-post.html?id=${j.id}" class="rg-search-item" style="font-size:var(--text-xs);font-weight:600;display:block;padding:4px 0;color:var(--text-primary);">📖 ${hi(j.title)}</a>`).join('')}
+ ${res.regions.slice(0, 3).map((r) => `<a href="region.html?region=${encodeURIComponent(r.id)}" class="rg-chip">Region: ${hi(r.name)} (${Number(r.productCount) || 0})</a>`).join('')}
+ ${(res.artisans || []).slice(0, 2).map((a) => `<a href="artisan.html?id=${encodeURIComponent(a.id)}" class="rg-chip">Artisan: ${hi(a.name)}</a>`).join('')}
+ ${res.journal.slice(0, 3).map((j) => `<a href="journal-post.html?id=${encodeURIComponent(j.id)}" class="rg-search-item" style="font-size:var(--text-xs);font-weight:600;display:block;padding:4px 0;color:var(--text-primary);">📖 ${hi(j.title)}</a>`).join('')}
  </div>
  </div>
  </div>
@@ -689,6 +693,22 @@
  document.addEventListener('change', (e) => {
  if (e.target.matches('[data-rg-giftwrap-toggle]')) {
  window.RG.cart.setGiftWrap(e.target.checked);
+ }
+ });
+
+ document.addEventListener('submit', (e) => {
+ const form = e.target;
+ if (!(form instanceof HTMLFormElement)) return;
+ if (form.matches('.rg-newsletter-form')) {
+ e.preventDefault();
+ if (window.RG && window.RG.ui && typeof window.RG.ui.toast === 'function') {
+ window.RG.ui.toast("You're in. Your first letter arrives with our next collection.");
+ }
+ form.reset();
+ return;
+ }
+ if (form.matches('#rg-filter-form, .woocommerce-cart-form, #rg-single-product-form, #rg-search-page-form')) {
+ e.preventDefault();
  }
  });
  }

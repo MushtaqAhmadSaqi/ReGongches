@@ -28,6 +28,15 @@
     }[ch]));
   }
 
+  function safeUrl(url, fallback = '#') {
+    const raw = String(url || '').trim();
+    if (!raw) return fallback;
+    if (/^(https?:)?\/\//i.test(raw) || !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) {
+      return raw;
+    }
+    return fallback;
+  }
+
   const RGUI = {
     /* <!-- WP PARTIAL: template-parts/content-product-card.php --> */
     renderProductCard(product) {
@@ -779,12 +788,12 @@
           <div style="display:grid;gap:12px;">
             ${suggested.map((p) => `
               <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--bg-secondary);border-radius:var(--radius-editorial);">
-                <img src="${p.images[0].src}" alt="${p.name}" width="52" height="64" style="width:52px;height:64px;object-fit:cover;border-radius:4px;">
+                <img src="${escHtml(safeUrl(p.images && p.images[0] && p.images[0].src, 'assets/img/heritage-flatlay.webp'))}" alt="${escHtml(p.name)}" width="52" height="64" style="width:52px;height:64px;object-fit:cover;border-radius:4px;">
                 <div style="flex:1;">
-                  <a href="product.html?id=${p.id}" style="font-weight:600;font-size:var(--text-xs);display:block;">${p.name}</a>
+                  <a href="product.html?id=${encodeURIComponent(p.id)}" style="font-weight:600;font-size:var(--text-xs);display:block;">${escHtml(p.name)}</a>
                   <span style="font-size:12px;color:var(--text-secondary);">${fmt(p.price)}</span>
                 </div>
-                <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-add-to-cart="${p.id}">+ Add</button>
+                <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-add-to-cart="${escHtml(p.id)}">+ Add</button>
               </div>
             `).join('')}
           </div>
@@ -797,30 +806,30 @@
         <div class="rg-shipping-bar ${isUnlocked ? 'is-unlocked' : ''}">
           <div style="font-size:var(--text-xs);">${shipMsg}</div>
           <div class="rg-shipping-bar__track">
-            <div class="rg-shipping-bar__fill" style="width:${summary.freeShippingProgress}%;"></div>
+            <div class="rg-shipping-bar__fill" style="width:${Number(summary.freeShippingProgress) || 0}%;"></div>
           </div>
         </div>
         <div style="display:grid;gap:var(--space-4);">
           ${summary.items.map((item) => `
             <div style="display:flex;gap:12px;padding-block-end:12px;border-block-end:1px solid var(--rg-border);">
-              <a href="product.html?id=${item.productId}">
-                <img src="${item.image}" alt="${item.name}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:var(--radius-editorial);border:1px solid var(--rg-border);">
+              <a href="product.html?id=${encodeURIComponent(item.productId)}">
+                <img src="${escHtml(safeUrl(item.image, 'assets/img/heritage-flatlay.webp'))}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:var(--radius-editorial);border:1px solid var(--rg-border);">
               </a>
               <div style="flex:1;">
                 <div style="display:flex;justify-content:space-between;gap:8px;">
-                  <a href="product.html?id=${item.productId}" style="font-weight:600;font-size:var(--text-sm);">${item.name}</a>
-                  <button type="button" aria-label="Remove ${item.name}" data-rg-cart-remove="${item.key}" style="color:var(--text-secondary);">✕</button>
+                  <a href="product.html?id=${encodeURIComponent(item.productId)}" style="font-weight:600;font-size:var(--text-sm);">${escHtml(item.name)}</a>
+                  <button type="button" aria-label="Remove ${escHtml(item.name)}" data-rg-cart-remove="${escHtml(item.key)}" style="color:var(--text-secondary);">✕</button>
                 </div>
                 <div style="font-size:12px;color:var(--text-secondary);margin-block:2px 6px;">
-                  ${item.size} · ${item.colour.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '')}
+                  ${escHtml(item.size)} · ${escHtml(String(item.colour || '').replace(/\s*\(#[0-9A-Fa-f]{6}\)/, ''))}
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;">
                   <div class="quantity" style="height:36px;">
                     <button type="button" style="width:36px;height:36px;" data-rg-cart-dec="${escHtml(item.key)}" aria-label="Decrease quantity for ${escHtml(item.name)}">−</button>
-                    <input type="number" class="qty" value="${item.qty}" min="1" max="99" style="width:36px;height:36px;font-size:12px;" readonly aria-label="Quantity for ${escHtml(item.name)}">
+                    <input type="number" class="qty" value="${Number(item.qty) || 1}" min="1" max="99" style="width:36px;height:36px;font-size:12px;" readonly aria-label="Quantity for ${escHtml(item.name)}">
                     <button type="button" style="width:36px;height:36px;" data-rg-cart-inc="${escHtml(item.key)}" aria-label="Increase quantity for ${escHtml(item.name)}">+</button>
                   </div>
-                  <strong class="rg-tabular" style="font-size:var(--text-sm);">${fmt(item.price * item.qty)}</strong>
+                  <strong class="rg-tabular" style="font-size:var(--text-sm);">${fmt((Number(item.price) || 0) * (Number(item.qty) || 1))}</strong>
                 </div>
               </div>
             </div>

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Search Results — ReGongches</title>
   <meta name="description" content="Search results across ReGongches mountain clothing, caps, shawls, regions, and cultural journal.">
   <meta property="og:title" content="Search Results — ReGongches">
@@ -633,7 +635,7 @@
           <h1 id="rg-archive-title">Search Our Gilgit-Baltistan Collection</h1>
         </div>
 
-        <form class="rg-search-page-bar" id="rg-search-page-form" role="search" onsubmit="return false;">
+        <form class="rg-search-page-bar" id="rg-search-page-form" role="search">
           <label for="rg-page-search-input" class="screen-reader-text">Search products by craft, valley, or material</label>
           <input type="search" id="rg-page-search-input" placeholder="Search caps, shawls, Hunza, wool, coat..." autocomplete="off">
           <button type="submit" class="rg-btn rg-btn--primary rg-btn--sm">Filter Results</button>
@@ -647,7 +649,7 @@
               <h2 style="font-size:var(--text-lg);margin:0;">Filter Products</h2>
               <button type="button" class="rg-icon-btn rg-mobile-toggle" data-rg-close-overlays aria-label="Close filters">✕</button>
             </div>
-            <form id="rg-filter-form" onsubmit="return false;">
+            <form id="rg-filter-form">
               <div class="rg-filter-group">
                 <label class="rg-filter-group__title" for="f-cat">Category</label>
                 <select name="cat" id="f-cat" style="width:100%;padding:8px;border:1px solid var(--rg-border-strong);background:var(--bg-primary);">
@@ -810,7 +812,7 @@
           <p style="font-size:var(--text-sm);color:rgba(247,244,238,0.85);margin-block-end:24px;line-height:1.6;">
             New collections, maker stories, and care tips—delivered twice a month. No spam, unsubscribe anytime.
           </p>
-          <form class="rg-newsletter-form" onsubmit="event.preventDefault();if(window.RG&&window.RG.ui){window.RG.ui.toast('You\'re in. Your first letter arrives with our next collection.');this.reset();}" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;margin-inline:auto;">
+          <form class="rg-newsletter-form" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;margin-inline:auto;">
             <input type="email" required placeholder="Enter your email address" aria-label="Email for Letters from the North" style="flex:1;min-width:240px;padding:12px 18px;border-radius:var(--radius-editorial);border:1px solid rgba(247,244,238,0.3);background:rgba(255,255,255,0.08);color:#F7F4EE;font-size:var(--text-sm);">
             <button type="submit" class="rg-btn rg-btn--secondary" style="background:var(--brand-secondary);color:#FFFFFF;padding:12px 24px;font-weight:600;">Subscribe</button>
           </form>
@@ -852,7 +854,7 @@
 </nav>
 
 <!-- Floating WhatsApp Inquiry Button -->
-<a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
+<a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener noreferrer" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
   <svg width="18" height="18" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
   <span>Ask on WhatsApp</span>
 </a>
@@ -923,7 +925,7 @@
         <div class="site-footer__col">
           <h3>Contact</h3>
           <ul>
-            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener">WhatsApp: +92 340 8500976</a></li>
+            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener noreferrer">WhatsApp: +92 340 8500976</a></li>
             <li><a href="tel:03408500976">Call: 0340-8500976</a></li>
             <li><a href="mailto:care@regongches.store">Email: care@regongches.store</a></li>
           </ul>

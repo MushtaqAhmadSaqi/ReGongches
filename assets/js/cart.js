@@ -33,7 +33,35 @@
     orderNote: ''
   };
 
-  let state = Object.assign({}, defaultState, safeGetStorage(STORAGE_KEY, defaultState));
+  function clampQty(val) {
+    const num = Math.trunc(Number(val));
+    if (!Number.isFinite(num)) return 1;
+    return Math.max(1, Math.min(99, num));
+  }
+
+  function clampText(val, maxLen = 280) {
+    return String(val || '').trim().slice(0, maxLen);
+  }
+
+  function sanitizeCartState(raw) {
+    const merged = Object.assign({}, defaultState, (raw && typeof raw === 'object') ? raw : {});
+    merged.items = Array.isArray(merged.items)
+      ? merged.items
+          .filter((it) => it && typeof it === 'object')
+          .map((it) => Object.assign({}, it, {
+            qty: clampQty(it.qty),
+            price: Math.max(0, Number(it.price) || 0),
+            customNote: clampText(it.customNote, 280)
+          }))
+      : [];
+    merged.couponCode = clampText(merged.couponCode, 40).toUpperCase();
+    merged.giftWrap = Boolean(merged.giftWrap);
+    merged.giftNote = clampText(merged.giftNote, 300);
+    merged.orderNote = clampText(merged.orderNote, 300);
+    return merged;
+  }
+
+  let state = sanitizeCartState(safeGetStorage(STORAGE_KEY, defaultState));
   let lastRemovedItem = null;
 
   const RGCart = {
@@ -52,12 +80,13 @@
 
       const size = options.size || (product.attributes && product.attributes.size && product.attributes.size[0]) || 'Standard';
       const colour = options.colour || (product.attributes && product.attributes.colour && product.attributes.colour[0]) || 'Default';
-      const customNote = options.customNote || '';
+      const customNote = clampText(options.customNote, 280);
+      const addQty = clampQty(qty);
       const key = `${product.id}__${size}__${colour}__${customNote}`;
 
       const existing = state.items.find((item) => item.key === key);
       if (existing) {
-        existing.qty = Math.min(99, existing.qty + Number(qty || 1));
+        existing.qty = Math.min(99, Math.max(1, clampQty(existing.qty) + addQty));
       } else {
         state.items.push({
           key,
@@ -74,7 +103,7 @@
           size,
           colour,
           customNote,
-          qty: Math.max(1, Number(qty || 1))
+          qty: addQty
         });
       }
       this.save();
@@ -82,7 +111,8 @@
     },
 
     updateQty(key, qty) {
-      const num = Number(qty);
+      const num = Math.trunc(Number(qty));
+      if (!Number.isFinite(num)) return;
       if (num <= 0) {
         return this.removeItem(key);
       }
@@ -124,12 +154,12 @@
 
     setGiftWrap(enabled, note) {
       state.giftWrap = Boolean(enabled);
-      if (typeof note === 'string') state.giftNote = note;
+      if (typeof note === 'string') state.giftNote = clampText(note, 300);
       this.save();
     },
 
     setOrderNote(note) {
-      state.orderNote = String(note || '');
+      state.orderNote = clampText(note, 300);
       this.save();
     },
 
@@ -208,7 +238,7 @@
 
   window.addEventListener('storage', (e) => {
     if (e.key === STORAGE_KEY) {
-      state = Object.assign({}, defaultState, safeGetStorage(STORAGE_KEY, defaultState));
+      state = sanitizeCartState(safeGetStorage(STORAGE_KEY, defaultState));
       window.dispatchEvent(new CustomEvent('rg:cart:updated', { detail: RGCart.getSummary() }));
     }
   });

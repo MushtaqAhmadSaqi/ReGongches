@@ -1,0 +1,18 @@
+# Apache Security Headers & Repository Artifact Protection
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+</IfModule>
+
+# Block public access to repository metadata, maintenance scripts, docs, and hidden files
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(\.git|scratch|docs|tests|Cursor\.com)(/.*)?$ - [F,L]
+  RewriteRule ^(\.env.*|README\.md|CONVERSION-NOTES\.md|CREDITS\.md)$ - [F,L]
+</IfModule>
+
+# Disable directory listing
+Options -Indexes

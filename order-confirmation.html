@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Order Confirmation & Receipt — ReGongches</title>
   <meta name="description" content="Thank you for your ReGongches order. View your order number, origin summary, and WhatsApp confirmation link.">
   <meta property="og:title" content="Order Confirmation & Receipt — ReGongches">
@@ -657,7 +659,7 @@
 </nav>
 
 <!-- Floating WhatsApp Inquiry Button -->
-<a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
+<a href="https://wa.me/923408500976?text=Hi%20ReGongches%2C%20I%20have%20a%20question%20about%20your%20Gilgit-Baltistan%20collection" target="_blank" rel="noopener noreferrer" class="rg-whatsapp-float" aria-label="Ask ReGongches on WhatsApp">
   <svg width="18" height="18" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
   <span>Ask on WhatsApp</span>
 </a>
@@ -728,7 +730,7 @@
         <div class="site-footer__col">
           <h3>Contact</h3>
           <ul>
-            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener">WhatsApp: +92 340 8500976</a></li>
+            <li><a href="https://wa.me/923408500976" target="_blank" rel="noopener noreferrer">WhatsApp: +92 340 8500976</a></li>
             <li><a href="tel:03408500976">Call: 0340-8500976</a></li>
             <li><a href="mailto:care@regongches.store">Email: care@regongches.store</a></li>
           </ul>
