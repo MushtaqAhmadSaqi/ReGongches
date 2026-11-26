@@ -88,25 +88,46 @@
         (product.attributes && product.attributes.material && product.attributes.material.join(', ')) ||
         '100% Handcrafted Mountain Craft';
 
-      container.innerHTML = `
-        <div class="rg-single-product-grid">
-          <!-- Gallery Column (.woocommerce-product-gallery) -->
-          <div class="woocommerce-product-gallery">
-            <div class="woocommerce-product-gallery__main" id="rg-gallery-main" title="Hover to magnify · Click to open full lightbox">
-              <img src="${product.images[0].src}" alt="${escHtml(product.images[0].alt)}" id="rg-gallery-main-img" width="640" height="800">
+      const images = Array.isArray(product.images) ? product.images.filter((im) => im && im.src) : [];
+      const hasImages = images.length > 0;
+      const heroImg = hasImages ? images[0] : null;
+      const videoSpec = window.RG.productVideo ? window.RG.productVideo.getVideoSpec(product) : product.video;
+      const totalThumbCount = images.length + (videoSpec ? 1 : 0);
+      const showThumbStrip = totalThumbCount > 1;
+      const thumbsClass = totalThumbCount > 0 && totalThumbCount < 5
+        ? 'woocommerce-product-gallery__thumbs is-compact'
+        : 'woocommerce-product-gallery__thumbs';
+      const pdpVideoHtml = (hasImages && window.RG.productVideo)
+        ? window.RG.productVideo.renderPdpVideoOverlay(product)
+        : '';
+
+      const mainGalleryHtml = hasImages
+        ? `
+            <div class="woocommerce-product-gallery__main" id="rg-gallery-main" data-rg-video-host title="Hover to magnify · Click to open full lightbox">
+              <img src="${escHtml(heroImg.src)}" alt="${escHtml(heroImg.alt || product.name)}" id="rg-gallery-main-img" width="640" height="800">
+              ${pdpVideoHtml}
               <div class="rg-magnifier-lens" id="rg-magnifier-lens"></div>
               <span class="rg-badge rg-badge--hand-finished" id="rg-gallery-badge-illustrative" style="position:absolute;inset-block-end:12px;inset-inline-start:12px;">Illustrative image</span>
               <span class="rg-badge rg-badge--hand-finished" id="rg-gallery-badge-zoom" style="position:absolute;inset-block-end:12px;inset-inline-end:12px;">Hover / Click Zoom</span>
             </div>
-            <div class="woocommerce-product-gallery__thumbs">
-              ${product.images.map((img, idx) => `
-                <button type="button" class="woocommerce-product-gallery__thumb ${idx === 0 ? 'is-active' : ''}" data-rg-thumb="${img.src}" data-rg-thumb-alt="${img.alt}" data-rg-thumb-colour="${img.colour || ''}">
-                  <img src="${img.src}" alt="${img.alt}" width="120" height="120">
+          `
+        : `
+            <div class="woocommerce-product-gallery__main is-media-pending" id="rg-gallery-main">
+              ${window.RG.ui.renderMediaPlaceholder(product, 'gallery')}
+            </div>
+          `;
+
+      const thumbStripHtml = showThumbStrip
+        ? `
+            <div class="${thumbsClass}">
+              ${images.map((img, idx) => `
+                <button type="button" class="woocommerce-product-gallery__thumb ${idx === 0 ? 'is-active' : ''}" data-rg-thumb="${escHtml(img.src)}" data-rg-thumb-alt="${escHtml(img.alt || product.name)}" data-rg-thumb-colour="${escHtml(img.colour || '')}">
+                  <img src="${escHtml(img.src)}" alt="${escHtml(img.alt || product.name)}" width="120" height="120">
                 </button>
               `).join('')}
-              ${product.video ? `
-                <button type="button" class="woocommerce-product-gallery__thumb rg-thumb--video" id="rg-video-thumb-btn" data-rg-video-src="${product.video.src}" data-rg-video-poster="${product.video.poster || product.images[0].src}" title="Watch Craft Demonstration Video" style="position:relative;border:2px solid var(--rg-antique-gold);">
-                  <img src="${product.video.poster || product.images[0].src}" alt="Watch craft video" width="120" height="120" style="filter:brightness(0.7);">
+              ${videoSpec ? `
+                <button type="button" class="woocommerce-product-gallery__thumb rg-thumb--video" id="rg-video-thumb-btn" data-rg-video-src="${escHtml(videoSpec.src)}" data-rg-video-poster="${escHtml(videoSpec.poster || (heroImg ? heroImg.src : ''))}" title="Watch Craft Demonstration Video" style="position:relative;border:2px solid var(--rg-antique-gold);">
+                  <img src="${escHtml(videoSpec.poster || (heroImg ? heroImg.src : ''))}" alt="Watch craft video" width="120" height="120" style="filter:brightness(0.7);">
                   <span style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#FFFFFF;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="margin-block-end:2px;"><path d="M8 5v14l11-7z"/></svg>
                     ▶ Video
@@ -114,6 +135,15 @@
                 </button>
               ` : ''}
             </div>
+          `
+        : '';
+
+      container.innerHTML = `
+        <div class="rg-single-product-grid">
+          <!-- Gallery Column (.woocommerce-product-gallery) -->
+          <div class="woocommerce-product-gallery">
+            ${mainGalleryHtml}
+            ${thumbStripHtml}
           </div>
 
           <!-- Summary Column (.summary.entry-summary) -->
@@ -449,7 +479,9 @@
 
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:center;margin-block-end:20px;">
             <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-card);border:1px solid var(--rg-border);">
-              <img src="${product.images[0].src}" alt="${product.name}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">
+              ${heroImg
+                ? `<img src="${escHtml(heroImg.src)}" alt="${escHtml(product.name)}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">`
+                : `<span style="width:54px;height:66px;flex:0 0 54px;border-radius:6px;overflow:hidden;border:1px solid var(--rg-border);">${window.RG.ui.renderMediaPlaceholder(product, 'thumb')}</span>`}
               <div>
                 <strong style="font-size:var(--text-xs);display:block;">${product.name}</strong>
                 <span style="font-size:12px;color:var(--brand-secondary);font-weight:700;">${fmt(product.price)}</span>
@@ -457,17 +489,22 @@
               </div>
             </div>
 
-            ${pairProducts.map((pp) => `
+            ${pairProducts.map((pp) => {
+              const ppImg = pp.images && pp.images[0] && pp.images[0].src;
+              return `
               <label style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-card);border:1px solid var(--rg-border);cursor:pointer;">
                 <input type="checkbox" checked data-rg-bundle-check="${pp.id}" data-rg-bundle-price="${pp.price}" style="width:16px;height:16px;accent-color:var(--brand-secondary);">
-                <img src="${pp.images[0].src}" alt="${pp.name}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">
+                ${ppImg
+                  ? `<img src="${escHtml(ppImg)}" alt="${escHtml(pp.name)}" width="54" height="66" style="width:54px;height:66px;object-fit:cover;border-radius:6px;">`
+                  : `<span style="width:54px;height:66px;flex:0 0 54px;border-radius:6px;overflow:hidden;border:1px solid var(--rg-border);">${window.RG.ui.renderMediaPlaceholder(pp, 'thumb')}</span>`}
                 <div style="flex:1;">
                   <strong style="font-size:var(--text-xs);display:block;">${pp.name}</strong>
                   <span style="font-size:12px;color:var(--brand-secondary);font-weight:700;">${fmt(pp.price)}</span>
                   <span style="font-size:11px;color:var(--text-secondary);display:block;">${pp.region}</span>
                 </div>
               </label>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
 
           <button type="button" class="rg-btn rg-btn--secondary" id="rg-add-bundle-btn" style="width:100%;min-height:44px;font-size:var(--text-sm);">
@@ -515,7 +552,9 @@
         <div class="rg-sticky-pdp-bar" id="rg-sticky-pdp-bar">
           <div class="rg-container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <img src="${product.images[0].src}" alt="" width="40" height="48" style="width:40px;height:48px;object-fit:cover;border-radius:4px;">
+              ${heroImg
+                ? `<img src="${escHtml(heroImg.src)}" alt="" width="40" height="48" style="width:40px;height:48px;object-fit:cover;border-radius:4px;">`
+                : `<span style="width:40px;height:48px;flex:0 0 40px;border-radius:4px;overflow:hidden;border:1px solid var(--rg-border);">${window.RG.ui.renderMediaPlaceholder(product, 'thumb')}</span>`}
               <div>
                 <strong style="font-size:var(--text-sm);display:block;">${product.name}</strong>
                 <span style="font-size:12px;color:var(--text-secondary);">${product.region} · ${fmt(product.price)}</span>
@@ -557,7 +596,14 @@
       const videoThumbBtn = document.getElementById('rg-video-thumb-btn');
 
       const restoreImageGallery = () => {
-        const currentVideo = mainBox.querySelector('video');
+        if (!mainBox) return;
+        const overlayVideo = mainBox.querySelector('[data-rg-video-el="pdp"]');
+        if (overlayVideo) {
+          if (!overlayVideo.paused) overlayVideo.pause();
+          overlayVideo.classList.remove('is-playing');
+          mainBox.classList.remove('is-video-playing');
+        }
+        const currentVideo = mainBox.querySelector('video:not([data-rg-video-el])');
         if (currentVideo) currentVideo.remove();
         if (mainImg) mainImg.style.display = 'block';
         if (lens) lens.style.display = 'none';
@@ -613,10 +659,18 @@
         }, { passive: true });
       }
 
-      if (videoThumbBtn && product.video) {
+      if (videoThumbBtn) {
         videoThumbBtn.addEventListener('click', () => {
           container.querySelectorAll('.woocommerce-product-gallery__thumb').forEach((b) => b.classList.remove('is-active'));
           videoThumbBtn.classList.add('is-active');
+          const overlayToggle = mainBox && mainBox.querySelector('[data-rg-pdp-video-toggle]');
+          if (overlayToggle) {
+            overlayToggle.click();
+            return;
+          }
+          const vSrc = videoThumbBtn.getAttribute('data-rg-video-src');
+          const vPoster = videoThumbBtn.getAttribute('data-rg-video-poster');
+          if (!vSrc || !mainBox) return;
 
           if (mainImg) mainImg.style.display = 'none';
           if (lens) lens.style.display = 'none';
@@ -629,16 +683,17 @@
           let vidEl = mainBox.querySelector('video');
           if (!vidEl) {
             vidEl = document.createElement('video');
-            vidEl.src = product.video.src;
-            vidEl.poster = product.video.poster;
+            vidEl.src = vSrc;
+            vidEl.poster = vPoster || '';
             vidEl.controls = true;
+            vidEl.muted = true;
             vidEl.autoplay = true;
             vidEl.loop = true;
             vidEl.playsInline = true;
             vidEl.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:var(--radius-card);display:block;';
             mainBox.appendChild(vidEl);
           } else {
-            vidEl.play();
+            vidEl.play().catch(() => {});
           }
         });
       }
@@ -676,17 +731,17 @@
           btn.classList.remove('rg-btn--outline');
           const lbl = document.getElementById('rg-selected-colour-label');
           if (lbl) lbl.textContent = btn.getAttribute('data-rg-colour-btn');
-          const idx = Number(btn.getAttribute('data-rg-colour-idx')) || 0;
-          const imgIdx = idx % product.images.length;
-          const targetImg = product.images[imgIdx];
-          restoreImageGallery();
-          const thumbs = container.querySelectorAll('.woocommerce-product-gallery__thumb[data-rg-thumb]');
-          thumbs.forEach((b, bIdx) => b.classList.toggle('is-active', bIdx === imgIdx));
-          const vThumb = document.getElementById('rg-video-thumb-btn');
-          if (vThumb) vThumb.classList.remove('is-active');
-          if (targetImg && mainImg) {
-            mainImg.src = targetImg.src;
-            mainImg.alt = targetImg.alt || product.name;
+          const colLabel = String(btn.getAttribute('data-rg-colour-btn') || '').replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '').trim().toLowerCase();
+          const images = Array.isArray(product.images) ? product.images.filter((im) => im && im.src) : [];
+          const matchedIdx = images.findIndex((im) => im.colour && im.colour.toLowerCase() === colLabel);
+          if (matchedIdx >= 0 && images[matchedIdx] && mainImg) {
+            restoreImageGallery();
+            const thumbs = container.querySelectorAll('.woocommerce-product-gallery__thumb[data-rg-thumb]');
+            thumbs.forEach((b, bIdx) => b.classList.toggle('is-active', bIdx === matchedIdx));
+            const vThumb = document.getElementById('rg-video-thumb-btn');
+            if (vThumb) vThumb.classList.remove('is-active');
+            mainImg.src = images[matchedIdx].src;
+            mainImg.alt = images[matchedIdx].alt || product.name;
           }
         });
       });
@@ -862,6 +917,11 @@
         });
       });
 
+      // Mount Product Video Showcase inside gallery
+      if (window.RG.productVideo) {
+        window.RG.productVideo.mount(container);
+      }
+
       // Review form toggle
       const revToggle = document.getElementById('rg-toggle-review-form');
       const revForm = document.getElementById('rg-demo-review-form');
@@ -897,6 +957,9 @@
         }
         const list = recents.length ? recents.slice(0, 4) : window.RG.data.getProducts().filter((p) => p.id !== product.id).slice(4, 8);
         recentGrid.innerHTML = list.map((p) => window.RG.ui.renderProductCard(p)).join('');
+      }
+      if (window.RG.productVideo) {
+        window.RG.productVideo.mount(document);
       }
     },
 

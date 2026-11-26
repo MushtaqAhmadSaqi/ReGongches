@@ -91,7 +91,9 @@
                     <!-- FIX: data-label attributes added for mobile card-stack CSS transform -->
                     <td class="product-name" data-label="Product">
                       <div style="display:flex;align-items:center;gap:14px;">
-                        <img src="${escHtml(item.image)}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">
+                        ${item.image
+                          ? `<img src="${escHtml(item.image)}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:4px;">`
+                          : `<span style="width:64px;height:80px;flex:0 0 64px;border-radius:4px;overflow:hidden;border:1px solid var(--rg-border);">${window.RG.ui.renderMediaPlaceholder(item, 'thumb')}</span>`}
                         <div>
                           <a href="product.html?id=${encodeURIComponent(item.productId)}" style="font-weight:700;">${escHtml(item.name)}</a>
                           <div style="font-size:12px;color:var(--text-secondary);">Origin: ${escHtml(item.region)} · ${escHtml(item.craft_type)}</div>

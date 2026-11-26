@@ -16,7 +16,7 @@
       desc: 'Dense hand-knitted sheep wool mittens for bitter high-altitude cold, lined with soft brushed wool.',
       region: 'Skardu, Baltistan',
       price: 'PKR 1,800',
-      img: 'assets/img/products/highland-woven-wool-mittens/highland-woven-wool-mittens-hero.webp',
+      img: '',
       href: 'shop.html?category=Accessories',
       sizes: ['S/M', 'L/XL'],
       defaultSize: 'S/M',
@@ -29,7 +29,7 @@
       desc: 'Dense mountain wool jacket with tailored structured shoulders and genuine bone buttons.',
       region: 'Hunza Valley',
       price: 'PKR 12,500',
-      img: 'assets/img/products/hand-woven-wool-jacket/hand-woven-wool-jacket-hero-oatmeal.webp',
+      img: 'assets/img/products/hand-woven-wool-jacket/hand-woven-wool-jacket-detail.webp',
       href: 'shop.html?category=Outerwear',
       sizes: ['S', 'M', 'L', 'XL'],
       defaultSize: 'M',
@@ -55,7 +55,7 @@
       desc: 'Miniature geometric silk-stitch coin pouch crafted by women artisan cooperatives in Gojal.',
       region: 'Gojal Valley',
       price: 'PKR 1,400',
-      img: 'assets/img/products/embroidered-coin-purse/embroidered-coin-purse-hero-assorted.webp',
+      img: '',
       href: 'category.html?cat=Textile+Accessories',
       sizes: ['Standard'],
       defaultSize: 'Standard',
@@ -68,7 +68,7 @@
       desc: 'Soft brushed sheep-wool scarf with twisted fringe ends, naturally charcoal-dyed.',
       region: 'Nagar Valley',
       price: 'PKR 3,200',
-      img: 'assets/img/products/hand-woven-wool-muffler/hand-woven-wool-muffler-hero-charcoal.webp',
+      img: 'assets/img/products/hand-woven-wool-muffler/hand-woven-wool-muffler-detail.webp',
       href: 'category.html?cat=Shawls+%26+Scarves',
       sizes: ['Free Size'],
       defaultSize: 'Free Size',
@@ -202,7 +202,7 @@
       desc: 'Feather-light fine merino stole with delicate needlepoint vine motif in dusty rose.',
       region: 'Hunza Valley',
       price: 'PKR 5,400',
-      img: 'assets/img/products/embroidered-lightweight-stole/embroidered-lightweight-stole-hero-dusty-rose.webp',
+      img: 'assets/img/products/embroidered-lightweight-stole/embroidered-lightweight-stole-detail.webp',
       href: 'category.html?cat=Shawls+%26+Scarves',
       sizes: ['Free Size'],
       defaultSize: 'Free Size',
@@ -212,10 +212,10 @@
       name: "Groom's Cap with Plume",
       craft: 'Caps & Headwear',
       isMain: false,
-      desc: 'Ceremonial charcoal Gilgiti cap with an ornate silver-plated pin and traditional white plume.',
+      desc: 'Ceremonial cream Gilgiti cap with an ornate antique metal pin and traditional white plume.',
       region: 'Gilgit District',
       price: 'PKR 3,800',
-      img: 'assets/img/products/grooms-gilgiti-cap-plume/grooms-gilgiti-cap-plume-hero-charcoal.webp',
+      img: 'assets/img/products/grooms-gilgiti-cap-plume/grooms-gilgiti-cap-plume-hero-cream.webp',
       href: 'category.html?cat=Caps+%26+Headwear',
       sizes: ['56 cm (M)', '58 cm (L)', '60 cm (XL)'],
       defaultSize: '58 cm (L)',
@@ -228,7 +228,7 @@
       desc: 'Tablet-woven wool waistband with braided tassels, traditionally worn with chughas and waistcoats.',
       region: 'Gojal Valley',
       price: 'PKR 2,400',
-      img: 'assets/img/products/hand-woven-wool-belt/hand-woven-wool-belt-hero-brown.webp',
+      img: '',
       href: 'category.html?cat=Textile+Accessories',
       sizes: ['110 cm', '130 cm'],
       defaultSize: '110 cm',
@@ -254,7 +254,7 @@
       desc: 'Hand-carved walnut wood keepsake box wrapped with an embroidered wool ribbon and seal.',
       region: 'Gilgit-Baltistan',
       price: 'PKR 4,500',
-      img: 'assets/img/products/mountain-keepsake-box/mountain-keepsake-box-hero-blue-silver-edition.webp',
+      img: '',
       href: 'gift-sets.html',
       sizes: ['Small (6×4")', 'Medium (8×6")'],
       defaultSize: 'Medium (8×6")',
@@ -267,7 +267,7 @@
       desc: 'Opulent heirloom bridal kurta, dupatta and pattu coat with heavy gold tilla wirework.',
       region: 'Hunza Valley',
       price: 'PKR 35,000',
-      img: 'assets/img/products/bridal-ceremonial-ensemble/bridal-ceremonial-ensemble-hero-ivory-red.webp',
+      img: 'assets/img/products/bridal-ceremonial-ensemble/bridal-ceremonial-ensemble-hero-maroon-gold.webp',
       href: 'custom-orders.html',
       sizes: ['Bespoke Order'],
       defaultSize: 'Bespoke Order',
@@ -339,7 +339,9 @@
       </svg>
       <div class="sr-item__card">
         <div class="sr-item__img-wrap">
-          <img src="${escHtml(p.img)}" alt="${escHtml(p.name)}" class="sr-item__img" loading="lazy" width="110" height="156">
+          ${p.img
+            ? `<img src="${escHtml(p.img)}" alt="${escHtml(p.name)}" class="sr-item__img" loading="lazy" width="110" height="156">`
+            : `<div class="rg-media-pending rg-media-pending--thumb" aria-label="${escHtml(p.name)} — Photo pending"><span class="rg-media-pending__icon" aria-hidden="true"><svg width="16" height="16"><use href="#icon-sparkles"></use></svg></span></div>`}
         </div>
         <div class="sr-item__craft-tag" title="${escHtml(p.craft)}">${escHtml(p.craft)}</div>
       </div>
@@ -533,8 +535,14 @@
     activeQvProduct = p;
     lastQvTrigger = document.activeElement;
     if (qvImg) {
-      qvImg.src = p.img;
-      qvImg.alt = p.name;
+      if (p.img) {
+        qvImg.hidden = false;
+        qvImg.src = p.img;
+        qvImg.alt = p.name;
+      } else {
+        qvImg.hidden = true;
+        qvImg.removeAttribute('src');
+      }
     }
     if (qvName) qvName.textContent = p.name;
     if (qvPrice) qvPrice.textContent = p.price;

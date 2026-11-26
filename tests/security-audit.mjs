@@ -383,7 +383,12 @@ check('SEC-08: RGDataSource sanitizes dangerous URLs while preserving legitimate
   const realCount = sb.RG_DATA.products.length;
   const products = sb.RG.data.getProducts();
   assert.equal(products.length, realCount, 'All real catalog products preserved');
-  assert.ok(products.every((p) => p.images && p.images[0] && p.images[0].src.startsWith('assets/img/')), 'Valid local image paths preserved');
+  const productsWithImages = products.filter((p) => Array.isArray(p.images) && p.images.length > 0);
+  assert.ok(
+    productsWithImages.length > 0 &&
+      productsWithImages.every((p) => p.images.every((img) => img.src.startsWith('assets/img/'))),
+    'Valid local image paths preserved'
+  );
 
   assert.equal(sb.RG.data.sanitizeUrl('javascript:alert(1)'), '');
   assert.equal(sb.RG.data.sanitizeUrl('vbscript:msgbox(1)'), '');

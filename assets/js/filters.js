@@ -351,6 +351,9 @@
         this._renderTimer = setTimeout(() => {
           grid.innerHTML = visible.map((p) => window.RG.ui.renderProductCard(p)).join('');
           grid.style.opacity = '1';
+          if (window.RG.productVideo) {
+            window.RG.productVideo.mount(grid);
+          }
         }, 50);
       }
 

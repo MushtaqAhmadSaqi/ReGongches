@@ -1061,3 +1061,162 @@ form.checkout.woocommerce-checkout {
 .product-price {
   font-variant-numeric: tabular-nums;
 }
+
+/* Pending / Missing Product Media Placeholder (Phase 1) */
+.rg-media-pending {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-5);
+  gap: 8px;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(184, 145, 58, 0.14), transparent 60%),
+    linear-gradient(155deg, var(--bg-secondary) 0%, var(--bg-elevated) 100%);
+  color: var(--text-secondary);
+}
+
+.rg-media-pending__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(122, 31, 43, 0.08);
+  color: var(--brand-secondary);
+  border: 1px solid var(--rg-border-strong);
+}
+
+.rg-media-pending__label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.rg-media-pending__sub {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.rg-media-pending--thumb {
+  padding: 6px;
+  gap: 3px;
+}
+
+.rg-media-pending--thumb .rg-media-pending__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.rg-media-pending--thumb .rg-media-pending__label,
+.rg-media-pending--thumb .rg-media-pending__sub {
+  display: none;
+}
+
+.woocommerce-product-gallery__main.is-media-pending {
+  cursor: default;
+}
+
+.woocommerce-product-gallery__thumbs.is-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.woocommerce-product-gallery__thumbs.is-compact .woocommerce-product-gallery__thumb {
+  width: 84px;
+  flex: 0 0 84px;
+}
+
+/* Phase 2: Product Video Showcase Component */
+.rg-product-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--duration-base) var(--ease-out);
+  background: transparent;
+}
+
+.rg-product-video.is-playing {
+  opacity: 1;
+}
+
+.rg-product-video--pdp.is-playing {
+  pointer-events: auto;
+}
+
+.rg-product-video-badge {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-end: 58px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(19, 36, 59, 0.82);
+  color: #F7F4EE;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity var(--duration-fast);
+}
+
+.is-video-playing .rg-product-video-badge {
+  opacity: 0;
+}
+
+.rg-pdp-video-toggle {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(19, 36, 59, 0.88);
+  color: #F7F4EE;
+  border: 1px solid rgba(184, 145, 58, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--duration-fast), transform var(--duration-fast);
+}
+
+.rg-pdp-video-toggle:hover {
+  background: var(--brand-secondary);
+  transform: translateY(-1px);
+}
+
+.rg-pdp-video-toggle.is-playing {
+  background: var(--brand-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rg-product-video,
+  .rg-product-video-badge,
+  .rg-pdp-video-toggle {
+    display: none !important;
+  }
+}

@@ -288,15 +288,20 @@
  <div>
  <h4 style="font-size:var(--text-xs);text-transform:uppercase;margin-block-end:10px;">Matching Products (${res.products.length})</h4>
  <div style="display:grid;gap:10px;" id="rg-search-product-list">
- ${res.products.slice(0, 5).map((p, idx) => `
+ ${res.products.slice(0, 5).map((p, idx) => {
+ const thumbSrc = p.images && p.images[0] && p.images[0].src;
+ return `
  <a href="product.html?id=${encodeURIComponent(p.id)}" class="rg-search-item" data-search-idx="${idx}" style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg-secondary);border-radius:4px;text-decoration:none;transition:background 120ms;">
- <img src="${escHtml(p.images && p.images[0] && p.images[0].src)}" alt="${escHtml(p.name)}" width="44" height="54" style="width:44px;height:54px;object-fit:cover;border-radius:2px;">
+ ${thumbSrc
+   ? `<img src="${escHtml(thumbSrc)}" alt="${escHtml(p.name)}" width="44" height="54" style="width:44px;height:54px;object-fit:cover;border-radius:2px;">`
+   : `<span style="width:44px;height:54px;flex:0 0 44px;border-radius:2px;overflow:hidden;border:1px solid var(--rg-border);">${window.RG.ui.renderMediaPlaceholder(p, 'thumb')}</span>`}
  <div>
  <strong style="font-size:var(--text-xs);display:block;color:var(--text-primary);">${hi(p.name)}</strong>
  <span style="font-size:11px;color:var(--text-secondary);">${hi(p.region)} · ${fmt(p.price)}</span>
  </div>
  </a>
- `).join('')}
+ `;
+ }).join('')}
  </div>
  </div>
  <div>
@@ -894,6 +899,7 @@
  wlGrid.innerHTML = `<li style="grid-column:1/-1;text-align:center;padding:48px 20px;background:var(--bg-elevated);border-radius:var(--radius-card);border:1px solid var(--rg-border);"><h3 style="margin-block-end:8px;">Nothing saved yet.</h3><p style="margin-inline:auto;color:var(--text-secondary);max-width:440px;margin-block-end:20px;">Tap the heart on any piece to keep it here.</p><a href="shop.html" class="rg-btn rg-btn--primary">Start with our best-loved Gilgiti caps</a></li>`;
  } else {
  wlGrid.innerHTML = prods.map((p) => window.RG.ui.renderProductCard(p)).join('');
+ if (window.RG.productVideo) window.RG.productVideo.mount(wlGrid);
  }
  };
  renderWl();
@@ -1141,6 +1147,7 @@
  if (window.RG.checkout) window.RG.checkout.init();
  if (window.RG.account) window.RG.account.init();
  initSecondaryPages();
+ if (window.RG.productVideo) window.RG.productVideo.mount(document);
  if (window.RG.motion) window.RG.motion.init();
  };
 

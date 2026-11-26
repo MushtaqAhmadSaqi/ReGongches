@@ -38,15 +38,33 @@
   }
 
   const RGUI = {
+    renderMediaPlaceholder(product, variant = 'card') {
+      const name = product && product.name ? escHtml(product.name) : 'Heritage Piece';
+      const region = product && product.region ? escHtml(product.region) : 'Gilgit-Baltistan';
+      const cls = variant === 'thumb' ? 'rg-media-pending rg-media-pending--thumb' : 'rg-media-pending';
+      return `
+        <div class="${cls}" role="img" aria-label="${name} — Artisan photo pending">
+          <span class="rg-media-pending__icon" aria-hidden="true">
+            <svg width="20" height="20"><use href="#icon-sparkles"></use></svg>
+          </span>
+          <p class="rg-media-pending__label">Artisan Photo Pending</p>
+          <p class="rg-media-pending__sub">${region} Craft</p>
+        </div>
+      `;
+    },
+
     /* <!-- WP PARTIAL: template-parts/content-product-card.php --> */
     renderProductCard(product) {
       if (!product) return '';
       const fmt = window.RG.data.formatPKR;
       const inWishlist = window.RG.wishlist && window.RG.wishlist.has(product.id);
       const inCompare = compareIds.includes(Number(product.id));
-      const img1 = (product.images && product.images[0] && product.images[0].src) || 'assets/img/heritage-flatlay.webp';
-      const img1Alt = (product.images && product.images[0] && product.images[0].alt) || product.name;
-      const img2 = (product.images && product.images[1] && product.images[1].src) || img1;
+      const images = Array.isArray(product.images) ? product.images.filter((im) => im && im.src) : [];
+      const hasImages = images.length > 0;
+      const hasSecondary = images.length > 1;
+      const img1 = hasImages ? images[0].src : '';
+      const img1Alt = (hasImages && images[0].alt) || product.name;
+      const img2 = hasSecondary ? images[1].src : '';
 
       const badges = [];
       if (product.sale_price && product.sale_price < product.regular_price) {
@@ -77,25 +95,37 @@
         const hexMatch = c.match(/#[0-9A-Fa-f]{6}/);
         const hex = hexMatch ? hexMatch[0] : (SWATCH_MAP[c] || '#7A1F2B');
         const label = c.replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '');
-        const imgForSwatch = (product.images && product.images[idx % product.images.length] && product.images[idx % product.images.length].src) || img1;
-        return `<button type="button" class="rg-swatch ${idx === 0 ? 'is-selected' : ''}" data-rg-card-swatch="${imgForSwatch}" style="background-color:${hex}" title="${label}" aria-label="Preview ${label}"></button>`;
+        const matchedImg = images.find((im) => im.colour && im.colour.toLowerCase() === label.toLowerCase());
+        const swatchAttr = matchedImg ? `data-rg-card-swatch="${escHtml(matchedImg.src)}"` : '';
+        return `<button type="button" class="rg-swatch ${idx === 0 ? 'is-selected' : ''}" ${swatchAttr} style="background-color:${hex}" title="${escHtml(label)}" aria-label="Preview ${escHtml(label)}"></button>`;
       }).join('');
 
       const stockUrgency = (product.stock_quantity && product.stock_quantity <= 5)
         ? `<span class="rg-stock-urgency" title="Limited stock">⚡ Only ${product.stock_quantity} left</span>`
         : '';
 
+      const cardVideoHtml = (hasImages && window.RG.productVideo)
+        ? window.RG.productVideo.renderCardVideoLayer(product)
+        : '';
+
+      const mediaInnerHtml = hasImages
+        ? `
+          <img src="${escHtml(img1)}" alt="${escHtml(img1Alt)}" width="640" height="800" loading="lazy" class="rg-product-card__img-primary">
+          ${hasSecondary ? `<img src="${escHtml(img2)}" alt="${escHtml(img1Alt)} detail view" width="640" height="800" loading="lazy" class="rg-product-card__img-secondary">` : ''}
+          ${cardVideoHtml}
+        `
+        : this.renderMediaPlaceholder(product, 'card');
+
       return `
         <!-- WP PARTIAL: template-parts/content-product-card.php -->
         <li class="product type-product status-publish instock" data-product-id="${product.id}">
-          <div class="rg-product-card__media">
+          <div class="rg-product-card__media" data-rg-video-host>
             <div class="rg-product-card__badges">${badges.join('')}</div>
             <button type="button" class="rg-product-card__wishlist ${inWishlist ? 'is-active' : ''}" data-rg-wishlist-toggle="${product.id}" aria-label="Save ${escHtml(product.name)} to wishlist" aria-pressed="${inWishlist ? 'true' : 'false'}">
               <svg width="18" height="18" aria-hidden="true"><use href="#icon-heart"></use></svg>
             </button>
-            <a href="product.html?id=${product.id}" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-              <img src="${img1}" alt="${img1Alt}" width="640" height="800" loading="lazy" class="rg-product-card__img-primary">
-              <img src="${img2}" alt="${img1Alt} detail view" width="640" height="800" loading="lazy" class="rg-product-card__img-secondary">
+            <a href="product.html?id=${product.id}" class="woocommerce-LoopProduct-link woocommerce-loop-product__link" style="display:block;width:100%;height:100%;">
+              ${mediaInnerHtml}
             </a>
             <div class="rg-product-card__actions">
               <button type="button" class="rg-product-card__quickview" data-rg-quick-view="${product.id}" aria-label="Quick view of ${product.name}">
@@ -505,6 +535,7 @@
               <a href="gift-sets.html" class="rg-btn rg-btn--secondary rg-btn--sm">Build a Custom Heritage Gift Set →</a>
             </div>
           `;
+          if (window.RG.productVideo) window.RG.productVideo.mount(resBox);
         });
       }
       this.openModal('rg-quickview-modal');
@@ -540,19 +571,24 @@
       const fmt = window.RG.data.formatPKR;
       const sizes = (product.attributes && product.attributes.size) || ['Standard'];
       const colours = (product.attributes && product.attributes.colour) || ['Default'];
+      const qvImages = Array.isArray(product.images) ? product.images.filter((im) => im && im.src) : [];
+      const qvHero = qvImages[0];
+      const qvVideoSpec = window.RG.productVideo ? window.RG.productVideo.getVideoSpec(product) : product.video;
 
       body.innerHTML = `
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-6);align-items:start;">
           <div>
-            <div id="rg-qv-media-container" style="position:relative;border-radius:var(--radius-card);overflow:hidden;border:1px solid var(--rg-border);">
-              <img id="rg-qv-main-img" src="${product.images[0].src}" alt="${product.images[0].alt}" style="width:100%;aspect-ratio:4/5;object-fit:cover;display:block;">
+            <div id="rg-qv-media-container" style="position:relative;border-radius:var(--radius-card);overflow:hidden;border:1px solid var(--rg-border);aspect-ratio:4/5;">
+              ${qvHero
+                ? `<img id="rg-qv-main-img" src="${escHtml(qvHero.src)}" alt="${escHtml(qvHero.alt || product.name)}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+                : this.renderMediaPlaceholder(product, 'gallery')}
             </div>
-            ${product.video ? `
+            ${qvVideoSpec ? `
               <button type="button" class="rg-btn rg-btn--secondary rg-btn--sm" id="rg-qv-toggle-video-btn" style="margin-block-start:8px;width:100%;font-size:12px;">
                 ▶ Play Craft Demonstration Video
               </button>
             ` : ''}
-            <small style="display:block;margin-block-start:6px;color:var(--text-secondary);font-size:11px;">Illustrative image · ${product.region}</small>
+            <small style="display:block;margin-block-start:6px;color:var(--text-secondary);font-size:11px;">${qvHero ? 'Illustrative image' : 'Photo pending'} · ${escHtml(product.region)}</small>
           </div>
           <div>
             <div style="display:flex;gap:8px;margin-block-end:8px;">
@@ -587,7 +623,7 @@
 
       const qvVidBtn = body.querySelector('#rg-qv-toggle-video-btn');
       const qvMedia = body.querySelector('#rg-qv-media-container');
-      if (qvVidBtn && qvMedia && product.video) {
+      if (qvVidBtn && qvMedia && qvVideoSpec) {
         qvVidBtn.addEventListener('click', () => {
           const isShowingVideo = qvMedia.querySelector('video');
           if (isShowingVideo) {
@@ -599,9 +635,10 @@
             const img = qvMedia.querySelector('img');
             if (img) img.style.display = 'none';
             const vid = document.createElement('video');
-            vid.src = product.video.src;
-            vid.poster = product.video.poster;
+            vid.src = qvVideoSpec.src;
+            vid.poster = qvVideoSpec.poster || '';
             vid.controls = true;
+            vid.muted = true;
             vid.autoplay = true;
             vid.loop = true;
             vid.playsInline = true;
@@ -629,9 +666,9 @@
           btn.classList.remove('rg-btn--outline');
           const lbl = body.querySelector('[data-qv-colour-label]');
           if (lbl) lbl.textContent = btn.getAttribute('data-qv-colour');
-          const idx = Number(btn.getAttribute('data-qv-colour-idx')) || 0;
+          const colName = String(btn.getAttribute('data-qv-colour') || '').replace(/\s*\(#[0-9A-Fa-f]{6}\)/, '').trim().toLowerCase();
           const img = body.querySelector('#rg-qv-main-img');
-          const targetImg = product.images[idx % product.images.length];
+          const targetImg = qvImages.find((im) => im.colour && im.colour.toLowerCase() === colName) || null;
           if (img && targetImg) {
             const existingVideo = qvMedia && qvMedia.querySelector('video');
             if (existingVideo) {
@@ -786,16 +823,21 @@
           <hr class="rg-stitch-line" style="margin-block:16px;">
           <h4 style="font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;margin-block-end:12px;">Most-Loved Pieces</h4>
           <div style="display:grid;gap:12px;">
-            ${suggested.map((p) => `
+            ${suggested.map((p) => {
+              const sImg = p.images && p.images[0] && p.images[0].src;
+              return `
               <div style="display:flex;align-items:center;gap:12px;padding:8px;background:var(--bg-secondary);border-radius:var(--radius-editorial);">
-                <img src="${escHtml(safeUrl(p.images && p.images[0] && p.images[0].src, 'assets/img/heritage-flatlay.webp'))}" alt="${escHtml(p.name)}" width="52" height="64" style="width:52px;height:64px;object-fit:cover;border-radius:4px;">
+                ${sImg
+                  ? `<img src="${escHtml(safeUrl(sImg, ''))}" alt="${escHtml(p.name)}" width="52" height="64" style="width:52px;height:64px;object-fit:cover;border-radius:4px;">`
+                  : `<span style="width:52px;height:64px;flex:0 0 52px;border-radius:4px;overflow:hidden;border:1px solid var(--rg-border);">${this.renderMediaPlaceholder(p, 'thumb')}</span>`}
                 <div style="flex:1;">
                   <a href="product.html?id=${encodeURIComponent(p.id)}" style="font-weight:600;font-size:var(--text-xs);display:block;">${escHtml(p.name)}</a>
                   <span style="font-size:12px;color:var(--text-secondary);">${fmt(p.price)}</span>
                 </div>
                 <button type="button" class="rg-btn rg-btn--outline rg-btn--sm" data-rg-add-to-cart="${escHtml(p.id)}">+ Add</button>
               </div>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
         `;
         footer.innerHTML = '';
@@ -813,7 +855,9 @@
           ${summary.items.map((item) => `
             <div style="display:flex;gap:12px;padding-block-end:12px;border-block-end:1px solid var(--rg-border);">
               <a href="product.html?id=${encodeURIComponent(item.productId)}">
-                <img src="${escHtml(safeUrl(item.image, 'assets/img/heritage-flatlay.webp'))}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:var(--radius-editorial);border:1px solid var(--rg-border);">
+                ${item.image
+                  ? `<img src="${escHtml(safeUrl(item.image, ''))}" alt="${escHtml(item.name)}" width="64" height="80" style="width:64px;height:80px;object-fit:cover;border-radius:var(--radius-editorial);border:1px solid var(--rg-border);">`
+                  : `<span style="display:block;width:64px;height:80px;border-radius:var(--radius-editorial);overflow:hidden;border:1px solid var(--rg-border);">${this.renderMediaPlaceholder(item, 'thumb')}</span>`}
               </a>
               <div style="flex:1;">
                 <div style="display:flex;justify-content:space-between;gap:8px;">
